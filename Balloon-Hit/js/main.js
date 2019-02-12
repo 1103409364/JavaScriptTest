@@ -6,7 +6,7 @@ function Balloon() {
     this.balloonContainerWidth = parseInt(HtmlUtil.getStyle(this.balloonContainer, "width"));
     this.left = HtmlUtil.getRandom(0, this.balloonContainerWidth - 63);
     this.bottom = -250;
-    this.speed = 2;
+    this.speed = 3;
     this.fps = document.getElementById("fps").textContent;
     this.color = HtmlUtil.getRandom(1, 3);
     this.score = document.getElementById("score").textContent;
@@ -47,16 +47,16 @@ function Balloon() {
         if (_this.bottom < 1000) {
             // 根据分数来调节速度
             if (_this.score > 50) {
-                _this.speed = 3;
-            }
-            if (_this.score > 150) {
                 _this.speed = 5;
             }
-            if (_this.score > 300) {
+            if (_this.score > 150) {
                 _this.speed = 7;
             }
-            if (_this.score > 600) {
+            if (_this.score > 300) {
                 _this.speed = 9;
+            }
+            if (_this.score > 600) {
+                _this.speed = 11;
             }
 
             _this.bottom += _this.speed;
