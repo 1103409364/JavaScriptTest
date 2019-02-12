@@ -104,7 +104,6 @@ var addEvent = function (id) {
         // 重新开始游戏，清除上一次的定时器
         clearInterval(id);
         initinal();
-        log(1)
         var newid = gameStart();
         addEvent(newid);
     });
