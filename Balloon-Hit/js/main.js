@@ -70,6 +70,7 @@ function Balloon() {
 
 var gameStart = function () {
     var balloonContainer = document.getElementById("balloonContainer");
+
     var d = new Date();
     var timeEle = document.getElementById("time");
     // 游戏时间限制
@@ -92,18 +93,48 @@ var gameStart = function () {
             alert("Game over!!");
         }
     }, 500);
+
+    return id;
 }
 
-var addEvent = function () {
+var addEvent = function (id) {
     var btn = document.getElementById("btn");
     btn.addEventListener("click", function () {
-        location.reload();
+        // location.reload();
+        // 重新开始游戏，清除上一次的定时器
+        clearInterval(id);
+        initinal();
+        var newid = gameStart();
+        addEvent(newid);
     });
 }
 
+var initinal = function () {
+    var ini = `
+        <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
+        <audio id="boom" src="audio/boom.mp3"></audio>
+        <div id="status">
+            <button id="btn">重新开始</button>
+            fps:
+            <span id="fps">50</span>
+            time:
+            <span id="time">5</span>
+            score:
+            <span id="score">0</span>
+        </div>
+
+        <div id="balloonContainer"></div>
+    `;
+
+    var container = document.getElementById("container");
+    container.innerHTML = ini;
+}
+
 var __main = function () {
-    addEvent();
-    gameStart();
+    initinal();
+    var id = gameStart();
+    addEvent(id);
+
 }
 
 __main();
