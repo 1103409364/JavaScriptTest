@@ -49,13 +49,13 @@ function Balloon() {
             if (_this.score > 50) {
                 _this.speed = 5;
             }
-            if (_this.score > 150) {
+            if (_this.score > 100) {
                 _this.speed = 7;
             }
-            if (_this.score > 300) {
+            if (_this.score > 200) {
                 _this.speed = 9;
             }
-            if (_this.score > 600) {
+            if (_this.score > 300) {
                 _this.speed = 11;
             }
 
