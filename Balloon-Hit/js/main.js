@@ -104,12 +104,16 @@ var addEvent = function (id) {
         // 重新开始游戏，清除上一次的定时器
         clearInterval(id);
         initinal();
+        log(1)
         var newid = gameStart();
         addEvent(newid);
     });
 }
 
 var initinal = function () {
+    // 游戏时间限制
+    var time = 50;
+
     var ini = `
         <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
         <audio id="boom" src="audio/boom.mp3"></audio>
@@ -118,7 +122,7 @@ var initinal = function () {
             fps:
             <span id="fps">50</span>
             time:
-            <span id="time">5</span>
+            <span id="time">${time}</span>
             score:
             <span id="score">0</span>
         </div>
