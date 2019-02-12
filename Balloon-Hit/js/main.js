@@ -90,7 +90,7 @@ var gameStart = function () {
             var bgm = document.getElementById("bgm");
             bgm.pause();
             balloonContainer.innerHTML = "";
-            alert("Game over!!");
+            alert("GAME OVER!!");
         }
     }, 500);
 
