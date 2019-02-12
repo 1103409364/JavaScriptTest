@@ -1,9 +1,10 @@
 var log = console.log.bind(console);
+
 // 气球类
 function Balloon() {
-    this.container = document.getElementById("container");
-    this.containerWidth = parseInt(HtmlUtil.getStyle(this.container, "width"));
-    this.left = HtmlUtil.getRandom(0, this.containerWidth - 63);
+    this.balloonContainer = document.getElementById("balloonContainer");
+    this.balloonContainerWidth = parseInt(HtmlUtil.getStyle(this.balloonContainer, "width"));
+    this.left = HtmlUtil.getRandom(0, this.balloonContainerWidth - 63);
     this.bottom = -250;
     this.speed = 2;
     this.fps = document.getElementById("fps").textContent;
@@ -26,7 +27,7 @@ function Balloon() {
         "left: " + this.left + "px;" + "bottom: " + this.bottom + "px;";
 
     this.dom.textContent = this.value;
-    this.container.appendChild(this.dom);
+    this.balloonContainer.appendChild(this.dom);
 
     this.dom.addEventListener("click", function () {
         var boom = document.getElementById("boom");
@@ -44,15 +45,17 @@ function Balloon() {
 
     var id = setInterval(function () {
         if (_this.bottom < 1000) {
-            log(_this.score);
             // 根据分数来调节速度
             if (_this.score > 50) {
                 _this.speed = 3;
             }
-            if (_this.score > 100) {
-                _this.speed = 6;
+            if (_this.score > 150) {
+                _this.speed = 5;
             }
-            if (_this.score > 500) {
+            if (_this.score > 300) {
+                _this.speed = 7;
+            }
+            if (_this.score > 600) {
                 _this.speed = 9;
             }
 
@@ -60,17 +63,46 @@ function Balloon() {
         } else {
             clearInterval(id);
         }
+
         _this.dom.style.bottom = _this.bottom + "px";
     }, 1000 / _this.fps);
 }
 
 var gameStart = function () {
-    setInterval(function () {
-        new Balloon();
+    var balloonContainer = document.getElementById("balloonContainer");
+    var d = new Date();
+    var timeEle = document.getElementById("time");
+    // 游戏时间限制
+    var maxTime = timeEle.textContent;
+    var id = setInterval(function () {
+        var time = timeEle.textContent;
+
+        if (time > 0) {
+            new Balloon();
+            var newDate = new Date();
+            var second = Math.floor((newDate - d) / 1000);
+
+            timeEle.textContent = maxTime - second;
+        } else {
+            // 时间到游戏结束
+            clearInterval(id);
+            var bgm = document.getElementById("bgm");
+            bgm.pause();
+            balloonContainer.innerHTML = "";
+            alert("Game over!!");
+        }
     }, 500);
 }
 
+var addEvent = function () {
+    var btn = document.getElementById("btn");
+    btn.addEventListener("click", function () {
+        location.reload();
+    });
+}
+
 var __main = function () {
+    addEvent();
     gameStart();
 }
 
