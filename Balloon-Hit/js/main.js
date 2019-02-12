@@ -112,14 +112,14 @@ var addEvent = function (id) {
 var initinal = function () {
     // 游戏时间限制
     var time = 50;
-
+    var fps = 50;
     var ini = `
         <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
         <audio id="boom" src="audio/boom.mp3"></audio>
         <div id="status">
             <button id="btn">重新开始</button>
             fps:
-            <span id="fps">50</span>
+            <span id="fps">${fps}</span>
             time:
             <span id="time">${time}</span>
             score:
@@ -137,7 +137,6 @@ var __main = function () {
     initinal();
     var id = gameStart();
     addEvent(id);
-
 }
 
 __main();
