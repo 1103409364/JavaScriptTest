@@ -1,13 +1,15 @@
+var log = console.log.bind(console);
 // 气球类
 function Balloon() {
     this.container = document.getElementById("container");
     this.containerWidth = parseInt(HtmlUtil.getStyle(this.container, "width"));
     this.left = HtmlUtil.getRandom(0, this.containerWidth - 63);
     this.bottom = -250;
-    this.speed = 3;
+    this.speed = 2;
     this.fps = document.getElementById("fps").textContent;
     this.color = HtmlUtil.getRandom(1, 3);
-    // 分数
+    this.score = document.getElementById("score").textContent;
+    // 分数值
     this.value = HtmlUtil.getRandom(1, 10);
 
     this.dom = document.createElement("div");
@@ -42,8 +44,19 @@ function Balloon() {
 
     var id = setInterval(function () {
         if (_this.bottom < 1000) {
-            _this.bottom += _this.speed;
+            log(_this.score);
+            // 根据分数来调节速度
+            if (_this.score > 50) {
+                _this.speed = 3;
+            }
+            if (_this.score > 100) {
+                _this.speed = 6;
+            }
+            if (_this.score > 500) {
+                _this.speed = 9;
+            }
 
+            _this.bottom += _this.speed;
         } else {
             clearInterval(id);
         }
