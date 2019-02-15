@@ -5,7 +5,7 @@ function Balloon() {
     this.balloonContainer = document.getElementById("balloonContainer");
     this.balloonContainerWidth = parseInt(HtmlUtil.getStyle(this.balloonContainer, "width"));
     this.left = HtmlUtil.getRandom(0, this.balloonContainerWidth - 63);
-    this.bottom = -250;
+    this.bottom = -200;
     this.speed = 3;
     this.fps = document.getElementById("fps").textContent;
     this.color = HtmlUtil.getRandom(1, 3);
