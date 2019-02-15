@@ -139,26 +139,17 @@ var __main = function () {
     addEvent(id);
 }
 
-// bgm加载完成后运行
-// var bgmTemp = document.querySelector(".bgm");
-
-// bgmTemp.onloadedmetadata = function () {
-//     log("bgm 加载完成");
-//     __main();
-// }
-
 
 //在页面未加载完毕之前显示的loading Html自定义内容
-var _LoadingHtml = '页面加载中，请等待...';
+var _LoadingHtml = "one thousand years later...";
 var loadingMask = document.getElementById('loading');
 
 //呈现loading效果
 loadingMask.innerHTML = _LoadingHtml;
 
-//加载状态为complete时移除loading效果
-var completeLoading = function () {
-}
+// 页面资源加载完成后开始游戏
 window.onload = function () {
+    // 移除loading效果
     loadingMask.parentNode.removeChild(loadingMask);
     __main();
 }
