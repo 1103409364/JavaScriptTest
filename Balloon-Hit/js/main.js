@@ -139,4 +139,10 @@ var __main = function () {
     addEvent(id);
 }
 
-__main();
+
+var bgmTemp = document.querySelector(".bgm");
+bgmTemp.addEventListener("canplay", function () {
+    log("bgm is ok");
+    __main();
+
+})
