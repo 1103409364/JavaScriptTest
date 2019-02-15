@@ -71,15 +71,26 @@
         #btn:active {
             background: #181818;
         }
+
+        .temp {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <img src="img/1.png" alt="">
-    <img src="img/2.png" alt="">
-    <img src="img/3.png" alt="">
+    <!-- 先下载声音和图片 -->
+    <div class="temp">
+        <img src="img/1.png" alt="">
+        <img src="img/2.png" alt="">
+        <img src="img/3.png" alt="">
+    </div>
+
     <div id="loadingDiv"></div>
-    <div id="container"></div>
+    <div id="container">
+        <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
+        <audio id="boom" src="audio/boom.mp3"></audio>
+    </div>
 
     <script src="js/HtmlUtil.js"></script>
 
