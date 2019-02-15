@@ -153,6 +153,7 @@ document.onreadystatechange = completeLoading;
 
 //加载状态为complete时移除loading效果
 function completeLoading() {
+    log(document.readyState)
     if (document.readyState == "complete") {
         log("加载完成")
         var loadingMask = document.getElementById('loadingDiv');
