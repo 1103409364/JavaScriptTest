@@ -139,7 +139,6 @@ var __main = function () {
     addEvent(id);
 }
 
-__main();
 
 //在页面未加载完毕之前显示的loading Html自定义内容
 
@@ -157,5 +156,6 @@ function completeLoading() {
     if (document.readyState == "complete") {
         var loadingMask = document.getElementById('loadingDiv');
         loadingMask.parentNode.removeChild(loadingMask);
+        __main();
     }
 }
