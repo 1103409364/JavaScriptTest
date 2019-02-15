@@ -140,10 +140,17 @@ var __main = function () {
 }
 
 // bgm加载完成后运行
-var bgmTemp = document.querySelector(".bgm");
-bgmTemp.onloadedmetadata = function () {
-    log("bgm 加载完成");
+// var bgmTemp = document.querySelector(".bgm");
+
+// bgmTemp.onloadedmetadata = function () {
+//     log("bgm 加载完成");
+//     __main();
+// }
+
+window.onload = function () {
     __main();
 }
+
+//页面加载中
 
 
