@@ -147,11 +147,19 @@ var __main = function () {
 //     __main();
 // }
 
+
+//在页面未加载完毕之前显示的loading Html自定义内容
+var _LoadingHtml = '页面加载中，请等待...';
+var loadingMask = document.getElementById('loading');
+
+//呈现loading效果
+loadingMask.innerHTML = _LoadingHtml;
+
+//加载状态为complete时移除loading效果
+var completeLoading = function () {
+}
 window.onload = function () {
-    log(1);
+    loadingMask.parentNode.removeChild(loadingMask);
     __main();
 }
-
-//页面加载中
-
 
