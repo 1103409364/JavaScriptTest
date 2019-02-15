@@ -148,6 +148,7 @@ var __main = function () {
 // }
 
 window.onload = function () {
+    log(1);
     __main();
 }
 
