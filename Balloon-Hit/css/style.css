@@ -67,7 +67,7 @@ html, body {
 
 #loading {
     color: #ff4e4e;
-    width: 600px;
+    width: 100%;
     height: 60px;
     line-height: 60px;
     font-size: 40px;
@@ -75,7 +75,7 @@ html, body {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -300px;
+    margin-left: -50%;
     margin-top: -30px;
     vertical-align: middle;
 }
