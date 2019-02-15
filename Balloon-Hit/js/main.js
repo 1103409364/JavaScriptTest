@@ -139,10 +139,11 @@ var __main = function () {
     addEvent(id);
 }
 
-
+// bgm加载完成后运行
 var bgmTemp = document.querySelector(".bgm");
-bgmTemp.addEventListener("canplay", function () {
-    log("bgm is ok");
+bgmTemp.onloadedmetadata = function () {
+    log("bgm 加载完成");
     __main();
+}
 
-})
+
