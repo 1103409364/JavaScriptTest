@@ -12,24 +12,34 @@ function Balloon() {
     this.score = document.getElementById("score").textContent;
     // 分数值
     this.value = HtmlUtil.getRandom(1, 10);
-
+    // 气球div
     this.dom = document.createElement("div");
+    // 气球的有效点击区域
+    this.targetDom = document.createElement("div");
+
     this.dom.style =
         "background: url(img/" + this.color + ".png) 0 0 no-repeat;" +
         "background-size: 62px 234.5px;" +
         "width: 63px; height: 234.5px;" +
         "text-align:center;" +
-        "padding-top: 10px;" +
         "font-size: 30px;" +
         "color: #fff;" +
-
         "position: absolute;" +
         "left: " + this.left + "px;" + "bottom: " + this.bottom + "px;";
 
-    this.dom.textContent = this.value;
-    this.balloonContainer.appendChild(this.dom);
+    this.targetDom.style =
+        "width: 63px;" +
+        "height: 60px;" +
+        "padding-top: 10px;" +
+        "position: absolute;" +
+        "left: 0" +
+        "top: 0";
 
-    this.dom.addEventListener("click", function () {
+    this.targetDom.textContent = this.value;
+    this.dom.appendChild(this.targetDom);
+
+    this.balloonContainer.appendChild(this.dom);
+    this.targetDom.addEventListener("click", function () {
         var boom = document.getElementById("boom");
         var scoreElement = document.getElementById("score");
         var score = parseInt(scoreElement.textContent);
@@ -37,7 +47,7 @@ function Balloon() {
         // 没有load会导致短时间play两次，第二次无法播放的问题
         boom.load();
         boom.play();
-        this.style = "display: none";
+        this.parentNode.style = "display: none";
     });
 
     // 备份this

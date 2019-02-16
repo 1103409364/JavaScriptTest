@@ -6,16 +6,16 @@ html, body {
     background-color: #81c5fc;
 }
 
-/* div {
-            width: 63px;
-            height: 234.5px;
-            background: url("img/1.png") 0 0 no-repeat;
-            background-size: 62px 234.5px;
-
-            position: absolute;
-            left: 100px;
-            bottom: 0;
-        } */
+/* .test {
+    border: 1px solid #fff;
+    width: 63px;
+    height: 75px;
+    background: url("../img/1.png") 0 0 no-repeat;
+    background-size: 62px;
+    position: absolute;
+    left: 100px;
+    bottom: 0;
+} */
 
 #container {
     width: 100%;
