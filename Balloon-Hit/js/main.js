@@ -127,7 +127,7 @@ var initinal = function () {
         <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
         <audio id="boom" src="audio/boom.mp3"></audio>
         <div id="status">
-            <button id="btn">重新开始</button>
+            <button id="btn">restart</button>
             fps:
             <span id="fps">${fps}</span>
             time:
