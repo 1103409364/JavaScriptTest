@@ -16,7 +16,7 @@
 
 <body>
     <div class="jigsaw">
-        <div class="moveUnit">
+        <div class="allImg">
             <ul class="clearfix">
                 <li class="first"><a href="#"><img src="img/0.jpg" alt=""></a></li>
                 <li><a href="#"><img src="img/1.jpg" alt=""></a></li>
@@ -56,7 +56,7 @@
         // 轮播图容器
         var $jigsaw = $(".jigsaw");
         // 图片数量
-        var imgLength = $(".moveUnit ul li").length;
+        var imgLength = $(".allImg ul li").length;
         // 函数节流
         var lock = true;
         // 创建100个div
@@ -91,7 +91,7 @@
             timerId = setInterval(rightBtnHandler, option.interval);
         });
 
-        var $imgLi = $(".jigsaw .moveUnit li");
+        var $imgLi = $(".jigsaw .allImg li");
         // 右键轮播业务
         function rightBtnHandler() {
             if (!lock) return;

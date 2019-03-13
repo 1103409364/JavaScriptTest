@@ -16,13 +16,13 @@
     overflow: hidden;
 }
 
-.jigsaw .moveUnit ul li {
+.jigsaw .allImg ul li {
     position: absolute;
     left: 560px;
     top: 0;
 }
 
-.jigsaw .moveUnit ul li.first {
+.jigsaw .allImg ul li.first {
     left: 0;
 }
 
