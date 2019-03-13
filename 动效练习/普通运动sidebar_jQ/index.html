@@ -13,18 +13,16 @@
             /* height: 405px; */
             width: 30px;
             height: 30px;
-            position: absolute;
-            /* right: 0; */
-            /* bottom: 0; */
+            position: fixed;
             right: 0;
             bottom: 0;
             background: url(img/2.png) no-repeat 0 0;
-            overflow: hidden;
+            /* overflow: hidden; */
         }
 
         .sidebar .content {
             padding: 40px 20px;
-            display: none;
+            /* display: none; */
         }
 
         .sidebar .btn {
@@ -35,18 +33,14 @@
             top: 0;
             background: url(img/0.png) no-repeat 0 0;
         }
-        .wrap {
-            /* overflow: hidden; */
-            /* position: relative; */
-        }
     </style>
 </head>
 
 <body>
     <div class="wrap">
-        <div class="sidebar">
+        <div class="sidebar hide">
             <a class="btn" href="javascript:;"></a>
-            <div class="content">
+            <div class="content hide">
                 <h3><a href="#">0</a></h3>
                 <ul>
                     <li><a href="#"><p>1</p></a></li>
@@ -65,24 +59,22 @@
         var $sidebar = $(".sidebar");
         var $content = $(".content");
         var time = 600;
-        // console.log($content.is(":visible"));
 
         $(".btn").click(function () {
             // 根据content是否可见来判断展开还是收回
-            if (!$content.is(":visible")) {
-                $sidebar.animate({ "right": 0, "width": 228 }, time, function () {
-                    $content.css("display", "block");
-                    $(this).animate({ "bottom": 0, "height": 405 }, time, function () {
-                        $(this).children(".btn").css("background", "url(img/1.png) no-repeat 0 0");
-                    });
+            if ($sidebar.hasClass("hide")) {
+                $sidebar.animate({"width": 228 }, time);
+                $sidebar.animate({"height": 405}, time, function() {
+                    $(this).children(".btn").css("background", "url(img/1.png) no-repeat 0 0");
+                    $sidebar.removeClass("hide");
+                    
                 })
             } else {
-                $sidebar.animate({ "bottom": 0, "height": 30 }, time, function () {
-                    $content.css("display", "none");
-                    $(this).animate({ "right": 0, "width": 30 }, time, function() {
-                        $(this).children(".btn").css("background", "url(img/0.png) no-repeat 0 0");
-                    });
-                })
+                $sidebar.animate({"height": 30 }, time);
+                $sidebar.animate({"width": 30 }, time, function() {
+                    $(this).children(".btn").css("background", "url(img/0.png) no-repeat 0 0");
+                    $sidebar.addClass("hide");
+                });
             }
         })
     </script>
