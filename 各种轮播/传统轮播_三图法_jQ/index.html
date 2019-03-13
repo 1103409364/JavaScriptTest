@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>传统轮播_三图法_jQ</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<style>
+    
+</style>
+<body>
+    <div class="carousel">
+        <div class="moveUnit">
+            <ul class="clearfix">
+                <li class="first"><a href="#"><img src="img/0.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/1.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/4.jpg" alt=""></a></li>
+            </ul>
+        </div>
+        <div class="slider">
+            <ol>
+                <li class="current"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+        </div>
+        <a class="leftBtn" id="leftBtn" href="javascript:;">L</a>
+        <a class="rightBtn" id="rightBtn" href="javascript:;">R</a>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        // 当前图片，信号量
+        var imgIdx = 0;
+        // 图片宽度
+        var width = 560;
+        // 运动时间
+        var time = 600;
+        // 自动轮播间隔
+        var interval = 1500;
+        // 轮播图容器
+        var $carousel = $(".carousel");
+        // 运动机构
+        // var $moveUnit = $(".moveUnit");
+        var imgLength = $(".moveUnit ul li").length;
+
+        $(".rightBtn").click(rightBtnHandler);
+        $(".leftBtn").click(leftBtnHandler);
+
+        // 自动轮播
+        var timerId = setInterval(rightBtnHandler, interval);
+        // 鼠标进入停止轮播
+        $carousel.mouseenter(function() {
+            clearInterval(timerId);
+        });
+        // 鼠标离开恢复自动轮播
+        $carousel.mouseleave(function() {
+            timerId = setInterval(rightBtnHandler, interval);
+        });
+        // 右键轮播业务
+
+        var $imgLi =  $(".carousel .moveUnit li");
+        function rightBtnHandler() {
+            if($imgLi.eq(imgIdx).is(":animated")) return;
+            // console.log(1);
+            $imgLi.eq(imgIdx).animate({left: -width}, time);
+            imgIdx++;
+            if(imgIdx == imgLength) {
+                imgIdx = 0;
+            }
+            // 下一张图片到左边预备
+            $imgLi.eq(imgIdx).css({"left": width});
+            // 下一张图片移动
+            $imgLi.eq(imgIdx).animate({left: 0}, time);
+
+            changeSlider();
+        }
+        // 左键轮播业务
+        function leftBtnHandler() {
+            if($imgLi.eq(imgIdx).is(":animated")) return;
+
+            $imgLi.eq(imgIdx).animate({left: width}, time);
+            imgIdx--;
+            if(imgIdx < 0) {
+                imgIdx = 4;
+            }
+            
+            $imgLi.eq(imgIdx).css({"left": -width});
+            
+            $imgLi.eq(imgIdx).animate({left: 0}, time);
+            
+            changeSlider();
+        }
+        
+        var slider =  $(".carousel .slider li");
+        // 小圆点指示器业务
+        slider.click(function() {
+            var clickIdx = $(this).index();
+            // 如果点击小圆点的序号在现有图片后，点中序号对应图片到左边准备，现图右移
+            if(clickIdx > imgIdx) {
+                $imgLi.eq(imgIdx).animate({left: width}, time);
+                $imgLi.eq(clickIdx).css({"left": -width});
+            }
+
+            if(clickIdx < imgIdx) {
+                $imgLi.eq(imgIdx).animate({left: -width}, time);
+                $imgLi.eq(clickIdx).css({"left": width});
+            }
+            
+            imgIdx = clickIdx;
+            $imgLi.eq(imgIdx).animate({left: 0}, time);
+
+            changeSlider();
+        })
+
+        function changeSlider() {
+            // 让所有小圆点变为未点击状态
+            slider.css({"opacity": 0.5})
+            slider.eq(imgIdx % 5).css({"opacity": 1});
+        }
+    </script>
+</body>
+</html>

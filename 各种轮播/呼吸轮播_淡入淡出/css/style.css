@@ -1,0 +1,91 @@
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.carousel {
+    /* 清除空格 */
+    font-size: 0;
+    margin: 100px auto;
+    position: relative;
+    border: 5px solid #000;
+    width: 560px;
+    /* 子元素定位，无法撑起父元素高度 */
+    height: 300px;
+    /* background: #000; */
+}
+
+/* .carouselWrap .imgUl {
+    position: absolute;
+    left: 0;
+} */
+
+.carousel .imgUl li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    display: none;
+}
+.carousel .imgUl li:nth-of-type(1) {
+    opacity: 1;
+    display: block;
+}
+
+.carousel .btn a {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    font-family: "SimSun";
+    font-size: 25px;
+    line-height: 40px;
+    text-align: center;
+
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    border: 1px solid #333;
+    background-color: #333;
+    opacity: 0.5;
+    cursor: pointer;
+    user-select: none;
+}
+
+.carousel .btn a:hover {
+    opacity: 0.8;
+}
+
+a#leftBtn {
+    left: 5px;
+}
+
+a#rightBtn {
+    right: 5px;
+}
+
+.carousel .state {
+    position: absolute;
+    width: 200px;
+    height: 20px;
+    /* background-color:#fff; */
+    left: 50%;
+    bottom: 5px;
+    margin-left: -100px;
+}
+
+.carousel .state li {
+    list-style-type: none;
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-color:#e2e2e2;
+    margin: 0 6.66px;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.carousel .state li.current {
+    opacity: 1;
+}

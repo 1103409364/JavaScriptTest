@@ -1,0 +1,79 @@
+.clearfix::before,
+.carousel::after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.carousel {
+    margin: 0 auto;
+    position: relative;
+    width: 800px;
+    height: 300px;
+    border: 3px solid #000;
+    overflow: hidden;
+}
+
+.carousel .moveUnit ul li {
+    position: absolute;
+}
+
+.carousel .moveUnit ul li.num0 {
+    left: 0;
+}
+.carousel .moveUnit ul li.num1 {
+    left: 160px;
+}
+.carousel .moveUnit ul li.num2 {
+    left: 320px;
+}
+.carousel .moveUnit ul li.num3 {
+    left: 480px;
+}
+.carousel .moveUnit ul li.num4 {
+    left: 640px;
+}
+
+.carousel .moveUnit .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    opacity: 0.5;
+    /* ie6 */
+    filter: alpha(opacity=50);
+}
+
+.carousel .leftBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    left: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.carousel .rightBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    right: 0;
+    top: 50%;
+    margin-top: -20px;
+}

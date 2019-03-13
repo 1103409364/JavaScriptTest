@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>传统轮播_火车法_jQ</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="moveUnit">
+            <ul class="clearfix">
+                <li><a href="#"><img src="img/0.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/1.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/2.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/3.jpg" alt=""></a></li>
+                <li><a href="#"><img src="img/4.jpg" alt=""></a></li>
+            </ul>
+        </div>
+        <div class="slider">
+            <ol>
+                <li class="current"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+        </div>
+        <a class="leftBtn" id="leftBtn" href="javascript:;">L</a>
+        <a class="rightBtn" id="rightBtn" href="javascript:;">R</a>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        // 当前图片，信号量
+        var imgIdx = 0;
+        // 图片宽度
+        var width = 560;
+        // 运动时间
+        var time = 600;
+        // 自动轮播间隔
+        var interval = 1500;
+        // 轮播图容器
+        var $carousel = $(".carousel");
+        // 运动机构
+        var $moveUnit = $(".moveUnit");
+        var imgLength = $(".moveUnit ul li").length;
+        $(".moveUnit ul li:first").clone().appendTo(".moveUnit ul");
+
+        $(".rightBtn").click(rightBtnHandler);
+        $(".leftBtn").click(leftBtnHandler);
+
+        // 自动轮播
+        var timerId = setInterval(rightBtnHandler, interval);
+        // 鼠标进入停止轮播
+        $carousel.mouseenter(function() {
+            clearInterval(timerId);
+        });
+        // 鼠标离开恢复自动轮播
+        $carousel.mouseleave(function() {
+            timerId = setInterval(rightBtnHandler, interval);
+        });
+        // 右键轮播业务
+        function rightBtnHandler() {
+            if($moveUnit.is(":animated")) return;
+
+            imgIdx++;
+            // console.log(1);
+            $moveUnit.animate({left: -imgIdx * width}, time, function() {
+                if(imgIdx == imgLength) {
+                    $(this).css({"left": 0,});
+                    imgIdx = 0;
+                }
+            });
+
+            changeSlider();
+        }
+        // 左键轮播业务
+        function leftBtnHandler() {
+            if($moveUnit.is(":animated")) return;
+            imgIdx--;
+            if(imgIdx < 0) {
+                imgIdx = 4;
+                // 先闪现到最后一张，再正常运动到4
+                $moveUnit.css({"left": -width * imgLength});
+            }
+            $moveUnit.animate({left: -imgIdx * width}, time);
+            changeSlider();
+        }
+        
+        var slider =  $(".carousel .slider li");
+        // 小圆点指示器业务
+        slider.click(function() {
+            imgIdx = $(this).index();
+            $moveUnit.animate({left: -imgIdx * width}, time);
+
+            changeSlider();
+        })
+
+        function changeSlider() {
+            // 让所有小圆点变为未点击状态
+            slider.css({"opacity": 0.5})
+            slider.eq(imgIdx % 5).css({"opacity": 1});
+        }
+    </script>
+</body>
+</html>

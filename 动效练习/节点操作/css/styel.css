@@ -1,0 +1,21 @@
+
+.left,
+.btn,
+.right {
+    float: left;
+}
+
+.btn {
+    padding-top: 100px;
+}
+.left,
+.right {
+    padding: 20px;
+    height: 200px;
+    width: 100px;
+    border: 1px solid #000;
+}
+
+button {
+    display: block;
+}

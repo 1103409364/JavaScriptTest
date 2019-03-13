@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>水平菜单</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .clearfix::before,
+        .clearfix::after {
+            content: "";
+            height: 0;
+            clear: both;
+            display: block;
+            visibility: hidden;
+        }
+
+        .nav {
+            background-color: #008000;
+        }
+
+        .nav ul {
+            width: 768px;
+            margin: 0 auto;
+        }
+
+        .nav>ul>li {
+            float: left;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .nav>ul>li>a {
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+            line-height: 40px;
+        }
+
+        .nav ul .dropDown {
+            position: absolute;
+            left: 0;
+            top: 40px;
+            display: none;
+        }
+
+        .nav ul .dropDown .inner {
+            padding-top: 5px;
+        }
+
+        .nav ul .dropDown .inner p {
+            text-align: center;
+            background-color: #62ad6c;
+            color: #fff;
+            font-size: 13px;
+            width: 100px;
+            line-height: 30px;
+        }
+
+        .nav ul .dropDown p:hover {
+            background-color: #e66666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <ul class="clearfix">
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <a href="#">栏目名称</a>
+                <div class="dropDown">
+                    <div class="inner">
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                        <p>栏目名称</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(".nav li").mouseenter(function () {
+            // 函数节流
+            if($(this).children(".dropDown").is(":animated")) return;
+            $(this).children(".dropDown").slideDown();
+        })
+
+        $(".nav li").mouseleave(function () {
+            $(this).children(".dropDown").slideUp(300);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生js节点操作</title>
+
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/styel.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="left" id="left">
+            <ul>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">0</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">1</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">2</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">3</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">4</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">5</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="" id="">
+                    <label for="">6</label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="btn" >
+            <button class="leftBtn" id="leftBtn">&lt------</button>
+            <button class="rightBtn" id="rightBtn">------&gt</button>
+        </div>
+
+        <div class="right" id="right">
+            <ul>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- <script src="js/jquery-1.12.4.js"></script> -->
+    <script>
+        var leftBtn = document.getElementById("leftBtn");
+        var rightBtn = document.getElementById("rightBtn");
+        
+        var leftUl = document.getElementById("left").getElementsByTagName("ul")[0];
+        var rightUl = document.getElementById("right").getElementsByTagName("ul")[0];
+        // 通过标签名获得的是一个类数组对象HTMLCollection，是动态的
+        var leftLi = document.getElementById("left").getElementsByTagName("li");
+        var rightLi = document.getElementById("right").getElementsByTagName("li");
+
+        rightBtn.onclick = function() {
+            for(var i = 0; i < leftLi.length; i++) {
+                var checkipt = leftLi[i].getElementsByTagName("input")[0];
+                console.log(checkipt.checked);
+                if (checkipt.checked) {
+                    // 取消选中状态
+                    checkipt.checked = false;
+                    // 可以用父节点属性，也可以用leftLi[i]
+                    rightUl.appendChild(checkipt.parentNode);
+                    // 每次移动li都会导致下一个li的索引-1
+                    i--;
+                }
+            }
+        }
+
+        leftBtn.onclick = function() {
+            for(var i = 0; i < rightLi.length; i++) {
+                var checkipt = rightLi[i].getElementsByTagName("input")[0];
+                console.log(checkipt.checked);
+                if (checkipt.checked) {
+                    checkipt.checked = false;
+                    leftUl.appendChild(rightLi[i]);
+                    // 每次移动li都会导致下一个li的索引-1
+                    i--;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

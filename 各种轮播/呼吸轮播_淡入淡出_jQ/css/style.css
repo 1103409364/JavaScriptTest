@@ -1,0 +1,83 @@
+.clearfix::before,
+.carousel::after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.carousel {
+    margin: 0 auto;
+    position: relative;
+    width: 560px;
+    height: 300px;
+    border: 3px solid #000;
+    overflow: hidden;
+}
+
+/* .carousel .moveUnit {
+
+    } */
+
+.carousel .moveUnit ul li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.carousel .moveUnit ul li.first {
+    display: block;
+}
+
+.carousel .leftBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    left: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.carousel .rightBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    right: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.carousel .slider {
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    margin-left: -100px;
+}
+
+.carousel .slider ol li {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+
+.carousel .slider ol li.current {
+    opacity: 1;
+}

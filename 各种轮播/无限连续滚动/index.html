@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>连续滚动</title>
+
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .infiniteScroll {
+            /* 清除空格 */
+            font-size: 0;
+            margin: 0 auto;
+            position: relative;
+            border: 5px solid #000;
+            width: 800px;
+            /* 子元素定位，无法撑起父元素高度 */
+            height: 130px;
+            overflow: hidden;
+        }
+        
+        .infiniteScroll .imgUl {
+            width: 5000px;
+            position: absolute;
+            left: 0;
+        }
+
+        .infiniteScroll .imgUl li {
+            float: left;
+        }
+
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>图片数量不定，图片宽度不定</h1>
+    <div class="infiniteScroll" id="infiniteScroll">
+        <ul class="imgUl clearfix" id="imgUl">
+            <li><a href="#"><img src="img/0.png" alt=""></a></li>
+            <li><a href="#"><img src="img/1.png" alt=""></a></li>
+            <li><a href="#"><img src="img/2.png" alt=""></a></li>
+            <li><a href="#"><img src="img/3.png" alt=""></a></li>
+            <li><a href="#"><img src="img/4.png" alt=""></a></li>
+            <li><a href="#"><img src="img/5.png" alt=""></a></li>
+            <li><a href="#"><img src="img/6.png" alt=""></a></li>
+            <li><a href="#"><img src="img/7.png" alt=""></a></li>
+            <li><a href="#"><img src="img/8.png" alt=""></a></li>
+            <li><a href="#"><img src="img/9.png" alt=""></a></li>
+        </ul>
+    </div>
+
+    <script src="js/animate-2.0.1.js"></script>
+    <script>
+    var infiniteScroll = document.getElementById("infiniteScroll");
+    var imgUl = document.getElementById("imgUl");
+    var imgLi = imgUl.getElementsByTagName("li");
+
+    var imgs = imgUl.getElementsByTagName("img");	
+    // 当前图片编号
+    var nowIdx = 0;
+
+    // var interval = 6000;
+    var imgLength = imgLi.length;
+    var time = 6000;
+
+    imgUl.innerHTML += imgUl.innerHTML;
+    // 折返点
+    var turningPoint;
+    var width;
+
+    //计算折返点，但是每个li的宽度都不一样，所以现在假火车的开头元素的offsetLeft就是折返点
+    // 这个元素是lis[lislength / 2];由于Chrome的机理，如果要读取offsetLeft值必须保证所有图片加载完毕。
+    for(var i = 0 , count = 0 ; i < imgs.length ; i++){
+        imgs[i].onload = function(){
+            count++;
+            if(count == imgs.length){
+                //所有图片加载完毕了，就有折返点了：
+                turningPoint = imgLi[imgLength].offsetLeft;
+                //所有图片加载完毕了，再开始运动
+                // 运动距离是整个ul的长度，也就是假0的offsetLeft
+                width = turningPoint;
+                move();
+            }
+        }
+    }
+    
+    // 用递归实现无限滚动
+    function move() {
+        var timerId =  animate(imgUl, {left: -width}, time, function() {
+            this.style.left = 0;
+            move();
+        });
+        //鼠标进入停止移动
+        infiniteScroll.onmouseover = function(){
+            clearInterval(timerId);
+            
+        }
+        //鼠标离开继续移动
+        infiniteScroll.onmouseout = function(){
+            move();
+        }
+    }
+
+      
+
+	
+    </script>
+</body>
+</html>

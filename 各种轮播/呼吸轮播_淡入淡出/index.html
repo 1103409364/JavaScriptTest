@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>呼吸轮播</title>
+
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="carousel" id="carousel">
+        <ul class="imgUl clearfix" id="imgUl">
+            <li class="current"><a href="#0"><img src="img/0.jpg" alt=""></a></li>
+            <li><a href="#1"><img src="img/1.jpg" alt=""></a></li>
+            <li><a href="#2"><img src="img/2.jpg" alt=""></a></li>
+            <li><a href="#3"><img src="img/3.jpg" alt=""></a></li>
+            <li><a href="#4"><img src="img/4.jpg" alt=""></a></li>
+        </ul>
+
+        <div class="btn">
+			<a type="button" id="leftBtn">&lt; </a>
+			<a type="button"  id="rightBtn">&gt; </a>
+		</div>
+
+		<div class="state" id="circleNav">
+			<ol>
+				<li class="current"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ol>
+		</div>
+    </div>
+
+    <script src="js/animate-2.0.1.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

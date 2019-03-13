@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .pic {
+            width: 560px;
+            height: 300px;
+            position: relative;
+        }
+
+        .mask {
+            height: 60px;
+            width: 100%;
+            background-color: #333;
+            opacity: 0.5;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: none;
+        }
+
+        .pic h3 {
+            width: 100%;
+            font-size: 30px;
+            line-height: 60px;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="pic">
+            <img src="img/2.jpg" alt="">
+            <div class="mask"></div>
+            <h3>你愁啥？！！！</h3>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        // slideDown实际上是改变高度，bottom定位时就会有向上展开效果
+        $(".pic").mouseenter(function() {
+            if($(".mask").is(":animated")) return;
+            $(".mask").slideDown();
+        })
+        $(".pic").mouseleave(function() {
+            $(".mask").slideUp();
+        })
+
+        $(".pic").mouseenter(function() {
+            if($(".pic h3").is(":animated")) return;
+            $(".pic h3").slideDown();
+        })
+
+        $(".pic").mouseleave(function() {
+            $(".pic h3").slideUp();
+        })
+    </script>
+</body>
+</html>

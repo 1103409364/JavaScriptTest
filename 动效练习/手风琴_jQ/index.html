@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手风琴模型</title>
+
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/styel.css">
+</head>
+
+<body>
+    <div class="info">
+        <ul>
+            <li>
+                <h3>JavaScript<span>&gt</span></h3>
+                <div class="content">
+                    <p>
+                        JavaScript 是在浏览器中运行的编程语言。 它可以为你的网站或应用程序添加交互性和其他动态功能。
+                    </p>
+                    <p>
+                        随着 Node.js 的出现, 你也可以在服务器上运行 JavaScript。
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>Web API<span>&gt</span></h3>
+                <div class="content">
+                    <p>
+                        Web应用编程接口（Web API）用于执行各种任务，例如操作 DOM 、播放音频或视频以及生成3D图形。
+                    </p>
+                </div>
+            </li>
+            <li>
+                <h3>Web Components<span>&gt</span></h3>
+                <div class="content">
+                    <p>
+                        Web Components 是一套不同的技术，允许您创建可重用的定制元素（它们的功能封装在您的代码之外）并且在您的 Web 应用中使用它们。
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(".info h3").click(function () {
+            $(".content").slideUp(300);
+            $(".info h3").removeClass("current");
+            if ($(this).siblings(".content").is(":visible")) {
+                $(this).removeClass("current").siblings(".content").stop(true).slideUp(300);
+                // $(th
+            } else {
+                $(this).addClass("current").siblings(".content").stop(true).slideDown(300);
+            }
+        })
+    </script>
+</body>
+
+</html>

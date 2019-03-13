@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百叶窗相册</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="moveUnit">
+            <ul class="clearfix">
+                <li class="num0"><a href="#"><img src="img/0.jpg" alt=""></a><div class="mask"></div></li>
+                <li class="num1"><a href="#"><img src="img/1.jpg" alt=""></a><div class="mask"></div></li>
+                <li class="num2"><a href="#"><img src="img/2.jpg" alt=""></a><div class="mask"></div></li>
+                <li class="num3"><a href="#"><img src="img/3.jpg" alt=""></a><div class="mask"></div></li>
+                <li class="num4"><a href="#"><img src="img/4.jpg" alt=""></a><div class="mask"></div></li>
+            </ul>
+        </div>
+
+        <a class="leftBtn" id="leftBtn" href="javascript:;">L</a>
+        <a class="rightBtn" id="rightBtn" href="javascript:;">R</a>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        var flag = 1;
+        // 当前图片，信号量
+        var imgIdx = 0;
+        // 图片宽度
+        var width = 560;
+        // 运动时间
+        var time = 600;
+        // 自动轮播间隔
+        var interval = 1500;
+        // 轮播图容器
+        var $carousel = $(".carousel");
+        var imgLength = $(".moveUnit ul li").length;
+        var $imgLi = $(".carousel .moveUnit li");
+
+        $(".rightBtn").click(rightBtnHandler);
+        $(".leftBtn").click(leftBtnHandler);
+         // 自动轮播
+        var timerId = setInterval(rightBtnHandler, interval);
+        
+        $imgLi.mouseenter(function () {
+            // 鼠标进入停止轮播
+            clearInterval(timerId);
+
+            imgIdx = $(this).index();
+            move(imgIdx);
+        })
+
+        // 鼠标离开图片复位
+        $carousel.mouseleave(function () {
+            reset();
+            timerId = setInterval(rightBtnHandler, interval);
+        });
+
+        // 在imgIdx左边的图片找到左边的位置，在imgidx右边的图片找到自己右边的位置，位置是固定的
+        function move(imgIdx) {
+            // 遍历
+            $imgLi.each(function (i) {
+                $(this).stop(true);
+                if (i <= imgIdx) {
+                    // stop防止动画的积累：
+                    $(this).animate({
+                        "left": 60 * i
+                    }, time);
+                    if(i == imgIdx) {
+                        $(this).children(".mask").fadeOut(time);
+                    } else {
+                        $(this).children(".mask").fadeIn(time);
+                    }
+                } else {
+                    $(this).animate({
+                        "left": 500 + 60 * i
+                    }, time);
+
+                    $(this).children(".mask").fadeIn(time);
+                }
+
+                if(i == imgIdx) {
+                }
+            })
+        }
+        // 重置默认状态
+        function reset() {
+            $imgLi.each(function (i) {
+                $(this).stop(true).animate({
+                    "left": 160 * i
+                }, time);
+                $(this).children(".mask").fadeIn(time);
+            })
+        }
+
+
+
+        function leftBtnHandler() {
+            // imgIdx++;
+            // if(imgIdx == imgLength) {
+            //     imgIdx = 0;
+            // }
+            // move(imgIdx);
+            move(imgIdx);
+            imgIdx += flag;
+            if (imgIdx > imgLength - 1) {
+                flag = -1;
+                imgIdx = imgLength - 1 - 1;
+            }
+
+            if (imgIdx < 0) {
+                flag = 1;
+                imgIdx = 1;
+            }
+
+        }
+
+        function rightBtnHandler() {
+            move(imgIdx);
+            // 图片按 01234 43210的顺序切换
+            imgIdx -= flag;
+            if (imgIdx < 0) {
+                flag = -1;
+                imgIdx = 1;
+            }
+            if (imgIdx > imgLength - 1) {
+                flag = 1;
+                imgIdx = imgLength - 1 - 1;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提示框</title>
+
+    <style>
+        p.check {
+            position: relative;
+            line-height: 30px;
+        }
+        .tips {
+            position:absolute;
+            left: 20px;
+            top: 30px;
+            width: 150px;
+            color: #fff;
+            border: 1px solid #000;
+            background-color: #333;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#">
+        <p>
+            <label for="email">email</label>
+            <input id="email" type="email" />
+        </p>
+
+        <p>
+            <label for="password">password</label>
+            <input type="password" name="" id="password" />
+        </p>
+        <P class="check">
+            <input type="checkbox" id="online"/>
+            <label id="txt" for="online">十天内免登陆</label>
+            <span class="tips">
+                warning!
+                warning!
+                warning!
+                warning!
+                warning!
+                warning!
+            </span>
+        </P>
+    </form>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(".check").mouseenter(function() {
+            if($(".tips").is(":animated")) return;
+            // 淡入
+            // $(".tips").fadeIn(1000);
+            // 显示
+            $(".tips").show(300);
+        })
+
+        $(".check").mouseleave(function() {
+            // $(".tips").fadeOut(500);
+            $(".tips").delay(1000).hide(300);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sidebar</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .sidebar {
+            /* width: 228px; */
+            /* height: 405px; */
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            /* right: 0; */
+            /* bottom: 0; */
+            right: 0;
+            bottom: 0;
+            background: url(img/2.png) no-repeat 0 0;
+            overflow: hidden;
+        }
+
+        .sidebar .content {
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .sidebar .btn {
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url(img/0.png) no-repeat 0 0;
+        }
+        .wrap {
+            /* overflow: hidden; */
+            /* position: relative; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="sidebar">
+            <a class="btn" href="javascript:;"></a>
+            <div class="content">
+                <h3><a href="#">0</a></h3>
+                <ul>
+                    <li><a href="#"><p>1</p></a></li>
+                    <li><a href="#"><p>2</p></a></li>
+                    <li><a href="#"><p>3</p></a></li>
+                    <li><a href="#"><p>4</p></a></li>
+                    <li><a href="#"><p>5</p></a></li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        var $sidebar = $(".sidebar");
+        var $content = $(".content");
+        var time = 600;
+        // console.log($content.is(":visible"));
+
+        $(".btn").click(function () {
+            // 根据content是否可见来判断展开还是收回
+            if (!$content.is(":visible")) {
+                $sidebar.animate({ "right": 0, "width": 228 }, time, function () {
+                    $content.css("display", "block");
+                    $(this).animate({ "bottom": 0, "height": 405 }, time, function () {
+                        $(this).children(".btn").css("background", "url(img/1.png) no-repeat 0 0");
+                    });
+                })
+            } else {
+                $sidebar.animate({ "bottom": 0, "height": 30 }, time, function () {
+                    $content.css("display", "none");
+                    $(this).animate({ "right": 0, "width": 30 }, time, function() {
+                        $(this).children(".btn").css("background", "url(img/0.png) no-repeat 0 0");
+                    });
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
