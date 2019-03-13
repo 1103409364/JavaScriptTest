@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: rebeccapurple;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+
+    <script>
+        var oBox = document.getElementById("box");
+        oBox.onmousedown = function(event) {
+            // 如果监听document，oBox容易掉
+            var difX = event.clientX - this.offsetLeft;
+            var difY = event.clientY - this.offsetTop;
+            // 鼠标移动
+            document.onmousemove = function(event) {
+                oBox.style.left = event.clientX - difX + "px";
+                oBox.style.top = event.clientY - difY + "px";
+            }
+            // 鼠标抬起，删除 事件
+            this.onmouseup = function() {
+                document.onmousemove = null;
+            }
+        }
+    </script>
+</body>
+</html>
