@@ -37,7 +37,7 @@
     border: 2px solid #000;
     left: 0;
     top: 50%;
-    margin-top: -20px;
+    margin-top: -40px;
 }
 
 .carousel .rightBtn {
@@ -52,7 +52,7 @@
     border: 2px solid #000;
     right: 0;
     top: 50%;
-    margin-top: -20px;
+    margin-top: -40px;
 }
 
 .carousel .slider {
@@ -78,4 +78,8 @@
 .carousel .slider ol li.current {
     /* opacity: 1; */
     border: 4px solid orange;
+}
+
+.carousel .slider ol li:hover {
+    border-color: orange;
 }
