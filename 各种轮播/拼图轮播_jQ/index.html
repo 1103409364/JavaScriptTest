@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>传统轮播_三图法_jQ</title>
+    <title>拼图轮播_jQ</title>
     <link rel="stylesheet" href="css/cssreset-min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <style>
-    
+
 </style>
+
 <body>
-    <div class="carousel">
+    <div class="jigsaw">
         <div class="moveUnit">
             <ul class="clearfix">
                 <li class="first"><a href="#"><img src="img/0.jpg" alt=""></a></li>
@@ -22,16 +24,15 @@
                 <li><a href="#"><img src="img/3.jpg" alt=""></a></li>
                 <li><a href="#"><img src="img/4.jpg" alt=""></a></li>
             </ul>
-
-
         </div>
+        <div class="divWrap"> </div>
         <div class="slider">
             <ol>
-                <li class="current"><img src="img/0.jpg"></li>
-                <li><img src="img/1.jpg"></li>
-                <li><img src="img/2.jpg"></li>
-                <li><img src="img/3.jpg"></li>
-                <li><img src="img/4.jpg"></li>
+                <li class="current"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ol>
         </div>
         <a class="leftBtn" id="leftBtn" href="javascript:;">L</a>
@@ -40,93 +41,164 @@
 
     <script src="js/jquery-1.12.4.js"></script>
     <script>
+        // 配置文件
+        var option = {
+            // 图片宽高
+            "width": 560,
+            "height": 300,
+            // 运动时间
+            "time": 400,
+            // 自动轮播间隔
+            "interval": 1500,
+        }
         // 当前图片，信号量
         var imgIdx = 0;
-        // 图片宽度
-        var width = 560;
-        // 运动时间
-        var time = 600;
-        // 自动轮播间隔
-        var interval = 1500;
         // 轮播图容器
-        var $carousel = $(".carousel");
-        // 运动机构
-        // var $moveUnit = $(".moveUnit");
+        var $jigsaw = $(".jigsaw");
+        // 图片数量
         var imgLength = $(".moveUnit ul li").length;
+        // 函数节流
+        var lock = true;
+        // 创建100个div
+        for (var row = 0; row < 10; row++) {
+            for (var col = 0; col < 10; col++) {
+                $("<div></div>").css({
+                    // "width": 0,
+                    // "height": 0,
+                    "position": "absolute",
+                    // "left": col * width / 10,
+                    // "top":  row * height / 10
+                    "right": 0,
+                    "top": 0,
+                }).appendTo(".divWrap");
+            }
+        }
+        var $divWrap = $(".divWrap");
+        var $allDdiv = $(".divWrap div");
+        // 创建的div数量
+        var divLength = $allDdiv.length;
 
-        $(".rightBtn").click(rightBtnHandler);
         $(".leftBtn").click(leftBtnHandler);
-
+        $(".rightBtn").click(rightBtnHandler);
         // 自动轮播
-        var timerId = setInterval(rightBtnHandler, interval);
+        var timerId = setInterval(rightBtnHandler, option.interval);
         // 鼠标进入停止轮播
-        $carousel.mouseenter(function() {
+        $jigsaw.mouseenter(function () {
             clearInterval(timerId);
         });
         // 鼠标离开恢复自动轮播
-        $carousel.mouseleave(function() {
-            timerId = setInterval(rightBtnHandler, interval);
+        $jigsaw.mouseleave(function () {
+            timerId = setInterval(rightBtnHandler, option.interval);
         });
-        // 右键轮播业务
 
-        var $imgLi =  $(".carousel .moveUnit li");
+        var $imgLi = $(".jigsaw .moveUnit li");
+        // 右键轮播业务
         function rightBtnHandler() {
-            if($imgLi.eq(imgIdx).is(":animated")) return;
-            // console.log(1);
-            $imgLi.eq(imgIdx).animate({left: -width}, time);
+            if (!lock) return;
+
+            $allDdiv.css({
+                "left": option.width,
+                "top": 0,
+            })
             imgIdx++;
-            if(imgIdx == imgLength) {
+            if (imgIdx == imgLength) {
                 imgIdx = 0;
             }
-            // 下一张图片到左边预备
-            $imgLi.eq(imgIdx).css({"left": width});
-            // 下一张图片移动
-            $imgLi.eq(imgIdx).animate({left: 0}, time);
+
+            jigsaw(imgIdx);
 
             changeSlider();
         }
+
         // 左键轮播业务
         function leftBtnHandler() {
-            if($imgLi.eq(imgIdx).is(":animated")) return;
+            if (!lock) return;
 
-            $imgLi.eq(imgIdx).animate({left: width}, time);
+            $allDdiv.css({
+                "left": 0,
+                "top": 0,
+            })
+
             imgIdx--;
-            if(imgIdx < 0) {
+            if (imgIdx < 0) {
                 imgIdx = 4;
             }
-            
-            $imgLi.eq(imgIdx).css({"left": -width});
-            
-            $imgLi.eq(imgIdx).animate({left: 0}, time);
-            
+
+            jigsaw(imgIdx);
             changeSlider();
         }
-        
-        var slider =  $(".carousel .slider li");
+        // 拼图业务
+        function jigsaw(imgIdx) {
+            $divWrap.css("display", "block");
+            $allDdiv.each(function (i) {
+                lock = false;
+                // console.log($imgLi.eq(imgIdx).find("img"));
+                var imgNow = $imgLi.eq(imgIdx).find("img");
+                var imgSrc = "url(" + imgNow.attr("src") + ")";
+                // "url(img/0.jpg)";
+                $(this).css({
+                    "width": option.width / 10,
+                    "height": option.height / 10,
+                    // 调整背景图片位置，每个div显示一部分图片
+                    "background": imgSrc + -i % 10 * 56 + "px" + " " + -parseInt(i / 10) * 30 +
+                        "px",
+                }).delay(i % 10 * 100 + parseInt(i / 10) * 30).animate({
+                    "left": i % 10 * 56,
+                    // js没有取整运算
+                    "top": parseInt(i / 10) * 30,
+                }, option.time, function () {
+                    if (i == divLength - 1) {
+                        lock = true;
+                        // 拼图完成，显示真实完整图片
+                        $imgLi.css({
+                            "left": option.width,
+                        });
+                        $imgLi.eq(imgIdx).css({
+                            "left": 0
+                        });
+                        // 拼图完成，隐藏所有div
+                        $divWrap.css("display", "none");
+                    }
+
+                })
+            })
+        }
+
+
+        var slider = $(".jigsaw .slider li");
         // 小圆点指示器业务
-        slider.click(function() {
+        slider.click(function () {
+            if (!lock) return;
             var clickIdx = $(this).index();
-            // 如果点击小圆点的序号在现有图片后，点中序号对应图片到左边准备，现图右移
-            if(clickIdx > imgIdx) {
-                $imgLi.eq(imgIdx).animate({left: width}, time);
-                $imgLi.eq(clickIdx).css({"left": -width});
+            // 如果点到圆点的序号在现有序号之后，把拼图div放在左上角准备，反之放在右上角
+            if (clickIdx > imgIdx) {
+                $allDdiv.css({
+                    "left": option.width,
+                    "top": 0,
+                })
             }
 
-            if(clickIdx < imgIdx) {
-                $imgLi.eq(imgIdx).animate({left: -width}, time);
-                $imgLi.eq(clickIdx).css({"left": width});
+            if (clickIdx < imgIdx) {
+                $allDdiv.css({
+                    "left": 0,
+                    "top": 0,
+                })
             }
-            
             imgIdx = clickIdx;
-            $imgLi.eq(imgIdx).animate({left: 0}, time);
-
+            jigsaw(imgIdx);
             changeSlider();
         })
-        //此处由三图法传统轮播修小圆点改而来
+
         function changeSlider() {
-            slider.removeClass("current");
-            slider.eq(imgIdx % 5).addClass("current");
+            // 让所有小圆点变为未点击状态
+            slider.css({
+                "opacity": 0.5
+            })
+            slider.eq(imgIdx % 5).css({
+                "opacity": 1
+            });
         }
     </script>
 </body>
+
 </html>
