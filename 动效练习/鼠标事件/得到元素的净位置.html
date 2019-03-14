@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>盒子内部拖拽</title>
+
+    <title>得到元素在页面中的净位置top left</title>
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
             height: 1000px;
         }
 
@@ -21,6 +27,8 @@
         }
 
         .box {
+            color: #fff;
+            font-size: 14px;
             width: 100px;
             height: 100px;
             /* 防止窗口卷动影响 */
@@ -49,32 +57,39 @@
             document.onmousemove = function (event) {
                 var event = event || window.event;
                 // 相对父元素定位
-                var left = event.clientX - deltaX;
-                var top = event.clientY - deltaY;
-                // 防止盒子跑出去，还要吸附效果
-                if (left > 500 - 100 - 10) {
-                    left = 400;
-                }
-                if (left < 10) {
-                    left = 0;
-                }
-                if (top < 10) {
-                    top = 0;
-                }
-                if (top > 500 - 100 - 10) {
-                    top = 400;
-                }
-
-                oBox.style.left = left + "px";
-                oBox.style.top = top + "px";
-
-                // 这种写法不行，offsetY因为offsetY是相对于最小盒子的坐标
-                // oBox.style.left = event.offsetX +"px";
-                // oBox.style.top = event.offsetY +  "px";
+                oBox.style.left = event.clientX - deltaX +"px";
+                oBox.style.top = event.clientY - deltaY +  "px";
+                oBox.innerHTML = "top: " + getAllTop(oBox) + "<p>" + " left: " + getAllLeft(oBox) + "</p>";
             }
-            document.onmouseup = function () {
+            document.onmouseup = function() {
                 document.onmousemove = null;
             }
+            // 禁止默认事件，选择文字
+            return false;
+        }
+
+        //返回这个元素在页面中的净位置
+        //就是这个元素所有offsetParent的offsetTop值的和
+        function getAllTop(elem) {
+            // 累加器，累加器的初始值不是0，而是自己现在offsetTop值
+            var top = elem.offsetTop;
+            var currentElem = elem;
+            while (currentElem  = currentElem .offsetParent) {
+                top += currentElem.offsetTop;
+            }
+
+            return top;
+        }
+
+        function getAllLeft(elem) {
+            var left = elem.offsetLeft;
+            var currentElem = elem;
+
+            while (currentElem = currentElem.offsetParent) {
+                left += currentElem.offsetLeft;
+            }
+
+            return left;
         }
     </script>
 </body>
