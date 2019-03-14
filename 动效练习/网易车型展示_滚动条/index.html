@@ -108,7 +108,7 @@
             <div class="right">
                 <span>180°</span>
             </div>
-            <div class="bar">
+            <div class="bar" id="bar">
                 <div class="btn" id="btn"></div>
             </div>
 
@@ -119,6 +119,7 @@
             var imgLi = document.getElementById("show_car").getElementsByTagName("li");
             // 滑动按钮
             var btn = document.getElementById("btn");
+            var bar = document.getElementById("bar");
             // 起点 步长 图片信号量
             var start = -10,
                 step = 300 / 4,
@@ -147,6 +148,9 @@
                     if (distance > step / 2) {
                         btn.style.left = step * parseInt(1 + left / step) + start + "px";
                         imgIdx++;
+                        if (imgIdx > 4) {
+                            imgIdx = 4;
+                        }
                         changePic(imgIdx);
 
                     }
@@ -154,10 +158,13 @@
                     if (distance < -step / 2) {
                         btn.style.left = step * parseInt(left / step) + start + "px";
                         imgIdx--;
+                        if (imgIdx < 0) {
+                            imgIdx = 0;
+                        }
                         changePic(imgIdx);
 
                     }
-                    // console.log(imgIdx);
+                    console.log(imgIdx);
 
                 }
 
@@ -168,6 +175,20 @@
                 return false;
             }
 
+            bar.onclick = function (event) {
+                event = event || window.event;
+                // console.log(event.target);
+                // offsetX表示鼠标在最内层盒子的位置，如果点到的是点到按钮有bug，加一个判断
+                if (event.target == bar) {
+                    var offsetX = event.offsetX;
+                    imgIdx = parseInt((offsetX + 10) / step);
+
+                    btn.style.left = step * imgIdx + start + "px";
+                    changePic(imgIdx);
+                }
+
+            }
+            // 切换图片
             function changePic(imgIdx) {
                 for (var i = 0; i < imgLi.length; i++) {
                     imgLi[i].className = "";
