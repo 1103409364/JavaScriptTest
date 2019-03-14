@@ -25,6 +25,8 @@
             height: 100px;
             /* 防止窗口卷动影响 */
             position: absolute;
+            top: 100px;
+            left: 100px;
             background-color: rebeccapurple;
         }
     </style>
@@ -37,13 +39,22 @@
 
     <script>
         var oBox = document.getElementById("box");
-        // 鼠标移动
 
-        oBox.onclick = function (event) {
-
+        oBox.onmousedown = function (event) {
+            // 按下按键记录差值,鼠标clientY到浏览器视口顶部距离，offsetTop盒子到offsetParent外边框内的距离
+            var deltaX = event.clientX - this.offsetLeft;
+            var deltaY = event.clientY - this.offsetTop;
             document.onmousemove = function (event) {
-                oBox.style.left = event.clientX - 50 + "px";
-                oBox.style.top = event.clientY - 50 + "px";
+                // 相对父元素定位
+                oBox.style.left = event.clientX - deltaX +"px";
+                oBox.style.top = event.clientY - deltaY +  "px";
+
+                // 这种写法不行，offsetY因为offsetY是相对于最小盒子的坐标
+                // oBox.style.left = event.offsetX +"px";
+                // oBox.style.top = event.offsetY +  "px";
+            }
+            document.onmouseup = function() {
+                document.onmousemove = null;
             }
         }
     </script>
