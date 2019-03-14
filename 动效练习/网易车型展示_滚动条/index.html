@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>车型展示</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .show_car {
+            margin: 100px 0 0 100px;
+            width: 549px;
+            height: 412px;
+            position: relative;
+            /* border: 1px solid #000; */
+        }
+
+        .show_car ul li {
+            position: absolute;
+        }
+
+        .show_car ul li.current {
+            z-index: 1;
+        }
+
+        .scrollBar {
+            position: absolute;
+            left: 50%;
+            margin-left: -202.5px;
+            bottom: 0;
+            width: 405px;
+            height: 26px;
+            z-index: 9;
+        }
+
+        .scrollBar div {
+            position: absolute;
+        }
+
+        .scrollBar .left {
+            font-size: 12px;
+            line-height: 26px;
+            padding-left: 10px;
+            width: 40px;
+            height: 26px;
+            left: 0;
+            background: url(img/car_pic_ctr.png) no-repeat 0 0;
+        }
+
+        .scrollBar .left span {
+            display: block;
+            background: url(img/car_pic_ctr.png) repeat-x 0 -26px;
+            user-select: none;
+        }
+
+        .scrollBar .right {
+            width: 46px;
+            font-size: 12px;
+            line-height: 26px;
+            padding-right: 10px;
+            right: 0;
+            background: url(img/car_pic_ctr.png) no-repeat 36px -78px;
+        }
+
+        .scrollBar .right span {
+            text-align: right;
+            display: block;
+            background: url(img/car_pic_ctr.png) repeat-x 0 -26px;
+            user-select: none;
+        }
+
+        /* 滑动距离300：-10~290 */
+        .scrollBar .btn {
+            width: 21px;
+            height: 26px;
+            left: -10px;
+            top: 0;
+            background: url(img/car_pic_ctr.png) repeat-x 0 -104px;
+        }
+
+        .scrollBar .bar {
+            width: 300px;
+            height: 26px;
+            position: absolute;
+            left: 50px;
+            cursor: pointer;
+            background: url(img/car_pic_ctr.png) repeat-x 0 -52px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="show_car" id="show_car">
+        <ul>
+            <li class="current"><a href="#"><img src="img/550x412_AE2UUEMQ297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUF24297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUF9J297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUFI9297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUFQB297B0008.jpg" alt=""></a></li>
+        </ul>
+
+        <div class="scrollBar">
+            <div class="left">
+                <span>0°</span>
+            </div>
+            <div class="center"></div>
+            <div class="right">
+                <span>180°</span>
+            </div>
+            <div class="bar">
+                <div class="btn" id="btn"></div>
+            </div>
+
+        </div>
+
+        <script>
+            // 图片列表
+            var imgLi = document.getElementById("show_car").getElementsByTagName("li");
+            // 滑动按钮
+            var btn = document.getElementById("btn");
+            // 起点 步长 图片信号量
+            var start = -10,
+                step = 300 / 4,
+                imgIdx = 0;
+
+            btn.onmousedown = function (event) {
+                event = event || window.event;
+                // 鼠标按下位置到视口的距离-点中盒子的offsetLeft
+                var deltaX = event.clientX - this.offsetLeft;
+                var distance;
+                document.onmousemove = function (event) {
+                    event = event || window.event;
+
+                    var left = event.clientX - deltaX;
+                    // 计算鼠标与按钮的距离,不准确
+                    distance = left - btn.offsetLeft;
+
+                    if (left < -10) {
+                        left = -10;
+                    }
+
+                    if (left > 290) {
+                        left = 290;
+                    }
+                    // 当鼠标和按钮距离大约是步长的一半时候，开始移动，一跳一跳的效果
+                    if (distance > step / 2) {
+                        btn.style.left = step * parseInt(1 + left / step) + start + "px";
+                        imgIdx++;
+                        changePic(imgIdx);
+
+                    }
+
+                    if (distance < -step / 2) {
+                        btn.style.left = step * parseInt(left / step) + start + "px";
+                        imgIdx--;
+                        changePic(imgIdx);
+
+                    }
+                    // console.log(imgIdx);
+
+                }
+
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                }
+                // 阻止选择事件
+                return false;
+            }
+
+            function changePic(imgIdx) {
+                for (var i = 0; i < imgLi.length; i++) {
+                    imgLi[i].className = "";
+                }
+                // 或者用classList属性，旧版ie不兼容
+                imgLi[imgIdx].className = "current";
+            }
+        </script>
+    </div>
+</body>
+
+</html>
