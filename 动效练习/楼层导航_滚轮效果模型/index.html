@@ -1,12 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>鼠标滚轮效果模型</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <style>
+        .center {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .other {
+            height: 1000px;
+            background-color: #b9b9b9;
+        }
+
+        .floor0 {
+            height: 400px;
+            background-color: #10aa6f;
+        }
+
+        .floor1 {
+            height: 500px;
+            background-color: #fa5959;
+        }
+
+        .floor2 {
+            height: 410px;
+            background-color: #5425fa;
+        }
+
+        .floor3 {
+            height: 590px;
+            background-color: #eef118;
+        }
+
+        .floor4 {
+            height: 400px;
+            background-color: #8514a1;
+        }
+
+        .floor5 {
+            height: 560px;
+            background-color: #1cddff;
+        }
+
+        .floor6 {
+            height: 660px;
+            background-color: #65cf57;
+        }
+
+        .sideNav {
+            width: 50px;
+            height: 350px;
+            position: fixed;
+            left: 0;
+            bottom: 50%;
+            margin-bottom: -175px;
+            background-color: #333;
+            display: none;
+        }
+
+        .fnavActive {
+            display: block;
+        }
+
+        .sideNav li {
+            width: 100%;
+            height: 50px;
+            background-color: #666;
+        }
+
+        .sideNav li a {
+            font-size: 14px;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            color: #cfcfcf;
+        }
+
+        .sideNav li a.product {
+            display: none;
+        }
+
+        .sideNav li a.num {
+            display: block;
+        }
+
+        .sideNav li.current {
+            background-color: #e63939;
+        }
+
+        .sideNav li.current a.product {
+            color: #dfdfdf;
+            display: block
+        }
+
+        .sideNav li.current a.num {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="other center"></div>
+
+    <div class="sideNav fnav_active" id="sideNav">
+        <ol>
+            <!-- javascript:; 禁用默认点击效果 -->
+            <li class="current"><a class="num" href="javascript:;">1F</a><a class="product" href="javascript:;">手机</a></li>
+            <li><a class="num" href="javascript:;">2F</a><a class="product" href="javascript:;">笔记本</a></li>
+            <li><a class="num" href="javascript:;">3F</a><a class="product" href="javascript:;">服饰</a></li>
+            <li><a class="num" href="javascript:;">4F</a><a class="product" href="javascript:;">个户</a></li>
+            <li><a class="num" href="javascript:;">5F</a><a class="product" href="javascript:;">食品</a></li>
+            <li><a class="num" href="javascript:;">6F</a><a class="product" href="javascript:;">五金</a></li>
+            <li><a class="num" href="javascript:;">7F</a><a class="product" href="javascript:;">酒水</a></li>
+        </ol>
+    </div>
+    <div class="productFloor">
+        <div class="floor0 f center"></div>
+        <div class="floor1 f center"></div>
+        <div class="floor2 f center"></div>
+        <div class="floor3 f center"></div>
+        <div class="floor4 f center"></div>
+        <div class="floor5 f center"></div>
+        <div class="floor6 f center"></div>
+    </div>
+
+
+    <div class="other center"></div>
+
+    <script>
+        var oSideNav = document.getElementById("sideNav");
+        var navList = oSideNav.getElementsByTagName("li");
+        var floors = document.getElementsByClassName("f");
+        // 浏览器窗口高度
+        // 页面滚动值
+        var scrollTop = 0;
+        // 楼层计数
+        var floorNum = 0;
+        // 数组保存楼层距离offsetTop的值
+        var floorOffsetTopArr = [];
+        for (var i = 0; i < floors.length; i++) {
+            floorOffsetTopArr.push(floors[i].offsetTop);
+        }
+        // [1000, 1400, 1700, 2110, 2500, 2900, 3260]
+
+        document.onscroll = function (event) {
+            var winHeight = document.documentElement.clientHeight;
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            // 进入楼层一 100px的时候显示楼层导航侧边栏，即将离开差100px的时候隐藏
+            // 当offsetTop - scrollTop 等于窗口高度的时候，就是要显示楼层的时候
+            if (floorOffsetTopArr[0] - scrollTop < winHeight - 100) {
+                oSideNav.style.display = "block";
+            }
+
+            if (floorOffsetTopArr[0] - scrollTop > winHeight - 100) {
+                oSideNav.style.display = "none";
+            }
+
+            if (scrollTop - (floorOffsetTopArr[floorOffsetTopArr.length - 1] + floors[floorOffsetTopArr.length - 1]
+                    .offsetHeight) > -100) {
+                oSideNav.style.display = "none";
+            }
+
+            for (var i = 0; i < floorOffsetTopArr.length; i++) {
+                // 给个200的提前量
+                if (scrollTop + 200 > floorOffsetTopArr[i] && scrollTop + 200 < floorOffsetTopArr[i + 1]) {
+                    // console.log(i);
+                    navList[floorNum].className = "";
+                    if (i > floorNum) {
+                        floorNum++
+                    }
+                    if (i < floorNum) {
+                        floorNum--;
+                    }
+                    navList[floorNum].className = "current";
+                }
+
+                if (scrollTop + 200 > floorOffsetTopArr[floorOffsetTopArr.length - 1]) {
+                    if (i > floorNum) {
+                        navList[floorNum].className = "";
+                        floorNum++;
+                        navList[floorNum].className = "current";
+                    }
+                }
+            }
+        }
+
+        for (var i = 0; i < navList.length; i++) {
+            navList[i].index = i;
+            navList[i].onclick = function () {
+                // console.log(this.index);
+                // 这里改floorNum会有bug，可以不改
+                // floorNum = this.index;
+                // 199偏移量
+                scrollAnimate(floorOffsetTopArr[this.index] - 199, 600);
+            }
+        }
+
+        // 页面卷动的运动函数
+        function scrollAnimate(target, time) {
+            var frameNumber = 0; //帧编号
+            var start = document.body.scrollTop || document.documentElement.scrollTop; //起点
+            var distance = target - start;
+            var interval = 10;
+            var maxFrame = time / interval;
+            // 设表先关
+            clearInterval(timer);
+            var timer = setInterval(function () {
+                frameNumber++;
+                if (frameNumber == maxFrame) {
+                    clearInterval(timer);
+                }
+                //第一个参数t表示当前帧编号
+                //第二个参数b表示起始位置
+                //第三个参数c表示变化量
+                //第四个参数d表示总帧数
+                //返回当前帧应该在哪儿
+                document.body.scrollTop = document.documentElement.scrollTop = CubicEaseInOut(frameNumber,
+                    start, distance, maxFrame);
+            }, 10);
+
+            function CubicEaseInOut(t, b, c, d) {
+                if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+                return c / 2 * ((t -= 2) * t * t + 2) + b;
+            }
+
+            function BounceEaseOut(t, b, c, d) {
+                if ((t /= d) < (1 / 2.75)) {
+                    return c * (7.5625 * t * t) + b;
+                } else if (t < (2 / 2.75)) {
+                    return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b;
+                } else if (t < (2.5 / 2.75)) {
+                    return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b;
+                } else {
+                    return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b;
+                }
+            }
+        }
+    </script>
 </body>
+
 </html>
