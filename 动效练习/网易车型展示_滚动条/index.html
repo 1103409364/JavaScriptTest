@@ -174,14 +174,15 @@
                 // 阻止默认事件：圈选文字
                 return false;
             }
-
+            // 在滑道上点击
             bar.onclick = function (event) {
                 event = event || window.event;
                 // console.log(event.target);
                 // offsetX表示鼠标在最内层盒子的位置，如果点到的是点到按钮有bug，加一个判断
                 if (event.target == bar) {
                     var offsetX = event.offsetX;
-                    imgIdx = parseInt((offsetX + 10) / step);
+                    // 点击位置大于半个步长进1，小于半个步长退1
+                    imgIdx = parseInt((offsetX - step/2) / step + 1);
 
                     btn.style.left = step * imgIdx + start + "px";
                     changePic(imgIdx);
