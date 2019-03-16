@@ -84,13 +84,13 @@
         .fullBtn {
             position: absolute;
             left: 50%;
-            top: 430px;
+            top: 662px;
             margin-left: -74.5px;
             width: 149px;
             height: 427px;
-            border: 1px solid #000;
-            background: url(img/btn.png) no-repeat 0 0;
-            /* display: none; */
+            /* border: 1px solid #000; */
+            /* background: url(img/btn.png) no-repeat 0 0; */
+            display: none;
         }
     </style>
 </head>
@@ -106,7 +106,7 @@
             <div class="btnHead"></div>
         </div>
 
-        <div class="fullBtn"></div>
+        <div class="fullBtn"><img src="img/btn.png" alt=""></div>
     </div>
     <script src="js/jquery-1.12.4.js"></script>
     <script src="js/jquery-ui.js"></script>
@@ -137,6 +137,29 @@
                     dismantle();
                 }
             }
+
+            $fullBtn.css({
+                top: scrollTop + 200,
+            })
+
+            if (scrollTop > 900 && scrollTop < 1500) {
+                $fullBtn.fadeOut(500);
+    
+            }
+            if(scrollTop > 1500){
+                $fullBtn.fadeIn();
+                $fullBtn.find("img").css({
+                    width: 100,
+                    height: 286,
+                })
+                $fullBtn.css({
+                    width: 100,
+                    height: 286,
+                    left: "50%", 
+                    "margin-left": -50,
+                    top: scrollTop + 200,
+                })
+            }
         })
         
         // 按键组装动画，利用jQ的动画队列
@@ -152,13 +175,32 @@
             //shell部分
             $btnShell.animate({left: 3, top: 104,}, 500);
             $btnShell.animate({top: 140,}, 500);
-            $btnShell.delay(500).animate({top: 202}, 300);
+            $btnShell.delay(500).animate({top: 202}, 300, function(){
+                // 按键组装完毕后
+                $btn.animate({right: 266, top: 500},500, function(){
+                    // 恢复按键大小
+                    $fullBtn.fadeIn();
+                    $fullBtn.css({
+                        "margin-left": -74.5,
+                        width: 149,
+                        height: 427,
+                    })
+                    $fullBtn.find("img").css({
+                        width: 149,
+                        height: 427,
+                    })
+
+                }).fadeOut(500);
+            });
             // head部分
             $btnHead.delay(500).animate({top: 164}, 500);
+
+          
         }
         // 按键拆解
         function dismantle() {
             lock = true;
+            
             if($btnBody.is(":animated")) return;
             if($btnShell.is(":animated")) return;
             if($btnHead.is(":animated")) return;
@@ -173,6 +215,9 @@
             $btnShell.animate({top: 104, left: 150}, 400);
             // head部分
             $btnHead.animate({top: -24}, 400);
+            $btn.animate({right: 100, top: 430},function(){
+                $fullBtn.fadeOut();
+            }).fadeIn(300);
         }
     </script>
 </body>
