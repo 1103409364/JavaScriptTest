@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模拟滚动条加滚轮事件_jQUI</title>
+    <style>
+        .wrap {
+            width: 600px;
+            height: 400px;
+            border: 1px solid #d8d5d5;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wrap #content {
+            position: relative;
+            padding: 20px 30px 20px 20px;
+        }
+
+        .wrap #content h3 {
+            text-align: center;
+        }
+
+        .wrap #content p {
+            text-indent: 2em;
+        }
+
+        .pathway {
+            position: absolute;
+            height: 100%;
+            width: 15px;
+            background-color: #d8d5d5;
+            right: 0;
+            top: 0;
+        }
+
+        .pathway .ctr {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #6e6e6e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap" id="wrap">
+        <div id="content">
+            <h3>央视3·15晚会曝光的问题解决了吗？</h3>
+            <p>
+                2009年，消费者权益保护法修订。而据潇湘晨报记者不完全统计，2009年到2018年，央视共曝光侵权案例70余件，其中汽车及配件问题被曝光9次，食品问题被曝光7次，日用品质量问题被曝光6次，个人信息安全问题被曝光6次，保健食品及非法会销被曝光5次，医药及医疗用品问题被曝光5次，这些都是十年间多次出现的问题。
+            </p>
+
+            <p>
+                然而，今年2月27日，工信部公布了2018年第四季度检测发现问题的应用软件名单，来自百度手机助手的“万能看“和来自PC141软件下载站的”校内外“两款APP未经用户同意，收集、使用用户个人信息。
+            </p>
+
+            <p>
+                在汽车维修行业，以换配件代替局部维修，也已成为一条潜规则。“不过，那时候是哪个零件坏了换哪个。现在不同了。通常要是换，就是换总成。”汽车维修专家王凯（化名）用车辆发电机举例。一台豪华车用发电机不工作，可能是缺少碳酸，要做的可能就是加注碳酸即可，花费不过几百块，但4S店可能就说要更换整个发电机，开价一两万。“对于客户来讲，修与换的差价是多少，我们可想而知。但对于4S店来说不会轻易给你更换。严格来说，他们不会这样给你做。”王凯告诉记者，有时在更换单件的过程中，“我们会发现，成本和时间都要节约很多。”
+            </p>
+
+            <p>
+                2018年，共享单车押金难退登上了央视“3·15”晚会。现在还有多少用户在等待着退押金？ofo公关没有告诉记者确切数字，只是告诉记者，“用户的排队退押金一直在有序进行中。”
+            </p>
+            <p>
+                2009年，消费者权益保护法修订。而据潇湘晨报记者不完全统计，2009年到2018年，央视共曝光侵权案例70余件，其中汽车及配件问题被曝光9次，食品问题被曝光7次，日用品质量问题被曝光6次，个人信息安全问题被曝光6次，保健食品及非法会销被曝光5次，医药及医疗用品问题被曝光5次，这些都是十年间多次出现的问题。
+            </p>
+
+            <p>
+                然而，今年2月27日，工信部公布了2018年第四季度检测发现问题的应用软件名单，来自百度手机助手的“万能看“和来自PC141软件下载站的”校内外“两款APP未经用户同意，收集、使用用户个人信息。
+            </p>
+
+            <p>
+                在汽车维修行业，以换配件代替局部维修，也已成为一条潜规则。“不过，那时候是哪个零件坏了换哪个。现在不同了。通常要是换，就是换总成。”汽车维修专家王凯（化名）用车辆发电机举例。一台豪华车用发电机不工作，可能是缺少碳酸，要做的可能就是加注碳酸即可，花费不过几百块，但4S店可能就说要更换整个发电机，开价一两万。“对于客户来讲，修与换的差价是多少，我们可想而知。但对于4S店来说不会轻易给你更换。严格来说，他们不会这样给你做。”王凯告诉记者，有时在更换单件的过程中，“我们会发现，成本和时间都要节约很多。”
+            </p>
+
+            <p>
+                2018年，共享单车押金难退登上了央视“3·15”晚会。现在还有多少用户在等待着退押金？ofo公关没有告诉记者确切数字，只是告诉记者，“用户的排队退押金一直在有序进行中。”
+                <p>
+                    2018年，共享单车押金难退登上了央视“3·15”晚会。现在还有多少用户在等待着退押金？ofo公关没有告诉记者确切数字，只是告诉记者，“用户的排队退押金一直在有序进行中。”
+                </p>
+                <p>
+                    2009年，消费者权益保护法修订。而据潇湘晨报记者不完全统计，2009年到2018年，央视共曝光侵权案例70余件，其中汽车及配件问题被曝光9次，食品问题被曝光7次，日用品质量问题被曝光6次，个人信息安全问题被曝光6次，保健食品及非法会销被曝光5次，医药及医疗用品问题被曝光5次，这些都是十年间多次出现的问题。
+                </p>
+
+                <p>
+                    然而，今年2月27日，工信部公布了2018年第四季度检测发现问题的应用软件名单，来自百度手机助手的“万能看“和来自PC141软件下载站的”校内外“两款APP未经用户同意，收集、使用用户个人信息。
+                </p>
+
+                <p>
+                    在汽车维修行业，以换配件代替局部维修，也已成为一条潜规则。“不过，那时候是哪个零件坏了换哪个。现在不同了。通常要是换，就是换总成。”汽车维修专家王凯（化名）用车辆发电机举例。一台豪华车用发电机不工作，可能是缺少碳酸，要做的可能就是加注碳酸即可，花费不过几百块，但4S店可能就说要更换整个发电机，开价一两万。“对于客户来讲，修与换的差价是多少，我们可想而知。但对于4S店来说不会轻易给你更换。严格来说，他们不会这样给你做。”王凯告诉记者，有时在更换单件的过程中，“我们会发现，成本和时间都要节约很多。”
+                </p>
+
+                <p>
+                    2018年，共享单车押金难退登上了央视“3·15”晚会。现在还有多少用户在等待着退押金？ofo公关没有告诉记者确切数字，只是告诉记者，“用户的排队退押金一直在有序进行中。”
+                </p>
+        </div>
+
+        <!-- 滚动条轨道 -->
+        <div class="pathway" id="pathway">
+            <i class="ctr" id="ctrBar"></i>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+    <script>
+        var $wrap = $(".wrap"),
+            $ctrBar = $("#ctrBar"),
+            $pathway = $(".pathway"),
+            $content = $("#content"),
+            rate = $content.outerHeight() / $pathway.outerHeight(),
+            ctrHeight = $pathway.outerHeight() / rate,
+            // 拖动时的top值
+            barTop = 0,
+            maxBarTop = $pathway.outerHeight() * (1 - 1 / rate),
+            minBarTop = 0,
+            // 滚动方向
+            direction = 0;
+
+        $ctrBar.css("height", ctrHeight);
+
+        $ctrBar.draggable({
+            axis: "y",
+            containment: $pathway,
+            drag: function (event, ui) {
+                barTop = ui.position.top;
+                $content.css("top", -barTop * rate);
+            }
+        });
+
+        $content.mousewheel(function (event) {
+            // 阻止滚轮默认事件：全屏滚动
+            if (event.preventDefault) {
+                event.preventDefault();
+            } {
+                event.returnValue = false;
+            }
+            direction = event.deltaY;
+            barTop -= direction * 10;
+            if (barTop < minBarTop) {
+                barTop = minBarTop;
+            }
+
+            if (barTop > maxBarTop) {
+                barTop = maxBarTop;
+            }
+            $ctrBar.css("top", barTop);
+            $content.css("top", -barTop * rate);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盒子内部拖拽jQ</title>
+    <style>
+        body {
+            height: 1000px;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            /* 防止窗口卷动影响 */
+            position: absolute;
+            background-color: rebeccapurple;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="box" id="box"></div>
+    </div>
+    
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script>
+        $(".box").draggable({
+            containment: $(".wrap"),
+            // axis: "x",
+            // grid: [50, 50],
+            drag: function(event, ui) {
+                console.log(ui.position.left);
+                console.log(ui.offset.left);
+            }
+        });
+    </script>
+</body>
+
+</html>
