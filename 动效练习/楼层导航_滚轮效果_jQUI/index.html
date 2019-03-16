@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>楼层导航jQUI</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="other center"></div>
+
+    <div class="sideNav fnav_active" id="sideNav">
+        <ol>
+            <!--a标签 javascript:; 禁用默认点击效果 -->
+            <li class="current">
+                <a class="num" href="javascript:;">1F</a>
+                <a class="product" href="javascript:;">手机</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">2F</a>
+                <a class="product" href="javascript:;">笔记本</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">3F</a>
+                <a class="product" href="javascript:;">服饰</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">4F</a>
+                <a class="product" href="javascript:;">个户</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">5F</a>
+                <a class="product" href="javascript:;">食品</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">6F</a>
+                <a class="product" href="javascript:;">五金</a>
+            </li>
+            <li>
+                <a class="num" href="javascript:;">7F</a>
+                <a class="product" href="javascript:;">酒水</a>
+            </li>
+        </ol>
+    </div>
+    <div class="productFloor">
+        <div class="floor0 f center"></div>
+        <div class="floor1 f center"></div>
+        <div class="floor2 f center"></div>
+        <div class="floor3 f center"></div>
+        <div class="floor4 f center"></div>
+        <div class="floor5 f center"></div>
+        <div class="floor6 f center"></div>
+    </div>
+
+    <div class="other center"></div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script>
+        var $sideNav = $(".sideNav"),
+            $navList = $(".sideNav ol li"),
+            $floors = $(".productFloor div.f"),
+            // 页面滚动值
+            scrollTop = $(window).scrollTop(),
+            // 楼层计数
+            floorNum = 0,
+            // 动画时间
+            time = 600,
+            // 窗口高度
+            winHeight = $(window).height(),
+            // 数组保存楼层距离offsetTop的值
+            floorOffsetTopArr = [];
+
+        $floors.each(function (i) {
+            // [] 和不加 $ 的 this是原生对象，不能调用offset方法
+            // floorOffsetTopArr.push($floors[i].offsetTop);
+            floorOffsetTopArr.push($(this).offset().top);
+        });
+
+        $(document).scroll(function (event) {
+            // 重新获得窗口高度 页面卷动值
+            winHeight = $(window).height();
+            scrollTop = $(window).scrollTop();
+            // console.log(1)
+            // 楼层一可见区域 >100px的时候显示楼层导航侧边栏
+            if (winHeight - (floorOffsetTopArr[0] - scrollTop) > 100) {
+                $sideNav.stop(true).fadeIn(600);
+            }
+            // 楼层一可见区域 <100px的时候隐藏楼层导航侧边栏
+            if (winHeight - (floorOffsetTopArr[0] - scrollTop) < 100) {
+                $sideNav.stop(true).fadeOut(300);
+            }
+
+            // 最后一层可见区域高度不足100时隐藏楼层导航条
+            if ((floorOffsetTopArr[floorOffsetTopArr.length - 1] + $(".productFloor div.f:last").outerHeight()) -
+                scrollTop < 100) {
+                $sideNav.stop(true).fadeOut(300);
+            }
+            // 判断卷动值scroll在哪两个楼层之间
+            for (var i = 0; i < floorOffsetTopArr.length; i++) {
+                // 给个200的提前量
+                if (scrollTop + 200 > floorOffsetTopArr[i] && scrollTop + 200 < floorOffsetTopArr[i + 1]) {
+                    // console.log(i);
+                    $navList.eq(floorNum).removeClass("current");
+                    if (i > floorNum) {
+                        floorNum++
+                    }
+                    if (i < floorNum) {
+                        floorNum--;
+                    }
+                    $navList.eq(floorNum).addClass("current");
+                }
+
+                if (scrollTop + 200 > floorOffsetTopArr[floorOffsetTopArr.length - 1]) {
+                    if (i > floorNum) {
+                        $navList.eq(floorNum).removeClass("current");
+                        floorNum++;
+                        $navList.eq(floorNum).addClass("current");
+                    }
+                }
+            }
+        });
+
+        $navList.click(function () {
+            console.log($(this).index());
+            //对象变成了$(“html,body”)//变成了属性},
+            $("html, body").animate({
+                "scrollTop": floorOffsetTopArr[$(this).index()]
+            }, time);
+
+        })
+    </script>
+</body>
+
+</html>

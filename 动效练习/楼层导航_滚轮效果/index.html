@@ -58,21 +58,20 @@
             var winHeight = document.documentElement.clientHeight;
             scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
 
-            // 进入楼层一 100px的时候显示楼层导航侧边栏，即将离开差100px的时候隐藏
-            // 当offsetTop - scrollTop 等于窗口高度的时候，就是要显示楼层的时候
+            // 楼层一可见区域 >100px的时候显示楼层导航侧边栏
             if (floorOffsetTopArr[0] - scrollTop < winHeight - 100) {
                 oSideNav.style.display = "block";
             }
-
+            // 楼层一可见区域 <100px的时候隐藏楼层导航侧边栏
             if (floorOffsetTopArr[0] - scrollTop > winHeight - 100) {
                 oSideNav.style.display = "none";
             }
-
+            // 最后一层可见区域高度不足100时隐藏楼层导航条
             if (scrollTop - (floorOffsetTopArr[floorOffsetTopArr.length - 1] + floors[floorOffsetTopArr.length - 1]
                     .offsetHeight) > -100) {
                 oSideNav.style.display = "none";
             }
-
+            // 判断卷动值scroll在哪两个楼层之间
             for (var i = 0; i < floorOffsetTopArr.length; i++) {
                 // 给个200的提前量
                 if (scrollTop + 200 > floorOffsetTopArr[i] && scrollTop + 200 < floorOffsetTopArr[i + 1]) {
