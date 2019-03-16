@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JD放大镜_jQUI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 1000px;
+        }
+
+        .wrap {
+            margin: 100px 0 0 100px;
+            width: 450px;
+            height: 450px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        .product {
+            position: relative;
+        }
+
+        .wrap .magnifying {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            background-color: rgb(255, 219, 16);
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            display: none;
+            cursor: zoom-in;
+        }
+
+        .wrap .zoomBox {
+            width: 540px;
+            height: 540px;
+            position: absolute;
+            left: 450px;
+            top: -1px;
+            border: 1px solid #000;
+            background: url(img/bigPic.jpg) no-repeat;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="product" id="product">
+            <i class="magnifying" id="magnifying"></i>
+            <img src="img/smallPic.jpg" alt="暗影精灵4代">
+        </div>
+
+        <div class="zoomBox" id="zoomBox"></div>
+
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script>
+        var $magnifying = $(".magnifying"),
+            $zoomBox = $(".zoomBox"),
+            $product = $(".product"),
+            // 图片宽高
+            productWidth = $product.outerWidth(),
+            productHeight = $product.outerHeight(),
+            // 放大镜宽高
+            magnifyingWidth = $magnifying.outerWidth(),
+            magnifyingHeight = $magnifying.outerHeight(),
+            // 放大展示区背景图，大图宽高
+            bigPicWidth = 800,
+            bigPicHeight = 800,
+            // 放大展示区宽高
+            zoomBoxHeight = $zoomBox.outerHeight(),
+            zoomBoxWidth = $zoomBox.outerWidth(),
+            // 放大镜位置
+            x = 0,
+            y = 0,
+            // 比率，放大镜移动一像素，背景应该移动多少像素
+            rate = (bigPicWidth - zoomBoxWidth) / (productWidth - magnifyingWidth);
+
+
+        $product.mouseenter(function (event) {
+            $magnifying.fadeIn();
+            $zoomBox.fadeIn();
+
+            $product.mousemove(function (event) {
+                x = event.clientX - ($product.offset().left - $(window).scrollLeft()) - magnifyingWidth / 2
+                y = event.clientY - ($product.offset().top - $(window).scrollTop()) - magnifyingHeight / 2
+                if(x < 0) {
+                    x = 0;
+                }
+                if(x > productWidth - magnifyingWidth) { 
+                    x = productWidth - magnifyingWidth;
+                }
+                if(y < 0) {
+                    y = 0;
+                }
+                if(y > productHeight -magnifyingHeight) {
+                    y = productHeight - magnifyingHeight;
+                }
+                console.log(x, y);
+                
+                $magnifying.css({
+                    "left": x,
+                    "top": y,
+                });
+                $zoomBox.css({
+                   "background-position-x": -x * rate,
+                   "background-position-y": -y * rate,
+                })
+            })
+
+        })
+
+        $product.mouseleave(function () {
+            $magnifying.fadeOut();
+            $zoomBox.fadeOut();
+        })
+    </script>
+</body>
+
+</html>
