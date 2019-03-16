@@ -76,7 +76,7 @@
             floorOffsetTopArr = [];
 
         $floors.each(function (i) {
-            // [] 和不加 $ 的 this是原生对象，不能调用offset方法
+            // [] 和不加 $()的 this都是原生对象，不能调用offset方法
             // floorOffsetTopArr.push($floors[i].offsetTop);
             floorOffsetTopArr.push($(this).offset().top);
         });

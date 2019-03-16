@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>快按键</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .other {
+            height: 300px;
+            height: 100%;
+        }
+
+        .inner_center {
+            width: 1340px;
+            margin: 0 auto;
+            height: 5000px;
+            position: relative;
+            background-color: #377;
+        }
+
+        /* 279*591 */
+        /* 149*427 */
+        .btn {
+            position: absolute;
+            width: 279px;
+            height: 591px;
+            right: 100px;
+            top: 430px;
+            /* background: url(img/btnbak.png) no-repeat 0 0; */
+            /* border: 1px solid #000; */
+        }
+
+        /* target {left: 0; top: 171px;} */
+        .btnBody {
+            /* border: 1px solid #000; */
+            width: 150px;
+            height: 360px;
+            position: absolute;
+            left: 0;
+            top: 64px;
+            background: url(img/btnbak.png) no-repeat 0 -60px;
+        }
+
+        .btnFoot {
+            /* border: 1px solid #000; */
+            width: 143px;
+            height: 171px;
+            position: absolute;
+            left: 0;
+            top: 420px;
+            background: url(img/btnbak.png) no-repeat left bottom;
+        }
+
+        /* target {left: 3px; top: 202px;} */
+        .btnShell {
+            /* border: 1px solid #000; */
+            width: 143px;
+            height: 240px;
+            position: absolute;
+            left: 150px;
+            top: 104px;
+            background: url(img/btnbak.png) no-repeat -150px -100px;
+
+        }
+
+        /* target {left: 0;top: 164px;} */
+        .btnHead {
+            /* border: 1px solid #000; */
+            width: 150px;
+            height: 60px;
+            position: absolute;
+            left: 0;
+            top: -24px;
+            background: url(img/btnbak.png) no-repeat 0 0;
+        }
+
+        .fullBtn {
+            position: absolute;
+            left: 50%;
+            top: 430px;
+            margin-left: -74.5px;
+            width: 149px;
+            height: 427px;
+            border: 1px solid #000;
+            background: url(img/btn.png) no-repeat 0 0;
+            /* display: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="other"></div>
+    <div class="inner_center">
+        <div class="btn">
+            <!-- 绝对定位后出现的在先出现的之上 -->
+            <div class="btnBody"></div>
+            <div class="btnFoot"></div>
+            <div class="btnShell"></div>
+            <div class="btnHead"></div>
+        </div>
+
+        <div class="fullBtn"></div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+
+    <script>
+        var $btnBody = $(".btnBody"),
+            $btnShell = $(".btnShell"),
+            $btnHead = $(".btnHead"),
+            $btn = $(".btn"),
+            // 函数节流，加个锁
+            lock = true,
+            scrollTop,
+            $fullBtn = $(".fullBtn");
+
+        $(window).scroll(function () {
+            // console.log($(window).scrollTop());
+            scrollTop = $(window).scrollTop();
+            // oldIdx
+            if (scrollTop >= 200) {
+                if(lock == true) {
+                    combination();
+                }
+            }
+
+            if(scrollTop < 200){
+                if(lock == false) {
+                    dismantle();
+                }
+            }
+        })
+        
+        // 按键组装动画
+        function combination() {
+            lock = false;
+            // body部分
+            if($btnBody.is(":animated")) return;
+            if($btnShell.is(":animated")) return;
+            if($btnHead.is(":animated")) return;
+            $btnBody.delay(500).animate({top: 120}, 500);
+            $btnBody.delay(500).animate({top: 171}, 300);
+            
+            //shell部分
+            $btnShell.animate({left: 3, top: 104,}, 500);
+            $btnShell.animate({top: 140,}, 500);
+            $btnShell.delay(500).animate({top: 202}, 300);
+            // head部分
+            $btnHead.delay(500).animate({top: 164}, 500);
+        }
+        // 按键拆解
+        function dismantle() {
+            lock = true;
+            if($btnBody.is(":animated")) return;
+            if($btnShell.is(":animated")) return;
+            if($btnHead.is(":animated")) return;
+             // body部分， 弹一下的效果
+            // $btnBody.animate({top: 120}, 500);
+            $btnBody.animate({top: 64}, 800);
+            $btnBody.animate({top: 94}, 100);
+            $btnBody.animate({top: 64}, 30);
+            
+            //shell部分
+            $btnShell.delay(400).animate({top: 104, left: 150}, 400);
+            // head部分
+            $btnHead.animate({top: -24}, 400);
+        }
+    </script>
+</body>
+
+</html>
