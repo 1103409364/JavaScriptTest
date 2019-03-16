@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>车型展示</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="show_car" id="show_car">
+        <ul>
+            <li class="current"><a href="#"><img src="img/550x412_AE2UUEMQ297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUF24297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUF9J297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUFI9297B0008.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img/550x412_AE2UUFQB297B0008.jpg" alt=""></a></li>
+        </ul>
+
+        <div class="scrollBar">
+            <div class="left">
+                <span>0°</span>
+            </div>
+            <div class="right">
+                <span>180°</span>
+            </div>
+            <div class="bar" id="bar"></div>
+            <!-- 轨道 -->
+            <div class="centerWay">
+                <div class="btn" id="btn"></div>
+            </div>
+        </div>
+        <script src="js/jquery-1.12.4.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.mousewheel.min.js"></script>
+        <script>
+            var $btn = $(".btn"),
+                $centerWay = $(".centerWay"),
+                $imgList = $(".show_car ul li"),
+                // 图片数量
+                imgLength = $imgList.length,
+                // 步长
+                step = ($centerWay.outerWidth() -$btn.outerWidth()) / (imgLength -1),
+                // 当前图片编号
+                imgIdx = 0,
+                // 上一张图片编号
+                oldInx;
+
+                $btn.draggable({
+                    axis: "x",
+                    containment: $centerWay,
+                    grid: [step],
+                    drag: function(event, ui) {
+                        oldInx = imgIdx;
+                        imgIdx = ui.position.left / step;
+                        // index发生变化切换图片
+                        if(imgIdx !== oldInx) {
+                            // 函数节流
+                            $imgList.eq(oldInx).stop(true).fadeOut(600);
+                            $imgList.eq(imgIdx).stop(true).fadeIn(600);
+                        }
+                    }
+                })
+
+                $centerWay.click(function (event){
+                    if (event.target == $centerWay[0]) {
+                        oldInx = imgIdx;
+                        // 点击位置大于半个步长进1，小于半个步长退1
+                        imgIdx = parseInt((event.offsetX - step/2) / step + 1);
+                        console.log(imgIdx);
+                        $btn.css("left", step * imgIdx);
+                        if(imgIdx !== oldInx) {
+                            $imgList.eq(oldInx).stop(true).fadeOut(600);
+                            $imgList.eq(imgIdx).stop(true).fadeIn(600);
+                        }
+                    }
+                })
+            
+            // 原生版本
+            // // 图片列表
+            // var imgLi = document.getElementById("show_car").getElementsByTagName("li");
+            // // 滑动按钮
+            // var btn = document.getElementById("btn");
+            // var bar = document.getElementById("bar");
+            // // 起点 步长 图片信号量
+            // var start = -10,
+            //     step = 300 / 4,
+            //     imgIdx = 0;
+
+            // btn.onmousedown = function (event) {
+            //     event = event || window.event;
+            //     // 鼠标按下位置到视口的距离-点中盒子的offsetLeft
+            //     var deltaX = event.clientX - this.offsetLeft;
+            //     var distance;
+            //     document.onmousemove = function (event) {
+            //         event = event || window.event;
+
+            //         var left = event.clientX - deltaX;
+            //         // 计算鼠标与按钮的距离,不准确
+            //         distance = left - btn.offsetLeft;
+
+            //         if (left < -10) {
+            //             left = -10;
+            //         }
+
+            //         if (left > 290) {
+            //             left = 290;
+            //         }
+            //         // 当鼠标和按钮距离大约是步长的一半时候，开始移动，一跳一跳的效果
+            //         if (distance > step / 2) {
+            //             btn.style.left = step * parseInt(1 + left / step) + start + "px";
+            //             imgIdx++;
+            //             if (imgIdx > 4) {
+            //                 imgIdx = 4;
+            //             }
+            //             changePic(imgIdx);
+
+            //         }
+
+            //         if (distance < -step / 2) {
+            //             btn.style.left = step * parseInt(left / step) + start + "px";
+            //             imgIdx--;
+            //             if (imgIdx < 0) {
+            //                 imgIdx = 0;
+            //             }
+            //             changePic(imgIdx);
+
+            //         }
+            //         // console.log(imgIdx);
+
+            //     }
+
+            //     document.onmouseup = function () {
+            //         document.onmousemove = null;
+            //     }
+            //     // 阻止默认事件：圈选文字
+            //     return false;
+            // }
+            // // 在滑道上点击
+            // bar.onclick = function (event) {
+            //     event = event || window.event;
+            //     // console.log(event.target);
+            //     // offsetX表示鼠标在最内层盒子的位置，如果点到的是点到按钮有bug，加一个判断
+            //     if (event.target == bar) {
+            //         var offsetX = event.offsetX;
+            //         // 点击位置大于半个步长进1，小于半个步长退1
+            //         imgIdx = parseInt((offsetX - step/2) / step + 1);
+
+            //         btn.style.left = step * imgIdx + start + "px";
+            //         changePic(imgIdx);
+            //     }
+
+            // }
+            // // 切换图片
+            // function changePic(imgIdx) {
+            //     for (var i = 0; i < imgLi.length; i++) {
+            //         imgLi[i].className = "";
+            //     }
+            //     // 或者用classList属性，旧版ie不兼容
+            //     imgLi[imgIdx].className = "current";
+            // }
+        </script>
+    </div>
+</body>
+
+</html>

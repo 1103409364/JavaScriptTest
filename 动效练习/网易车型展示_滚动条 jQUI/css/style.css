@@ -1,0 +1,88 @@
+.show_car {
+    margin: 100px 0 0 100px;
+    width: 549px;
+    height: 412px;
+    position: relative;
+    /* border: 1px solid #000; */
+}
+
+.show_car ul li {
+    position: absolute;
+    display: none;
+}
+
+.show_car ul li.current {
+    display: block;
+}
+
+.scrollBar {
+    position: absolute;
+    left: 50%;
+    margin-left: -202.5px;
+    bottom: 0;
+    width: 405px;
+    height: 26px;
+    z-index: 9;
+}
+
+.scrollBar div {
+    position: absolute;
+}
+
+.scrollBar .left {
+    font-size: 12px;
+    line-height: 26px;
+    padding-left: 10px;
+    width: 40px;
+    height: 26px;
+    left: 0;
+    background: url(../img/car_pic_ctr.png) no-repeat 0 0;
+}
+
+.scrollBar .left span {
+    display: block;
+    background: url(../img/car_pic_ctr.png) repeat-x 0 -26px;
+    user-select: none;
+}
+
+.scrollBar .right {
+    width: 46px;
+    font-size: 12px;
+    line-height: 26px;
+    padding-right: 10px;
+    right: 0;
+    background: url(../img/car_pic_ctr.png) no-repeat 36px -78px;
+}
+
+.scrollBar .right span {
+    text-align: right;
+    display: block;
+    background: url(../img/car_pic_ctr.png) repeat-x 0 -26px;
+    user-select: none;
+}
+
+/* 滑动距离300：-10~290 */
+
+.scrollBar .btn {
+    width: 21px;
+    height: 26px;
+    left: 0;
+    top: 0;
+    background: url(../img/car_pic_ctr.png) repeat-x 0 -104px;
+}
+
+.scrollBar .bar {
+    width: 300px;
+    height: 26px;
+    position: absolute;
+    left: 50px;
+    background: url(../img/car_pic_ctr.png) repeat-x 0 -52px;
+}
+
+.scrollBar .centerWay {
+    position: absolute;
+    left: 40px;
+    height: 26px;
+    right: 46px;
+    cursor: pointer;
+}
