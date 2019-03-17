@@ -10,21 +10,29 @@
 </head>
 
 <body>
-    <!-- 先下载声音和图片 bgm最大下载最慢-->
-    <div class="temp">
-        <img src="img/1.png" alt="">
-        <img src="img/2.png" alt="">
-        <img src="img/3.png" alt="">
-        <audio class="bgm" src="audio/bgm.mp3"></audio>
-        <audio src="audio/boom.mp3"></audio>
-    </div>
-
+    <audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
+    <audio id="boom" src="audio/boom.mp3"></audio>
+    <!-- 加载中提示文字 -->
     <div id="loading"></div>
-    <div id="container"></div>
 
-    <script src="js/HtmlUtil.js"></script>
+    <div id="container">
+        <div id="status">
+            <button id="btn">restart</button>
+            fps:
+            <span id="fps">50</span>
+            frameNumber:
+            <span id="fnum">0</span>
+            time:
+            <span id="time">50</span>
+            score:
+            <span id="score">0</span>
+        </div>
 
-    <script src="js/main.js"></script>
+        <div id="balloonContainer"></div>
+
+        <script src="js/HtmlUtil.js"></script>
+        <script src="js/main.js"></script>
+    </div>
 </body>
 
 </html>

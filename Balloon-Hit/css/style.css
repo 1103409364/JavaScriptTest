@@ -30,17 +30,15 @@ html, body {
     user-select: none;
 }
 
-#container div {
-    cursor: pointer;
-}
-
 #status {
     text-shadow: 1px 1px 1px #2c2c2c;
     text-align: left;
     color: #ffffff;
     font-size: 20px;
     line-height: 20px;
-    position: relative;
+    /* position: absolute; */
+    /* left: 0; */
+    /* top: 0; */
     z-index: 999;
     padding: 5px;
 }
@@ -78,4 +76,24 @@ html, body {
     margin-left: -50%;
     margin-top: -30px;
     vertical-align: middle;
+}
+/* 气球 */
+.ballon {
+    position: absolute;
+    color: #fff;
+    font-size: 30px;
+    text-align:center;
+    width: 63px; height: 234.5px;
+    background-size: 62px 234.5px;
+    background: url(../img/balloon.png) no-repeat;
+}
+/* 气球可点击区域 */
+.ballon .target {
+    width: 63px;
+    height: 60px;
+    padding-top: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: crosshair;
 }
