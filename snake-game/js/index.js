@@ -81,7 +81,7 @@ function Snake() {
     // 蛇的生死属性
     this.alive = true;
     // 定时器时间间隔，数字越小，蛇速度越快
-    this.interval = 500;
+    this.interval = 300;
     // 渲染小蛇
     this.render();
     // 加个锁，防止按键过快蛇来不及移动，方向连续改变，蛇死亡的bug比如：向右时，快速按下向下和向左。
