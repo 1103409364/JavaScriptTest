@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>snake</title>
+    <style>
+        .gameBox {
+            /* width: 541px; */
+            margin: 0 auto;
+        }
+
+        .gameBox table {
+            border-collapse: collapse;
+            background-color: #90ad8f;
+        }
+
+        .gameBox table td {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #90ad8f;
+            background-color: #90ad8f;
+        }
+
+        .gameBox table .snake {
+            width: 9px;
+            height: 9px;
+            background-color: #000000;
+            border-color: #90ad8f;
+            border: 1px dotted #90ad8f;
+        }
+
+        .gameBox table .food {
+            width: 9px;
+            height: 9px;
+            background-color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 背景音乐 -->
+    <audio src="audio/bgm.mp3" id = "bgm" autoplay></audio>
+    <!-- 吃食物音效 -->
+    <audio src="audio/eat.mp3"  id="eatAudio"></audio>
+    <audio src="audio/die.mp3" id="dieAudio"></audio>
+
+    <div class="gameBox" id="gameBox"></div>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
