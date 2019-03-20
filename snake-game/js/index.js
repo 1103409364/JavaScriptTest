@@ -35,7 +35,7 @@ Map.prototype.init = function (row, col) {
         // 监听重新开始按钮
         restart.onclick = function () {
             gameBox.innerHTML = "";
-            // clearInterval(map.timer);
+            map.bgm.play();
             clearInterval(snake.timer);
             map = new Map(20, 20);
             snake = new Snake();
@@ -217,7 +217,7 @@ Snake.prototype.getDirectiion = function () {
                 break;
         }
     }
-
+    // 监听虚拟按键
     up.onclick = eventHandler;
     down.onclick = eventHandler;
     left.onclick = eventHandler;
