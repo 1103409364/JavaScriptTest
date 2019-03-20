@@ -35,6 +35,7 @@ Map.prototype.init = function (row, col) {
         // 监听重新开始按钮
         restart.onclick = function () {
             gameBox.innerHTML = "";
+            map.bgm.load();
             map.bgm.play();
             clearInterval(snake.timer);
             map = new Map(20, 20);
