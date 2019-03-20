@@ -1,5 +1,5 @@
 (function () {
-    // 轮播图构造函数
+    // 轮播图构造函数，各个方法注意检查参数
     var Carousel = window.Carousel = function (argsJSON) {
         //参数检验
         if (!argsJSON.ID) {
@@ -26,7 +26,6 @@
         this.animateTime = argsJSON.animateTime || 500;
         //自动轮播的事件
         this.autoplayinterval = argsJSON.autoplayinterval || 2000;
-
         //缓冲公式，可以传进来，也可以不传进来用默认的：
         this.tween = argsJSON.tween || function (t, b, c, d) {
             if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;

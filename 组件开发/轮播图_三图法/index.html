@@ -35,7 +35,8 @@
             </ol>
         </div> -->
     </div>
-    <script src="js/index.js"></script>
+
+    <script src="js/carousel.js"></script>
     <script>
         new Carousel({
             "ID": "carousel",
@@ -44,6 +45,16 @@
             "width": 560
         });
     </script>
+    <!-- 第二个轮播图，共用一个构造函数，互不影响 -->
+    <div class="carousel" id="carousel2"></div>
+    <script>
+            new Carousel({
+                "ID": "carousel2",
+                "autoplayinterval": 2000,
+                "animateTime": 500,
+                "width": 560
+            });
+        </script>
 </body>
 
 </html>
