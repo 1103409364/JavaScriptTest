@@ -1,0 +1,69 @@
+.carousel {
+    margin: 0 auto;
+    position: relative;
+    width: 560px;
+    height: 300px;
+    border: 3px solid #000;
+    /* overflow: hidden; */
+}
+
+.carousel .imageList ul li {
+    position: absolute;
+    left: 560px;
+    top: 0;
+}
+
+.carousel .imageList ul li.first {
+    left: 0;
+}
+
+.carousel .leftBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    left: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.carousel .rightBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid #000;
+    right: 0;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.carousel .circles {
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    margin-left: -100px;
+}
+
+.carousel .circles ol li {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+
+.carousel .circles ol li.current {
+    opacity: 1;
+}
