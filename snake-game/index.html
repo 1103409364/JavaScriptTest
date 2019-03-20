@@ -10,6 +10,7 @@
         .gameBox {
             /* width: 541px; */
             margin: 0 auto;
+            position: relative;
         }
 
         .gameBox table {
@@ -29,13 +30,32 @@
             height: 9px;
             background-color: #000000;
             border-color: #90ad8f;
-            border: 1px dotted #90ad8f;
+            /* border: 1px dotted #90ad8f; */
         }
 
         .gameBox table .food {
             width: 9px;
             height: 9px;
-            background-color: #000000;
+            background-color: #ff0000;
+        }
+
+        .gameBox table .grow {
+            background-color: #ff0000;
+        }
+        .gameBox table .head {
+            background-color: #076423;
+        }
+
+        .gameBox p {
+            font-family: monospace;
+            font-size: 12px;
+            position: absolute;
+            padding-left: 10px;
+        }
+
+        .ex p {
+            font-size: 12px;
+            padding-left: 10px;
         }
     </style>
 </head>
@@ -46,8 +66,14 @@
     <!-- 吃食物音效 -->
     <audio src="audio/eat.mp3"  id="eatAudio"></audio>
     <audio src="audio/die.mp3" id="dieAudio"></audio>
+    
+    <div class="gameBox" id="gameBox">
+        <p>score:<span id="score"></span></p>
+    </div>
 
-    <div class="gameBox" id="gameBox"></div>
+    <div class="ex">
+        <p>说明：方向键控制方向</p>
+    </div>
 
     <script src="js/index.js"></script>
 </body>
