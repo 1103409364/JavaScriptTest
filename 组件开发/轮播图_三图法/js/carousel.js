@@ -1,5 +1,6 @@
 (function () {
-    // 轮播图构造函数，各个方法注意检查参数
+    // 轮播图构造函数，各个方法注意检查参数，暴露构造函数
+    // 这样写也行？ Carousel  = function (argsJSON)
     var Carousel = window.Carousel = function (argsJSON) {
         //参数检验
         if (!argsJSON.ID) {
