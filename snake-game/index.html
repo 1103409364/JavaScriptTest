@@ -7,10 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>snake</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #7c99e7;
+        }
+        .snakeGame {
+            width: 321px;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            margin-left: -180px;
+            /* border: 1px solid #000; */
+        }
         .gameBox {
             /* width: 541px; */
-            margin: 0 auto;
-            position: relative;
+            position: absolute;
+            top: 20px;
         }
 
         .gameBox table {
@@ -46,16 +63,73 @@
             background-color: #076423;
         }
 
-        .gameBox p {
+        .ex p {
             font-family: monospace;
             font-size: 12px;
             position: absolute;
+            top: 370px;
             padding-left: 10px;
-        }
-
-        .ex p {
             font-size: 12px;
             padding-left: 10px;
+        }
+        .ex p.score {
+            top: 350px;
+        }
+
+        .ex .ctr {
+            height: 150px;
+            width: 150px;
+            position: absolute;
+            right: 10px;
+            bottom: 30px;
+        }
+
+        .ex .ctr i {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            background-color: #c74a4a;
+            /* border: 1px solid #000; */
+            border-radius: 50%;
+            box-shadow: 0 2px 4px #8a3232;
+        }
+        .ex .ctr i:active {
+            background-color: #c74a4a;
+            box-shadow: 0 0 0 saddlebrown;
+        }
+
+        .ex .ctr i.up {
+            top: 0;
+            left: 50%;
+            margin-left: -25px;
+        }
+        .ex .ctr i.down {
+            bottom: 0;
+            left: 50%;
+            margin-left: -25px;
+        }
+        .ex .ctr i.left {
+            top: 50%;
+            left: 0;
+            margin-top: -25px;
+        }
+        .ex .ctr i.right {
+            top: 50%;
+            right: 0;
+            margin-top: -25px;
+        }
+
+        .ex .ctr i.restart {
+            height: 40px;
+            width: 66px;
+            border-radius: 5px;
+            left: -140px;
+            top: 80px;
+            margin-top: -25px;
+            line-height: 40px;
+            font-size: 12px;
+            text-align: center;
+            color: #f08282;
         }
     </style>
 </head>
@@ -67,13 +141,24 @@
     <audio src="audio/eat.mp3"  id="eatAudio"></audio>
     <audio src="audio/die.mp3" id="dieAudio"></audio>
 
-    <div class="gameBox" id="gameBox">
-        <p>score:<span id="score"></span></p>
-    </div>
+    <div class="snakeGame">
+        <div class="gameBox" id="gameBox">
+        </div>
+    
+        <div class="ex">
+            <div class="ctr">
+                <i class="up" id="ArrowUp"></i>
+                <i class="down" id="ArrowDown"></i>
+                <i class="left" id="ArrowLeft"></i>
+                <i class="right" id="ArrowRight"></i>
+                <i class="restart" id="restart">RESTART</i>
+            </div>
 
-    <div class="ex">
-        <p>说明：键盘方向键控制方向</p>
+            <p class="score">score:<span id="score"></span></p>
+            <p>说明：用键盘方向键或者虚拟按键控制方向</p>
+        </div>
     </div>
+    
 
     <script src="js/index.js"></script>
 </body>

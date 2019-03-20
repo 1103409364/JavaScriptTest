@@ -1,4 +1,10 @@
 var gameBox = document.getElementById("gameBox");
+var up = document.getElementById("ArrowUp");
+var down = document.getElementById("ArrowDown");
+var left = document.getElementById("ArrowLeft");
+var right = document.getElementById("ArrowRight");
+var restart = document.getElementById("restart");
+
 var score = document.getElementById("score");
 
 // 地图构造函数
@@ -26,6 +32,15 @@ Map.prototype.init = function (row, col) {
         }
         this.table.appendChild(tr);
         this.tdArr.push(tdRow);
+        // 监听重新开始按钮
+        restart.onclick = function () {
+            gameBox.innerHTML = "";
+            // clearInterval(map.timer);
+            clearInterval(snake.timer);
+            map = new Map(20, 20);
+            snake = new Snake();
+            food = new Food();
+        }
     }
 }
 // 重置地图
@@ -55,17 +70,19 @@ Map.prototype.check = function () {
         alert("You are awesom!!");
     }
 }
+
+
 // 蛇的构造函数
 function Snake() {
     // 蛇的身体，第0个数组成员是蛇头，根据不同地图尺寸生成蛇的位置
     this.snakeBody = [{
-            "x": map.row < 8 ? 1 : parseInt(map.row / 3) + 1,
-            "y": parseInt(map.row / 2),
-        },
-        {
-            "x": map.row < 8 ? 0 : parseInt(map.row / 3) ,
-            "y": parseInt(map.row / 2),
-        },
+        "x": map.row < 8 ? 1 : parseInt(map.row / 3) + 1,
+        "y": parseInt(map.row / 2),
+    },
+    {
+        "x": map.row < 8 ? 0 : parseInt(map.row / 3),
+        "y": parseInt(map.row / 2),
+    },
         // {
         //     "x": map.row < 8 ? 2 : parseInt(map.row / 3) + 2,
         //     "y": parseInt(map.row / 2),
@@ -125,7 +142,7 @@ Snake.prototype.render = function () {
 Snake.prototype.move = function () {
     // 备份this
     var _this = this;
-    // 蛇走之前，重置地图 
+    // 设表先关
     clearInterval(this.timer);
     this.timer = setInterval(function () {
         _this.frameNumber++;
@@ -164,6 +181,7 @@ Snake.prototype.move = function () {
         _this.isEatSelf();
 
         if (_this.alive) {
+            // 蛇走之前，重置地图 
             map.reset();
             food.render();
             _this.render();
@@ -177,6 +195,37 @@ Snake.prototype.getDirectiion = function () {
     window.onkeydown = function (event) {
         event = event || window.event;
         switch (event.key) {
+            case "ArrowUp":
+                if (_this.direction === "ArrowDown" || _this.lock) return;
+                _this.direction = "ArrowUp";
+                _this.lock = true;
+                break;
+            case "ArrowDown":
+                if (_this.direction === "ArrowUp" || _this.lock) return;
+                _this.direction = "ArrowDown";
+                _this.lock = true;
+                break;
+            case "ArrowLeft":
+                if (_this.direction === "ArrowRight" || _this.lock) return;
+                _this.direction = "ArrowLeft";
+                _this.lock = true;
+                break;
+            case "ArrowRight":
+                if (_this.direction === "ArrowLeft" || _this.lock) return;
+                _this.direction = "ArrowRight";
+                _this.lock = true;
+                break;
+        }
+    }
+
+    up.onclick = eventHandler;
+    down.onclick = eventHandler;
+    left.onclick = eventHandler;
+    right.onclick = eventHandler;
+    function eventHandler(event) {
+        event = event || window.event;
+        var target = event.target;
+        switch (event.key || target.id) {
             case "ArrowUp":
                 if (_this.direction === "ArrowDown" || _this.lock) return;
                 _this.direction = "ArrowUp";
