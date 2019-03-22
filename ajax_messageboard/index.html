@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>message board</title>
+    <style>
+        .board {
+            border: 1px solid #000;
+        }
+
+        .msgwrap {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+        <h3>留言本</h3>
+        <p>邮箱
+            <input type="text" id="email">
+        </p>
+
+        <p>日期
+            <input type="text" id="date">
+        </p>
+
+        <p>内容
+            <textarea name="" id="message" cols="30" rows="10"></textarea>
+        </p>
+
+        <p>
+            <input type="button" value="保存" id="save">
+        </p>
+    </div>
+    <div class="msgwrap">
+        <span>留言列表</span>
+        <input type="button" value="刷新" id="refresh">
+        <div id="msglist"></div>
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script>
+        // Ajax提交数据
+        var saveabtn = document.getElementById("save");
+
+        saveabtn.onclick = function () {
+            var email = document.getElementById("email").value;
+            var date = document.getElementById("date").value;
+            var message = document.getElementById("message").value;
+            // 表单验证
+            if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
+                alert("邮箱格式有误");
+                return;
+            }
+            myAjax.get("do/write.php", {
+                "email": email,
+                "date": date,
+                "message": message
+            }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(data);
+                }
+            });
+        }
+        // Ajax读取数据库，组建DOM
+        var rebtn = document.getElementById("refresh");
+        var msglist = document.getElementById("msglist");
+
+        rebtn.onclick = getMsgList;
+
+        function getMsgList() {
+            // 请求数据，传一个参数，表示是否排序
+            myAjax.get("do/read.php", {
+                "sort": 1
+            }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // 返回的数据
+                    var result = [];
+                    var resultarr = JSON.parse(data)["result"];
+
+                    for (var i = 0; i < resultarr.length; i++) {
+                        result.push(JSON.parse(resultarr[i]));
+                    }
+                    // 组建DOM
+                    // 先清空子节点
+                    msglist.innerHTML = "";
+                    for (var j = 0; j < result.length; j++) {
+                        msglist.innerHTML += `
+                            <div>
+                                <h3>${result[j].id}楼</h3>
+                                <button class="delete" id=${result[j].id}>删除</button>
+                                <ul>
+                                    <li>${result[j].email}</li>
+                                    <li>${result[j].date}</li>
+                                    <li>${result[j].message}</li>
+                                <ul>
+                            </div>
+                        `
+                    }
+                }
+                // 给删除按键添加监听
+                var deletebtn = document.getElementsByClassName("delete");
+                for (var k = 0; k < deletebtn.length; k++) {
+                    (function () {
+                        deletebtn[k].onclick = function () {
+                            var _this = this;
+                            // Ajax删除
+                            myAjax.get("do/delete.php", {
+                                "id": this.getAttribute("id")
+                            }, function (err, data) {
+                                console.log(data);
+                                if (data == "ok") {
+                                    //alert、prompt、confirm
+                                    if (confirm("确定要删除吗？")) {
+                                        // 删除楼层
+                                        _this.parentNode.parentNode.removeChild(_this.parentNode);
+                                    }
+                                } else {
+                                    alert("删除失败");
+                                }
+                            });
+                        }
+                    })(k)
+                }
+            })
+        }
+
+        function removeThisFloor() {
+
+        }
+
+        getMsgList();
+    </script>
+</body>
+
+</html>
