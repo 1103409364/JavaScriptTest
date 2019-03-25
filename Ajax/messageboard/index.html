@@ -15,12 +15,20 @@
             border: 1px solid #000;
             margin-top: 20px;
         }
+
+        #msglist .hide {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <div class="board">
         <h3>留言本</h3>
+        <p>
+            说明：后台php 数据库MySQL
+            数据库名称：data1 表名：messageboard 主键：id 列名：email message data
+        </p>
         <p>邮箱
             <input type="text" id="email">
         </p>
@@ -42,6 +50,7 @@
         <input type="button" value="刷新" id="refresh">
         <div id="msglist"></div>
     </div>
+
 
     <script src="js/ajax.js"></script>
     <script>
@@ -68,6 +77,8 @@
                     console.log(data);
                 }
             });
+            // 保存的同时刷新留言列表
+            getMsgList();
         }
         // Ajax读取数据库，组建DOM
         var rebtn = document.getElementById("refresh");
@@ -97,37 +108,76 @@
                         msglist.innerHTML += `
                             <div>
                                 <h3>${result[j].id}楼</h3>
-                                <button class="delete" id=${result[j].id}>删除</button>
+                                <button class="delete" del=${result[j].id}>删除</button>
+                                <button class="showupd" upd=${result[j].id}>修改</button>
                                 <ul>
                                     <li>${result[j].email}</li>
                                     <li>${result[j].date}</li>
-                                    <li>${result[j].message}</li>
-                                <ul>
+                                    <li class="message">${result[j].message}</li>
+                                    <li class="ipt hide">
+                                        <textarea name="" class="iptbox" cols="30" rows="5">${result[j].message}</textarea>
+                                        <button class="update" upd=${result[j].id}>保存</button>
+                                    </li>
+                                </ul>
                             </div>
                         `
                     }
                 }
                 // 给删除按键添加监听
                 var deletebtn = document.getElementsByClassName("delete");
+                var updatebtn = document.getElementsByClassName("showupd");
                 for (var k = 0; k < deletebtn.length; k++) {
                     (function () {
                         deletebtn[k].onclick = function () {
                             var _this = this;
-                            // Ajax删除
-                            myAjax.get("do/delete.php", {
-                                "id": this.getAttribute("id")
-                            }, function (err, data) {
-                                console.log(data);
-                                if (data == "ok") {
-                                    //alert、prompt、confirm
-                                    if (confirm("确定要删除吗？")) {
-                                        // 删除楼层
-                                        _this.parentNode.parentNode.removeChild(_this.parentNode);
+                            if (confirm("确定要删除吗？")) {
+                                // 删除楼层
+                                _this.parentNode.parentNode.removeChild(_this.parentNode);
+                                // Ajax删除
+
+                                myAjax.get("do/delete.php", {
+                                    "id": this.getAttribute("del")
+                                }, function (err, data) {
+                                    console.log(data);
+                                    if (data == "ok") {
+                                        alert("删除成功");
+                                    } else {
+                                        alert("删除失败");
                                     }
-                                } else {
-                                    alert("删除失败");
-                                }
-                            });
+                                });
+                            } else {
+                                console.log("删除已取消")
+                            }
+                        }
+                    })(k);
+
+                    (function () {
+                        updatebtn[k].onclick = function () {
+                            var _this = this;
+                            var msg = this.parentNode.getElementsByClassName("message")[0];
+                            var ipt = this.parentNode.getElementsByClassName("ipt")[0];
+                            var iptbox = this.parentNode.getElementsByClassName("iptbox")[0];
+                            var updbtn = this.parentNode.getElementsByClassName("update")[0];
+                            msg.className = "hide";
+                            ipt.className = "ipt";
+                            updbtn.onclick = function () {
+                                var val = iptbox.value;
+                                // console.log(val);
+                                // Ajax修改
+                                myAjax.get("do/update.php", {
+                                    "id": this.getAttribute("upd"),
+                                    "newmsg": val,
+                                }, function (err, data) {
+                                    if (data == "ok") {
+                                        msg.className = "message";
+                                        msg.innerHTML = val;
+                                        ipt.className = "hide ipt";
+                                    } else {
+                                        console.log(data.result);
+                                    }
+                                });
+                            }
+
                         }
                     })(k)
                 }
