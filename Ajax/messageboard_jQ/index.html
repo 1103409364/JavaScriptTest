@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>message board</title>
+    <style>
+        .board {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .board .headipt .ps {
+            font-size: 12px;
+            color: #6e6e6e;
+        }
+
+        .board .headipt p input {
+            width: 50%;
+            text-align: left;
+        }
+
+        .board .headipt p textarea {
+            width: 780px;
+            padding: 10px;
+        }
+
+        .msgwrap {
+            /* border: 1px solid #000; */
+            margin-top: 20px;
+        }
+
+        #msglist .hide {
+            display: none;
+        }
+
+        #msglist .floor {
+            border: 1px solid #adadad;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+        <h3>留言本</h3>
+        <div class="headipt">
+            <p class="ps">
+                说明：后台php 数据库MySQL,
+                数据库名称：data1 ,表名：messageboard ,主键：id ,列名：email message data
+            </p>
+            <label>邮箱
+                <input type="text" id="email">
+            </label>
+
+            <label>日期
+                <input type="text" id="date">
+            </label>
+            <input type="button" value="发布" id="save">
+            <p>
+                <textarea name="" id="message" cols="30" rows="10" placeholder="说点啥。。。。。。。"></textarea>
+            </p>
+
+
+        </div>
+
+        <div class="msgwrap">
+            <span>留言列表</span>
+            <input type="button" value="刷新" id="refresh">
+
+            <div id="msglist"></div>
+        </div>
+    </div>
+
+
+    <script type="text/template" class="template">
+        <div class="floor">
+            <h3><%= id %>楼</h3>
+            <button class="delete" del="<%= id %>">删除</button>
+            <button class="showupd" upd="<%= id %>">修改</button>
+            <ul>
+                <li><%= email %></li>
+                <li><%= date %></li>
+                <li class="message"><%= message %></li>
+                <li class="ipt hide">
+                    <textarea name="" class="iptbox" cols="30" rows="5"></textarea>
+                    <button class="update" upd="<%= id %>">保存</button>
+                </li>
+            </ul>
+        </div>
+    </script>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/underscore.js"></script>
+
+    <script>
+        var $templateString = $(".template").html();
+        var $saveabtn = $("#save");
+        $saveabtn.click(function () {
+            var email = $("#email").val();
+            var date = $("#date").val();
+            var message = $("#message").val();
+            // 表单验证
+            if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
+                alert("邮箱格式有误");
+                return;
+            }
+
+            $.get("do/write.php", {
+                "email": email,
+                "date": date,
+                "message": message
+            }, function (data) {
+                // jQuery get回调函数没用err参数
+                // console.log(err);
+                console.log(data);
+                // 发布成功清空输入框
+                $("#message").val("");
+                getJsonAndRender();
+            })
+        })
+        // 页面载入时马上加载留言列表
+        getJsonAndRender();
+        var $rebtn = $("#refresh");
+        var $msglist = $("#msglist");
+
+        $rebtn.click(getJsonAndRender);
+        // 获得json并渲染数据
+        function getJsonAndRender() {
+
+            $.get("do/read.php", {
+                "sort": 1
+            }, function (data) {
+                $msglist.html("");
+                // 返回的数据
+                var result = [];
+                var resultarr = JSON.parse(data)["result"];
+                var compile = _.template($templateString);
+                // 后台写的有问题，这里需要转一下
+                _.each(resultarr, function (str) {
+                    result.push(JSON.parse(str));
+                })
+                // 用模板引擎组建dom
+                _.each(result, function (dictionary) {
+                    $msglist.append(compile(dictionary));
+                })
+                // console.log(result);
+                var $deletebtn = $(".floor .delete");
+                var $updatebtn = $(".floor .showupd");
+
+                // 删除按钮添加监听
+                $deletebtn.click(function () {
+                    $this = $(this);
+                    if (confirm("确定要删除吗？")) {
+                        // 删除父节点
+                        $this.parent().remove();
+                        $.get("do/delete.php", {
+                            "id": $this.attr("del"),
+                        }, function (data) {
+                            if (data == "ok") {
+                                console.log("删除成功", data);
+                            } else {
+                                alert("删除失败");
+                            }
+                        })
+                    } else {
+                        console.log("取消删除");
+                    }
+                });
+
+                $updatebtn.click(function () {
+                    var $this = $(this);
+                    var $msg = $this.parent().find(".message");
+                    var $ipt = $this.parent().find(".ipt");
+                    var $iptbox = $this.parent().find(".iptbox");
+                    var $upsavebtn = $this.parent().find(".update");
+
+                    $msg.hide();
+                    $ipt.show();
+                    $iptbox.val($msg.html());
+                    $iptbox.focus();
+                    // 修改输入框旁的保存按钮
+                    $upsavebtn.click(saveNewMsg);
+                    // 修改框失去焦点的时候
+                    $iptbox.blur(saveNewMsg);
+                    // 保存新留言
+                    function saveNewMsg() {
+                        var msg = $iptbox.val();
+                        $.get("do/update.php", {
+                            "id": $this.attr("upd"),
+                            "newmsg": msg,
+                        }, function (data) {
+                            if (data == "ok") {
+                                $msg.show();
+                                $msg.html(msg);
+                                $ipt.hide();
+                            } else {
+                                console.log(data.result);
+                            }
+                        })
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
