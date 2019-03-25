@@ -17,14 +17,16 @@
             // 竞速规则，先加载的先先显示
             img.onload = function() {
                 count++;
-                var div = document.createElement("div");
-                _this.wrap.appendChild(div);
+                var a = document.createElement("a");
+                a.href = this.src;
+                a.target = "_blank";
+                _this.wrap.appendChild(a);
                 var minHeight = Math.min.apply(null, _this.heightArr);
                 var index = _this.heightArr.indexOf(minHeight);
-                // var height =div.clientHeight;
-                div.style.left = (_this.imgWeight + 20) * index + "px";
-                div.style.top = minHeight + "px";
-                div.appendChild(this);
+                // var height =a.clientHeight;
+                a.style.left = (_this.imgWeight + 20) * index + "px";
+                a.style.top = minHeight + "px";
+                a.appendChild(this);
                 // console.log(_this.imgWeight,this.clientHeight, index);
                 // 图片加载之后才有高
                 _this.heightArr[index] += this.clientHeight + 20;
