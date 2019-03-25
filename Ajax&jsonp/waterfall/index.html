@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #waterfall {
+            width: 1060px;
+            /* border: 1px solid #000; */
+            /* height: 1000px; */
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #waterfall img {
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        #waterfall div {
+            position: absolute;
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="waterfall"></div>
+
+    <script src="js/ajax.js"></script>
+    <script src="js/waterfall.js"></script>
+    <script>
+        var wrap = document.getElementById("waterfall");
+        var col = 4;
+        var heightArr = [];
+        for (var i = 0; i < col; i++) {
+            heightArr.push(0);
+        };
+
+        function getDataAndRender(page, wrap) {
+            myajax.jsonp("js/蘑菇街" + page + ".js" + "?" + Math.random() * 100, {}, "render", function (data) {
+                var imgdata = [];
+                for (var i = 0; i < data.data.list.length; i++) {
+                    if (data.data.list[i].modelData.data) {
+                        if (data.data.list[i].modelData.data.looks.images) {
+                            // console.log(data.data.list[i].modelData.data.looks.images);
+                            for (var j = 0; j < data.data.list[i].modelData.data.looks.images.length; j++) {
+                                imgdata.push(data.data.list[i].modelData.data.looks.images[j].path);
+                            }
+                        }
+                    }
+                }
+                // 参数：data图片url数组，wrap瀑布流容器，col列数，width每列宽度，heightArr存放每次加载后的高度，
+                // 为了拉到底连续加载下一页，所以改为全局变量
+                new Waterfall({
+                    "data": imgdata,
+                    "wrap": wrap,
+                    "col": col,
+                    "width": 250,
+                    "heightArr": heightArr,
+                });
+            })
+        }
+
+
+        var page = 0;
+        var lock = false;
+        getDataAndRender(page, wrap);
+
+        window.onscroll = function () {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+            var rate = scrollTop / (getDocumentPort().height - getViewPort().height);
+            // console.log(rate, page);
+            if (rate > 0.7) {
+                if (lock) return;
+                // 进来马上锁上
+                lock = true;
+                page++;
+                // 等待这次图片全部加载完毕，再开锁，jsonp是异步的，涉及io操作
+                getDataAndRender(page, wrap);
+            }
+
+            /*视口的大小，部分移动设备浏览器对innerWidth的兼容性不好，需要
+             *使用方法 ： getViewPort().width;
+             */
+            function getViewPort() {
+                if (document.compatMode == "BackCompat") { //浏览器嗅探，混杂模式兼容ie
+                    return {
+                        width: document.body.clientWidth,
+                        height: document.body.clientHeight
+                    };
+                } else {
+                    return {
+                        width: document.documentElement.clientWidth,
+                        height: document.documentElement.clientHeight
+                    };
+                }
+            }
+
+            //获得文档的大小，与上面获取视口大小的方法如出一辙
+            function getDocumentPort() {
+                if (document.compatMode == "BackCompat") {
+                    return {
+                        width: document.body.scrollWidth,
+                        height: document.body.scrollHeight
+                    };
+                } else {
+                    return {
+                        width: Math.max(document.documentElement.scrollWidth, document.documentElement.clientWidth),
+                        height: Math.max(document.documentElement.scrollHeight, document.documentElement
+                            .clientHeight)
+                    }
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>
