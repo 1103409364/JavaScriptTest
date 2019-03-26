@@ -152,7 +152,7 @@
                     dictionary.postType = dictionary.postType.replace(/^\w*/, "");
                     domStr += compile(dictionary);
                 });
-
+                // 清空旧的页
                 $job_ulli.html("");
                 $job_ulli.append(domStr);
                 $(".list_row .toogle").click(function () {
