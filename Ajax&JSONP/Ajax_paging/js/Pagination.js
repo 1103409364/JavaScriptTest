@@ -18,8 +18,8 @@
     }
 
     Pagination.prototype.init = function () {
-        
         this.pStr = "<ol>";
+        // 生成所有的格子
         for (var i = 1; i <= this.count + 2; i++) {
             if (i == 2 || i == this.count) {
                 this.pStr += "<li class='ellipsis'>...</li>"
@@ -43,7 +43,7 @@
         this.$prev = this.$container.find(".prev");
         this.$next = this.$container.find(".next");
     }
-    // 渲染页码的逻辑，前中后分类讨论
+    // 渲染页码的逻辑，前中后分类讨论，隐藏不需要的格子
     Pagination.prototype.render = function () {
         location.hash = this.nowIdx;
         var _this = this;
@@ -100,7 +100,6 @@
     }
 
     Pagination.prototype.addEvent = function () {
-        // 保存显示的每个页码
         var _this = this;
         this.$p.click(function () {
             var $a = $(this).children("a")
