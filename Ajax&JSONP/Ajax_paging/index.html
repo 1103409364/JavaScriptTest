@@ -24,7 +24,7 @@
                     <h2>职位信息</h2>
                 </div>
                 <div class="pull_right">
-                    共<span>100</span>个在招职位
+                    共<span class="row_count">100</span>个在招职位
                 </div>
             </div>
 
@@ -134,10 +134,13 @@
 
         function getDataAndRender(page) {
             $.get("JSON/getPostList" + page, function (data) {
+                var $rowCount = $(".row_count");
                 var $job_ulli = $("#job_ulli");
                 var templateStr = $("#template").html();
                 var compile = _.template(templateStr);
-                // console.log(compile);
+                // 招聘人数
+                var count = JSON.parse(data).rowCount;
+                $rowCount.html( count);
 
                 var data = JSON.parse(data).postList;
                 var domStr = ""
@@ -149,6 +152,7 @@
                     dictionary.postType = dictionary.postType.replace(/^\w*/, "");
                     domStr += compile(dictionary);
                 });
+
                 $job_ulli.html("");
                 $job_ulli.append(domStr);
                 $(".list_row .toogle").click(function () {
