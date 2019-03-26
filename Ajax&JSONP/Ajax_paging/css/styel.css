@@ -1,6 +1,7 @@
 body {
     background-color: #f9f9f9;
     color: #333;
+    min-width: 1100px;
 }
 
 .inner_center {
@@ -18,18 +19,21 @@ body {
 header {
     height: 56px;
     width: 100%;
+    min-width: 1100px;
     background-color: #2b2d33;
 }
 
 .social_container .banner_container {
     height: 197px;
     width: 100%;
-    background-color: #101ac9;
+    min-width: 1100px;
+    background-color: #4090ff;
 }
 
 .social_container .job_menu {
     height: 48px;
     width: 100%;
+
     background-color: #fff;
     border-bottom: 1px solid #e5e5e5
 }
@@ -76,6 +80,7 @@ header {
 .social_container .job_container .pagination ol li {
     /* float: left; */
     display: inline-block;
+    margin: 0 2px;
 } 
 
 .social_container .job_container .pagination ol li a:hover {
@@ -158,30 +163,77 @@ header {
     width: 18%;
 }
 
-.social_container .job_list .list_row .col5 span.toogle {
+.social_container .job_list .list_row .col5 b.toogle {
     float: right;
     font-size: 26px;
     font-family: serif;
     font-weight: bold;
     padding: 0 5px;
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .social_container .job_list .list_row span a {
     text-decoration: none;
     color: #666;
+    transition: all 0.3s;
 }
 
-.social_container .job_list .list_row span.active a {
+.social_container .list_row b a {
     display: block;
-    /* width: 1em; */
+    transition: all 0.3s;
+}
+
+.social_container .list_row b.active a {
     color: #4090ff;
     transform: rotate(90deg);
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .social_container .job_list .list_row a:hover {
     color: #4090ff;
+}
+
+.social_container .job_list li.job_detail {
+    color: #666;
+    font-size: 12px;
+    border-bottom: 1px dashed #e4e4e4;
+    padding: 12px 2%;
+    line-height: 20px;
+    display: none;
+}
+
+.social_container .job_list li.job_detail {
+    line-height: 30px;
+}
+
+.social_container .job_list .job_operation {
+    margin: 10px 0;
+}
+
+.social_container .job_list .job_operation a {
+    display: inline-block;
+    text-decoration: none;
+    width: 88px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    color: #fff;
+}
+
+.social_container .job_list .job_operation a.apply_job {
+    background-color: #ec6738;
+    margin-right: 10px;
+}
+
+.social_container .job_list .job_operation a.collect_job {
+    background-color: #4090ff;
+}
+
+.social_container .job_list .job_operation a.share_job {
+    color: #666;
+    float: right;
+    text-align: left;
+    width: 200px;
 }
 
 footer {
