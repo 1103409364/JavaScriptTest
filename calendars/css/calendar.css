@@ -1,0 +1,111 @@
+/*
+YUI 3.18.1 (build f7e7bcb)
+Copyright 2014 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+http://yuilibrary.com/license/
+*/
+
+html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
+
+
+#container {
+    position: relative;
+    width: 290px;
+    margin: 0 auto;
+}
+
+#container input {
+    width: 200px;
+    line-height: 25px;
+}
+
+#container #calender {
+    padding: 10px;
+    box-shadow: 0 0 5px #333;
+    /* width: 204px; */
+    position: absolute;
+    top: 35px;
+    right: -45px;
+}
+#container #calender th,
+#container #calender td {
+    font-size: 13px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+}
+#container #calender th {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#container #calender td {
+    cursor: pointer;
+}
+
+#container #calender td span {
+    color: #797979;
+    font-size: 12px;
+    display: block;
+}
+
+#container #calender td.current span {
+    color: #fff;
+    font-size: 12px;
+    display: block;
+    background-color: #503dfa
+}
+
+#container #calender td.current {
+    color: #FFF;
+    background-color: #503dfa
+}
+
+#container #calender td:hover {
+    color: #FFF;
+    background-color: #503dfa
+}
+
+#container #calender td:hover span {
+    color: #FFF;
+}
+
+#container a {
+    font-weight: bold;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #333;
+    padding: 0 15px;
+}
+
+#container .calender_header {
+    text-align: center;
+}
+
+#container .calender_header span {
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+#container .calender_footer {
+    padding-top: 10px;
+    overflow: hidden;
+}
+
+#container .calender_footer a {
+    font-family: "MicroSoft YaHei";
+    font-size: 14px;
+}
+
+#container .calender_footer .close {
+    padding: 0 10px;
+    float: right;
+}
+
+#container .calender_footer .today {
+    float: left;
+    padding: 0 10px;
+}
