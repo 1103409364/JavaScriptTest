@@ -18,13 +18,13 @@
     <div class="social_container">
         <div class="banner_container"></div>
         <div class="job_menu inner_center"></div>
-        <div class="job_container inner_center">
+        <div class="job_container inner_center"  id="job_container">
             <div class="job_info clearfix">
                 <div class="pull_left">
                     <h2>职位信息</h2>
                 </div>
                 <div class="pull_right">
-                    共<span class="row_count">100</span>个在招职位
+                    共<span class="row_count"></span>个在招职位
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="list_body">
                     <!-- 要替换的部分 -->
-                    <ul id="job_ulli">
+                    <div id="job_ulli">
                         <!-- <li class="list_row">
                             <span class="col1"><a href="">搜索发展部_搜索战略分析师（产品方向）搜索发展部_搜索战略分析师（产品方向</a></span>
                             <span class="col2">产品</span>
@@ -76,100 +76,46 @@
                                 <a href="" class="share_job" href="javascript:;">分享到：微博 贴吧 QQ空间 微信</a>
                             </div>
                         </li> -->
-                    </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="pagination inner_center" id="pagination">
-                <!-- <ol>
-                    <li class="current p"><a href="javascript:;">1</a></li>
-                    <li class="ellipsis">...</li>
-                    <li class="p"><a href="javascript:;">1</a></li>
-                    <li class="p"><a href="javascript:;">1</a></li>
-                    <li class="p"><a href="javascript:;">1</a></li>
-                    <li class="ellipsis">...</li>
-                    <li class="p"><a href="javascript:;">1</a></li>
-                    <li class="prev"><a href="javascript:;">&lt;</a></li>
-                    <li class="next"><a href="javascript:;">&gt;</a></li>
-                </ol> -->
-            </div>
+            <div class="pagination inner_center" id="pagination"></div>
         </div>
     </div>
 
     <footer></footer>
     <!-- 模板 -->
     <script type="text/template" id="template">
-        <li class="list_row">
-            <span class="col1"><a href="#"><%= name %></a></span>
-            <span class="col2"><%= postType %></span>
-            <span class="col3"><%= workPlace %></span>
-            <span class="col4"><%= recruitNum %></span>
-            <span class="col5"><%= publishDate %><b class="toogle"><a href="javascript:;">&gt</a></b></span>
-        </li>
-        <li class="job_detail">
-            <div class="job_duty">
-                <h3>工作职责:</h3>
-                <p><%= workContent %></p>
-            </div>
-            <div class="job_demand">
-                <h3>职位要求</h3>
-                <p><%= serviceCondition %></p>
-            </div>
-            <div class="job_operation">
-                <a href="" class="apply_job" href="javascript:;">申请职位</a>
-                <a href="" class="collect_job" href="javascript:;">收藏职位</a>
-                <a href="" class="share_job" href="javascript:;">分享到：微博 贴吧 QQ空间 微信</a>
-            </div>
-        </li>
+        <ul>
+            <li class="list_row">
+                <span class="col1"><a href="<%= link %>" target="_blank"><%= name %></a></span>
+                <span class="col2"><%= postType %></span>
+                <span class="col3"><%= workPlace %></span>
+                <span class="col4"><%= recruitNum %></span>
+                <span class="col5"><%= publishDate %><b class="toogle"><a href="javascript:;">&gt</a></b></span>
+            </li>
+            <li class="job_detail">
+                <div class="job_duty">
+                    <h3>工作职责:</h3>
+                    <p><%= workContent %></p>
+                </div>
+                <div class="job_demand">
+                    <h3>职位要求</h3>
+                    <p><%= serviceCondition %></p>
+                </div>
+                <div class="job_operation">
+                    <a href="" class="apply_job" href="javascript:;">申请职位</a>
+                    <a href="" class="collect_job" href="javascript:;">收藏职位</a>
+                    <a href="" class="share_job" href="javascript:;">分享到：微博 贴吧 QQ空间 微信</a>
+                </div>
+            </li>
+        </ul>
     </script>
 
     <script src="js/jquery-1.12.4.js"></script>
     <script src="js/underscore.js"></script>
-    <script src="js/Pagination.js"></script>
-
-    <script>
-        var page = 1;
-        var containerId = "pagination";
-        getDataAndRender(1);
-
-        function getDataAndRender(page) {
-            $.get("JSON/getPostList" + page, function (data) {
-                var $rowCount = $(".row_count");
-                var $job_ulli = $("#job_ulli");
-                var templateStr = $("#template").html();
-                var compile = _.template(templateStr);
-                // 招聘人数
-                var count = JSON.parse(data).rowCount;
-                $rowCount.html( count);
-
-                var data = JSON.parse(data).postList;
-                var domStr = ""
-                _.each(data, function (dictionary) {
-                    // postType岗位类别需要字典修正
-                    if (dictionary.postType.split("-")[1]) {
-                        dictionary.postType = dictionary.postType.split("-")[1];
-                    }
-                    dictionary.postType = dictionary.postType.replace(/^\w*/, "");
-                    domStr += compile(dictionary);
-                });
-                // 清空旧的页
-                $job_ulli.html("");
-                $job_ulli.append(domStr);
-                $(".list_row .toogle").click(function () {
-                    var $detail = $(this).toggleClass("active").parents().next(".job_detail");
-                    $detail.slideToggle();
-                    // 点击的时候在动画过程中，可见性都是true；
-                    // console.log($detail.is(":visible"))
-                })
-            })
-        }
-        // 页码组件
-        var pagination = new Pagination ({
-            "callback": getDataAndRender,
-            "containerId": containerId,
-            "countPages": 10,
-        });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
