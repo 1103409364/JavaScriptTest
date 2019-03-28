@@ -16,91 +16,229 @@
             请选择日期
             <input type="text" name="" id="">
         </p>
-        <div id="calender">
-            <div class="calender_header">
-                <a href="javascript:;" class="prevyear">&lt;&lt;</a>
-                <a href="javascript:;" class="prev">&lt;</a>
-                <span class="date">2019年3月27日</span>
-                <a href="javascript:;"  class="next">&gt;</a>
-                <a href="javascript:;"  class="nextyear">&gt;&gt;</a>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>日</th>
-                        <th>一</th>
-                        <th>二</th>
-                        <th>三</th>
-                        <th>四</th>
-                        <th>五</th>
-                        <th>六</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td class="current">12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                    <tr>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                    <tr>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                    <tr>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                    <tr>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                    <tr>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                        <td>12<span>十二</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="calender_footer">
-                <a href="javascript:;" class="today">今天</a>
-                <a href="javascript:;" class="close">关闭</a>
-            </div>
-        </div>
     </div>
+
+    <script>
+        function Calendar(containerId) {
+            this.container = document.getElementById(containerId);
+            this.domStr =
+                '<div class="calender" id="calender">' +
+                '<div id="main">' +
+                '<div class="calender_header">' +
+                '<a href="javascript:;" class="prevyear">&lt;&lt;</a>' +
+                '<a href="javascript:;" class="prevMonth">&lt;</a>' +
+                '<span class="year"></span>年<span class="month"></span>月<span class="date"></span>日' +
+                '<a href="javascript:;" class="nextMonth">&gt;</a>' +
+                '<a href="javascript:;" class="nextyear">&gt;&gt;</a>' +
+                '</div>' +
+                '<table>' +
+                '<thead>' +
+                '<tr>' +
+                '<th>日</th>' +
+                '<th>一</th>' +
+                '<th>二</th>' +
+                '<th>三</th>' +
+                '<th>四</th>' +
+                '<th>五</th>' +
+                '<th>六</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>' +
+                '</tbody>' +
+                '</table>' +
+                '<div class="calender_footer">' +
+                '<a href="javascript:;" class="today">今天</a>' +
+                '<a href="javascript:;" class="close">关闭</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+
+            this.container.innerHTML += this.domStr;
+            this.dom = this.container.getElementsByClassName("calender")[0];
+            this.prevMonthBtn = this.container.getElementsByClassName("prevMonth")[0];
+            this.nextMonthBtn = this.container.getElementsByClassName("nextMonth")[0];
+            this.prveYearBtn = this.container.getElementsByClassName("prevYear")[0];
+            this.nextYearBtn = this.container.getElementsByClassName("nextYear")[0];
+            this.todayBtn = this.container.getElementsByClassName("today")[0];
+            this.closeBtn = this.container.getElementsByClassName("close")[0];
+            // 所有单元格
+            this.allTd = this.container.getElementsByTagName("td");
+            this.yearDom = this.container.getElementsByClassName("year")[0];
+            this.monthDom = this.container.getElementsByClassName("month")[0];
+            this.dateDom = this.container.getElementsByClassName("date")[0];
+            // 今天的date对象
+            this.date = new Date();
+            // 当前的年月日
+            this.yearNow = this.date.getFullYear();
+            this.monthNow = this.date.getMonth() + 1;
+            this.dateNow = this.date.getDate();
+            console.log(this.yearDom.innerHTML);
+            // 初始化日历
+            this.init();
+            // 给日历相关按钮元素绑定事件
+            // this.bindEvent();
+        }
+        // 初始化日历
+        Calendar.prototype.init = function () {
+            this.yearDom.innerHTML = this.yearNow;
+            this.monthDom.innerHTML = this.monthNow;
+            this.dateDom.innerHTML = this.dateNow;
+            // console.log(this.date.getDay());
+            this.render(this.yearNow, this.monthNow);
+            // this.render(2019, 1);
+        }
+        // 根据年和月渲染日历
+        Calendar.prototype.render = function (year, month) {
+            this.clearClass();
+            var day = this.getDay(year, month, 1);
+            // 获得当月天数
+            var m = this.getNumOfMonth(month);
+            // 根据1号是周几来填充日历
+            for (var i = day; i <= m + day; i++) {
+                this.allTd[i].innerHTML = i - day + 1;
+                this.allTd[i].className += " curM";
+                // 当天加上类标记
+                if(this.allTd[i].innerHTML == this.dateNow) {
+                    this.allTd[i].className += " current";
+                }
+            }
+
+            // 根据当月填充头部剩下的格子
+            var prvemonth = month - 1;
+            var pyear = year;
+            if (month == 1) {
+                prvemonth = 12;
+                pyear = year - 1;
+            }
+            // 上月天数
+            var prevm = this.getNumOfMonth(pyear, prvemonth);
+            for (var j = 0; j < day; j++){
+                this.allTd[j].innerHTML = prevm - day + j + 1;
+                this.allTd[j].className += " prevM";
+            }
+            // 根据当月填充尾部剩下的格子
+            // 下月
+            var nextmonth = month + 1;
+            var nyear = year;
+            if (month == 12) {
+                nextmonth = 1;
+                nyear = year + 1;
+            }
+
+            // 剩余格子数
+            var empty = this.allTd.length - (day + m + 1);
+            var nextm = this.getNumOfMonth(nyear, nextmonth);
+            for (var k = day + m + 1; k < this.allTd.length; k++){
+                this.allTd[k].innerHTML = empty - (this.allTd.length - k) + 1;
+                this.allTd[k].className += " nextM";
+            }
+        }
+        // 清空class
+        Calendar.prototype.clearClass = function() {
+            for (var i = 0; i < this.allTd.length; i++) {
+                this.allTd[i].className = "";
+            }
+        }
+        // 获取某个日期是周几
+        Calendar.prototype.getDay = function (y, m, d) {
+            var d = new Date(y, m - 1, d);
+            return d.getDay();
+        }
+        // 获得某个月的天数
+        Calendar.prototype.getNumOfMonth = function (year, month) {
+            if (month > 12 || month < 1) {
+                throw "month range error";
+            }
+            switch (parseInt(month)) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    return 31;
+                case 2:
+                    if (this.isLeapYear(parseInt(year))) {
+                        return 29;
+                    } else {
+                        return 28;
+                    }
+                default:
+                    return 30;
+            }
+        }
+        // 判断闰年
+        Calendar.prototype.isLeapYear = function (year) {
+            return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+        }
+
+        Calendar.prototype.binEvent = function () {
+            // 日历头部按钮
+
+            // 日历格子点击事件
+
+            // 日历footer
+
+        }
+
+        // 输入框获得焦点时new一个，失去焦点时，取消引用
+        var cal = new Calendar("container");
+    </script>
     <script src="js/calendar.js"></script>
 </body>
 
