@@ -27,6 +27,7 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
     top: 35px;
     right: -45px;
     border-radius: 5px;
+    transition:all 0.5s ease 0s;
 }
 #container #calender th,
 #container #calender td {
@@ -44,6 +45,7 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
 #container #calender td {
     cursor: pointer;
     font-size: 12px;
+    transition:all 0.5s ease 0s;
 }
 
 #container #calender td.prevM,
@@ -64,12 +66,12 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
 
 #container #calender td.current {
     color: #FFF;
-    background-color: #503dfa
+    background-color: #0d7feb;
 }
 
 #container #calender td:hover {
     color: #FFF;
-    background-color: #503dfa
+    background-color: #53abfd;
 }
 
 #container #calender td:hover span {
