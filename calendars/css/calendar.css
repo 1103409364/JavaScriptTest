@@ -10,13 +10,14 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
 
 #container {
     position: relative;
-    width: 290px;
+    width: 350px;
     margin: 0 auto;
 }
 
 #container input {
-    width: 200px;
+    width: 100px;
     line-height: 25px;
+    padding: 0 10px;
 }
 
 #container #calender {
@@ -25,9 +26,10 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
     /* width: 204px; */
     position: absolute;
     top: 35px;
-    right: -45px;
+    left: 0;
+    border: 1px solid #d1d1d1;
     border-radius: 5px;
-    transition:all 0.5s ease 0s;
+    display: none;
 }
 #container #calender th,
 #container #calender td {
@@ -45,11 +47,11 @@ html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre
 #container #calender td {
     cursor: pointer;
     font-size: 12px;
-    transition:all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
 }
 
-#container #calender td.prevM,
-#container #calender td.nextM {
+#container #calender td.prevMd,
+#container #calender td.nextMd {
     color: #c7c7c7;
 }
 
