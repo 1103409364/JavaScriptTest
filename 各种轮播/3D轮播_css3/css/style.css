@@ -1,0 +1,81 @@
+.stage {
+    margin: 100px auto;
+    position: relative;
+    width: 560px;
+    height: 300px;
+    perspective: 5000px;
+    transition: all 0.5s ease 0s;
+}
+
+.stage .unit {
+    transform-style: preserve-3d;
+}
+
+.stage .unit ul img {
+    width: 560px;
+}
+
+.stage .unit ul li {
+    width: 560px;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    perspective: 1000px;
+    user-select: none;
+}
+
+h3 {
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+}
+/* .carousel .moveUnit ul li:nth-of-type(1) {
+    transform: rotateY(0deg) translateZ(385px);
+}
+
+.carousel .moveUnit ul li:nth-of-type(2) {
+    transform: rotateY(72deg) translateZ(385px);
+}
+
+.carousel .moveUnit ul li:nth-of-type(3) {
+    transform: rotateY(144deg) translateZ(385px);
+}
+
+.carousel .moveUnit ul li:nth-of-type(4) {
+    transform: rotateY(216deg) translateZ(385px);
+}
+
+.carousel .moveUnit ul li:nth-of-type(5) {
+    transform: rotateY(288deg) translateZ(385px);
+} */
+
+.leftBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: rgb(0, 0, 0);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid rgb(0, 0, 0);
+    left: 0;
+    bottom: 0;
+    margin-top: -20px;
+}
+
+.rightBtn {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 40px;
+    color: rgb(0, 0, 0);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border: 2px solid rgb(0, 0, 0);
+    right: 0;
+    bottom: 0;
+    margin-top: -20px;
+}

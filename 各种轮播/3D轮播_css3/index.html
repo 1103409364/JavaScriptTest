@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D轮播</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h3>滚轮控制</h3>
+    <!-- 景深要给组合体的舞台，这里是这一层div -->
+    <div class="stage">
+        <!-- 3D组合体 -->
+        <!-- transform-style: preserve-3d;保留内部的3d变化加载组合体上 -->
+        <div class="unit">
+            <ul>
+                <li class="num0"><a href="#"><img src="img/0.jpg" alt=""></a>
+                    <div class="mask"></div>
+                </li>
+                <li class="num1"><a href="#"><img src="img/1.jpg" alt=""></a>
+                    <div class="mask"></div>
+                </li>
+                <li class="num2"><a href="#"><img src="img/2.jpg" alt=""></a>
+                    <div class="mask"></div>
+                </li>
+                <li class="num3"><a href="#"><img src="img/3.jpg" alt=""></a>
+                    <div class="mask"></div>
+                </li>
+                <li class="num4"><a href="#"><img src="img/4.jpg" alt=""></a>
+                    <div class="mask"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <a class="leftBtn" id="leftBtn" href="javascript:;">L</a>
+    <a class="rightBtn" id="rightBtn" href="javascript:;">R</a>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+
+    <script>
+        var $unit = $(".unit");
+
+        $(".unit li").each(function (i) {
+            $(this).css("transform", "rotateY("+ i * 72 + "deg) translateZ(" + 280 / Math.tan(36* Math.PI/180) + "px)");
+        });
+
+        var nowdegree = 0;		//信号量
+		var lock = true;		//函数截流
+
+		//滚轮事件
+ 		$(".stage").mousewheel(function(event,delta){
+ 			//函数节流
+ 			if(!lock) return;	
+ 			//阻止默认事件
+ 			event.preventDefault();
+ 			//信号量根据鼠标滚轮的方向来改变
+ 			nowdegree -= delta * 72;
+
+ 			$unit.css("transform","rotateY(" + nowdegree + "deg)");
+
+ 			//过河拆桥
+ 			lock = false;
+ 			//函数截流，因为transition的动画时间是0.5s，所以500毫秒开锁
+ 			setTimeout(function(){
+ 				lock = true
+ 			}, 500);
+ 		});
+
+         //拖拽业务
+ 		var startX;
+ 		var startY;
+ 		$(document).mousedown(function(event){
+			//  禁止默认拖拽图片的行为
+			event.preventDefault();
+
+ 			startX = event.clientX;
+ 			startY = event.clientY;
+ 			console.log(startX,startY);
+			// 禁止过度
+ 			$unit.css("transition","none");
+
+ 			$(document).mousemove(function(event){
+	 			var deltaX = event.clientX - startX;
+	 			var deltaY = event.clientY - startY;
+	 			console.log(deltaX,deltaY);
+
+	 			$unit.css("transform","rotateX(" + -deltaY / 5 + "deg) rotateY(" + deltaX / 5 + "deg)");
+	 			return false;
+ 			});
+
+ 		});
+
+ 		$(document).mouseup(function(){
+			//  取消move事件
+			$(document).off("mousemove");
+			// 恢复过度
+			$unit.css("transition","all 0.5s ease 0s");
+		})
+    </script>
+</body>
+
+</html>
