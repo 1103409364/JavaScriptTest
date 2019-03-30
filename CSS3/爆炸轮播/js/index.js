@@ -16,19 +16,6 @@ var $jigsaw = $(".jigsaw");
 var imgLength = 5;
 // 函数节流
 var lock = true;
-// 创建100个div
-function createDiv() {
-    for (var row = 0; row < 10; row++) {
-        for (var col = 0; col < 10; col++) {
-            $("<div></div>").css({
-                "position": "absolute",
-                "left": col * option.width / 10,
-                "top": row * option.height / 10
-
-            }).appendTo(".divWrap");
-        }
-    }
-}
 
 var $divWrap = $(".divWrap");
 var $allDdiv = $(".divWrap div");
@@ -101,6 +88,19 @@ function jigsaw(imgIdx) {
     })
 }
 
+// 创建100个div
+function createDiv() {
+    for (var row = 0; row < 10; row++) {
+        for (var col = 0; col < 10; col++) {
+            $("<div></div>").css({
+                "position": "absolute",
+                "left": col * option.width / 10,
+                "top": row * option.height / 10
+            }).appendTo(".divWrap");
+        }
+    }
+}
+// 下一张图片
 function nextImg(imgIdx) {
     $(".jigsaw .first img").attr("src", "img/" + imgIdx + ".jpg");
 }
