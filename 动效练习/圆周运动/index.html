@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>圆周运动</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <ul class="pic">
+        <li id="angry"><a href="#"><img src="img/angry.png" alt=""></a></li>
+        <li id="funny"><a href="#"><img src="img/funny.png" alt=""></a></li>
+        <li id="laugh"><a href="#"><img src="img/laugh.png " alt=""></a></li>
+        <li id="indidious"><a href="#"><img src="img/insidious.png" alt=""></a></li>
+    </ul>
+
+    <script>
+        var list = document.getElementsByTagName("li");
+
+        for (var i = 0; i < list.length; i++) {
+            circularMotion({
+                "obj": list[i],
+                "center": [600, 400],
+                "r": 100 * i,
+                "looptime": 4000 * i,
+            })
+        }
+
+        // 圆周运动函数
+        function circularMotion(argsJSON) {
+            var o = argsJSON.obj;
+            var a = argsJSON.center[0];
+            var b = argsJSON.center[1];
+            var r = argsJSON.r;
+
+            var direction = argsJSON.direction || 1;
+            var degree = argsJSON.degree || 0;
+            var interval = 20;
+            var looptime = argsJSON.looptime;
+            var loopFrames = looptime / interval;
+            var degreeDelta = 360 / loopFrames;
+
+            setInterval(() => {
+                degree += degreeDelta * direction;
+                degree %= 360;
+                go(degree);
+            }, interval);
+
+            function go() {
+                o.style.left = a + r * Math.sin(degreeToRad(degree)) + "px";
+                o.style.top = b - r * Math.cos(degreeToRad(degree)) + "px";
+            }
+
+            function degreeToRad(degree) {
+                return degree * Math.PI / 180;
+            }
+        }
+    </script>
+</body>
+
+</html>
