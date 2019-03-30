@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3 球</title>
+    <link rel="stylesheet" href="css/cssreset-min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="ball">
+        <ul class="unit"></ul>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+
+    <script>
+        // 球组合体
+        var $unit = $(".ball .unit");
+        // 半径
+        var r = 300;
+        // 从球顶部往底部的顺序编号0到8，总共9层
+        var layer = 8;
+
+        for (var j = 0; j <= layer; j++) {
+            // 每层的个数为num
+            var num = 5 * j;
+            if (j == 0) {
+                num = 1;
+            }
+            if (j > 4) {
+                // 0 1 2 3 4 3 2 1 0
+                num = (8 - j) * 4;
+            }
+            // Y轴旋转角度
+            var Ydeg;
+            if (j > 0 && j < 8) {
+                Ydeg = 360 / num;
+            }
+
+            if (j == 0 || j == 8) {
+                Ydeg = 0;
+            }
+            for (var i = 0; i <= num; i++) {
+                $("<li></li>").css({
+                    // 根据总层数一半计算X轴旋转的角度，如果是做圆柱体，x轴不动
+                    "transform": "rotateY(" + Ydeg * i + "deg)" + "rotateX(" + 90 / (layer/2)* (layer/2 - j) + "deg)" +
+                        "translateZ(" +
+                        r +
+                        "px)",
+                    "width": 80,
+                    "height": 80,
+                    "position": "absolute",
+                    "left": 0,
+                    "top": 0,
+                    "opacity": 0.7,
+                    "border-radius": "50%",
+                    "background-color": "rgb(" + parseInt(Math.random() * 250) + "," + parseInt(Math.random() *
+                        250) + "," + parseInt(Math.random() * 250) + ")"
+                }).appendTo($unit);
+            }
+        }
+        // 鼠标移动，球跟着转动
+        $(document).mousemove(function (event) {
+            $unit.css({
+                "transform": "rotateY(" + event.clientX / 5 + "deg)" + "rotateX(" + event.clientY / 5 +
+                    "deg)",
+            })
+        })
+    </script>
+</body>
+
+</html>

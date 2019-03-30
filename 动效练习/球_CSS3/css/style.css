@@ -1,0 +1,19 @@
+.ball {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: -50px;
+    perspective: 1000px;
+}
+
+.ball .unit {
+    transform-style: preserve-3d;
+}
+
+/* .ball .unit li {
+    opacity: 0.7;
+    background-color: rgb(25, 0, 250);
+} */
