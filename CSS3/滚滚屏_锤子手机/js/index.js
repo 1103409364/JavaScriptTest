@@ -35,6 +35,7 @@ $jigsaw.mouseleave(function () {
     timerId = setInterval(rightBtnHandler, option.interval);
 });
 
+var $imgLi = $(".jigsaw .allImg li");
 // 右键轮播业务
 function rightBtnHandler() {
     if (!lock) return;
@@ -60,9 +61,8 @@ function leftBtnHandler() {
     changeSlider();
 }
 
-// 拼图飞走的业务
+// 拼图
 function jigsaw(imgIdx) {
-    // 每次重新创建div
     createDiv();
     $allDdiv = $(".divWrap div");
     $allDdiv.each(function (i) {
@@ -110,18 +110,23 @@ var slider = $(".jigsaw .slider li");
 // 小圆点指示器业务
 slider.click(function () {
     if (!lock) return;
-
     var clickIdx = $(this).index();
-    // 如果点到圆点是当前图片，直接返回
-    if (clickIdx == imgIdx) {
-        return;
+    // 如果点到圆点的序号在现有序号之后，把拼图div放在左上角准备，反之放在右上角
+    if (clickIdx > imgIdx) {
+        $allDdiv.css({
+            "left": option.width,
+            "top": 0,
+        })
     }
-    // 先让老图飞走
-    jigsaw(imgIdx);
-    // 改变信号量
+
+    if (clickIdx < imgIdx) {
+        $allDdiv.css({
+            "left": 0,
+            "top": 0,
+        })
+    }
     imgIdx = clickIdx;
-    // 切换到下一张图片
-    nextImg(imgIdx);
+    jigsaw(imgIdx);
     changeSlider();
 })
 
