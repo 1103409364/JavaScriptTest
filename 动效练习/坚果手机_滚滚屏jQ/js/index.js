@@ -42,6 +42,7 @@ function reset() {
 var index = 0;
 // 函数节流
 var lock = false;
+// 入场出场动画数组
 var animateInArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
 var animateOutArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
 $(document).mousewheel(function (e, delta) {
