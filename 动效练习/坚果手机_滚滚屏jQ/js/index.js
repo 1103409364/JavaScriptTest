@@ -1,3 +1,4 @@
+// 第一页鼠标滑过手机的业务
 $phonePicWrap = $(".phonePic");
 $imglist = $(".phonePic .standard img");
 
@@ -38,7 +39,7 @@ function reset() {
         }, 200)
     })
 }
-
+// 滚滚屏业务
 var index = 0;
 // 函数节流
 var lock = false;
