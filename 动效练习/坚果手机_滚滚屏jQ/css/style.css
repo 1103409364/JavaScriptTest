@@ -1,0 +1,204 @@
+.clearfix::before, .clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #cfcfcf;
+    z-index: 999;
+}
+
+header ul.link {
+    width: 100%;
+    height: 100px;
+}
+
+nav {
+    width: 100%;
+    height: 38px;
+    background-color: rgb(230, 230, 230);
+}
+.pages {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+/* .page1 */
+.page1 {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.phonePic {
+    width: 100%;
+    padding-top: 50px;
+    position: absolute;
+    bottom: 0;
+    min-width: 1000px;
+    overflow: hidden;
+    height: 50%;
+}
+
+/* 7张图片平分100%的宽度 */
+
+.phonePic .standard li {
+    /* float: left; */
+    width: 14%;
+    position: absolute;
+    overflow: hidden;
+    /* height: 80%; */
+}
+
+.phonePic li img {
+    position: absolute;
+    width: 100%;
+    transition: all 0.1s ease 0s;
+}
+
+.phonePic li {
+    height: 100%;
+}
+
+.phonePic li:nth-of-type(1) {
+    left: 0.5%;
+}
+
+.phonePic li:nth-of-type(2) {
+    left: 14.7%;
+}
+
+.phonePic li:nth-of-type(3) {
+    left: 28.8%;
+}
+
+.phonePic li:nth-of-type(4) {
+    left: 42.9%;
+}
+
+.phonePic li:nth-of-type(5) {
+    left: 57%;
+}
+
+.phonePic li:nth-of-type(6) {
+    left: 71.1%;
+}
+
+.phonePic li:nth-of-type(7) {
+    left: 85.2%;
+}
+
+.page1 .content {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 30%;
+}
+
+.page1 .content h3 {
+    width: 100%;
+    font-size: 45px;
+    font-weight: 100;
+    padding-bottom: 20px;
+    color: #535353;
+}
+
+.page1 .content p a {
+    font-size: 18px;
+    height: 20px;
+    /* display: inline-block; */
+    text-decoration: none;
+    color: #c0c0c0;
+}
+
+.page1 .content p a.active {
+    color: #8b8b8b;
+}
+
+.page1 .content p i {
+    line-height: 20;
+    display: inline-block;
+    height: 12px;
+    border-right: 1px solid #d8d8d8;
+    margin: 0 20px;
+}
+/* 屏幕宽度小于1366时，防止露出手机底部 */
+@media screen and (max-width:1366px) {
+    .phonePic {
+        width: 100%;
+        padding-top: 50px;
+        position: absolute;
+        bottom: 0;
+        min-width: 1000px;
+        overflow: hidden;
+        height: 30%;
+    }
+}
+/* .page1 */
+
+/* page2 */
+.page2 {
+    width: 100%;
+    height: 100%;
+    /* background-color: #38aa4b; */
+    position: relative;
+}
+
+.page2 .front {
+    position: absolute;
+    top: 0;
+    right: 300px;
+    width: 866px;
+    height: 1539px;
+    background: url(../img/coffee-1.png);
+}
+
+.page2 .back {
+    position: absolute;
+    right: 250px;
+    top: 300px;
+    width: 819px;
+    height: 1539px;
+    background: url(../img/coffee-2.png);
+    animation: shake 2s ease 2s infinite alternate;
+}
+
+@keyframes shake {
+    from {
+        top: 250px;
+    } to {
+        top: 350px;
+    }
+}
+/* page3 */
+.page3 {
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    position: relative;
+}
+
+.page4 {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    position: relative;
+}
+
+footer {
+    height: 30%;
+    width: 100%;
+    background-color: #999;
+}
