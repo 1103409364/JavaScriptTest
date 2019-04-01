@@ -42,9 +42,9 @@ function reset() {
 var index = 0;
 // 函数节流
 var lock = false;
-// 入场出场动画数组
-var animateInArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
-var animateOutArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
+// 向上卷动和向下卷动的动画数组
+var animateUpArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
+var animateDownArr = [function () { }, function () { }, function () { }, function () { }, function () { }];
 $(document).mousewheel(function (e, delta) {
     if (lock) return;
     lock = true;
@@ -60,16 +60,18 @@ $(document).mousewheel(function (e, delta) {
         index = 5;
     }
     // console.log(index, oldIndex);
-    // 向上入场，向下出场
+    // 向上1，向下-1
     if (delta == 1) {
-        animateInArr[index]();
+        animateUpArr[index]();
     }
     if (delta == -1) {
-        animateOutArr[oldIndex]();
+        animateDownArr[oldIndex]();
     }
+
+    console.log(index, oldIndex)
 })
 // 顶栏动画
-animateOutArr[0] = function () {
+animateDownArr[0] = function () {
     $(".link").animate({
         "height": 0
     }, 500);
@@ -79,7 +81,7 @@ animateOutArr[0] = function () {
         lock = false
     });
 }
-animateInArr[0] = function () {
+animateUpArr[0] = function () {
     $(".link").animate({
         "height": 100
     }, 500);
@@ -90,7 +92,7 @@ animateInArr[0] = function () {
     });
 }
 // 第一页出，第二页入
-animateOutArr[1] = function () {
+animateDownArr[1] = function () {
     $(".pages").animate({
         "top": -100 + "%"
     }, 1000, "easieEaseInOutCirc", function () {
@@ -113,7 +115,7 @@ animateOutArr[1] = function () {
         "right": 250,
     }, 1500);
 }
-animateInArr[1] = function () {
+animateUpArr[1] = function () {
     $(".pages").animate({
         "top": 0
     }, 1000, "easieEaseInOutCirc", function () {
@@ -122,14 +124,14 @@ animateInArr[1] = function () {
 
 }
 // 第二页
-animateOutArr[2] = function () {
+animateDownArr[2] = function () {
     $(".pages").animate({
         "top": -200 + "%"
     }, 1000, "easieEaseInOutCirc", function () {
         lock = false;
     });
 }
-animateInArr[2] = function () {
+animateUpArr[2] = function () {
     $(".pages").animate({
         "top": -100 + "%",
     }, 1000, "easieEaseInOutCirc", function () {
@@ -153,14 +155,14 @@ animateInArr[2] = function () {
     }, 1500);
 }
 // 第三页
-animateOutArr[3] = function () {
+animateDownArr[3] = function () {
     $(".pages").animate({
         "top": -300 + "%"
     }, 1000, "easieEaseInOutCirc", function () {
         lock = false
     });
 }
-animateInArr[3] = function () {
+animateUpArr[3] = function () {
     $(".pages").animate({
         "top": -200 + "%",
     }, 1000, "easieEaseInOutCirc", function () {
@@ -169,14 +171,14 @@ animateInArr[3] = function () {
 }
 
 // 第三页
-animateOutArr[4] = function () {
+animateDownArr[4] = function () {
     $(".pages").animate({
         "top": -330 + "%"
     }, 500, "easieEaseInOutCirc", function () {
         lock = false
     });
 }
-animateInArr[4] = function () {
+animateUpArr[4] = function () {
     $(".pages").animate({
         "top": -300 + "%",
     }, 500, "easieEaseInOutCirc", function () {
