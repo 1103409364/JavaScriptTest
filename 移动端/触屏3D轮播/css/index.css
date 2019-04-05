@@ -100,7 +100,7 @@ html, body {
     top: 0;
     width: 0.5rem;
     height: 0;
-    border: 0.05rem solid #646464;
+    border: 2px solid #646464;
 }
 
 .page0 .header .nav a:nth-child(1) i:nth-child(1) {
