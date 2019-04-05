@@ -101,6 +101,8 @@ unit.addEventListener("touchend", function (e) {
     this.style.transform = "rotateY(" + -90 * now + "deg)" + "scale3d(1,1,1)";
     // 改变指示器
     changeSlider();
+    // 切换导航
+    changeNav();
 })
 
 // 显示当前信号量的图片，隐藏其他图片
