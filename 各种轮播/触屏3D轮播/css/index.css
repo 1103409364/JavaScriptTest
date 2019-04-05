@@ -1,0 +1,220 @@
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    font-size: 0.7rem;
+    width: 100%;
+    min-width: 300px;
+    /* 溢出隐藏，禁止纵向滑动 */
+    overflow: hidden;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+.pages {
+    width: 100%;
+    height: 100%;
+}
+.pages ul {
+    width: 100%;
+    height: 100%;
+}
+
+.pages ul li {
+    background-color: #fff;
+    width: 25rem;
+    /* height: 100%; */
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* padding-top: 5.8rem; */
+}
+
+
+.pages ul li img {
+    width: 100%;
+}
+
+.pages .page0 .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5.8rem;
+    background: url(../img/logo.png) no-repeat 0 0;
+    background-size: 24.5rem;
+    background-color: #fff;
+}
+
+.pages .page0 .header h1 {
+    text-indent: -999rem;
+    font-size: 0;
+}
+
+.page0 .header .nav {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    width: 12rem;
+    height: 2rem;
+    /* background-color: #068a3d; */
+}
+
+.page0 .header .nav a {
+    float: right;
+    margin-left: 2.5rem;
+    width: 1.2rem;
+    height: 100%;
+    background-size: 1.2rem 2rem;
+    background-repeat: no-repeat;
+}
+
+.page0 .header .nav a:nth-child(3) {
+    background-image: url(../img/car.png);
+}
+
+.page0 .header .nav a:nth-child(2) {
+    background-image: url(../img/try.png);
+}
+
+.page0 .header .nav a:nth-child(1) {
+    background-image: url(../img/h-menu.png);
+    position: relative;
+}
+
+.page0 .header .nav a:nth-child(1) i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0.5rem;
+    height: 0;
+    border: 0.05rem solid #646464;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(1) {
+    top: 0;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(2) {
+    top: 0.4rem;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(3) {
+    top: 0.8rem;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(4) {
+    left: 0.6rem;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(5) {
+    top: 0.4rem;
+    left: 0.6rem;
+}
+
+.page0 .header .nav a:nth-child(1) i:nth-child(6) {
+    top: 0.8rem;
+    left: 0.6rem;
+}
+
+.pages {
+    perspective: 1000px;
+}
+
+.pages .unit {
+    transform-style: preserve-3d;
+    /* transform: scale3d(0.6,0.6,0.6); */
+    transition:all 0.5s ease 0s;
+    /* transform-origin: 50% 50% -100px; */
+}
+
+/* footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.footer nav {
+    height: 2.03125rem;
+    background: url(../img/bk.png) no-repeat 0 bottom;
+    background-size: 25rem;
+
+}
+
+.footer ul {
+    height: 100%;
+}
+
+.footer nav ul li {
+    float: left;
+    width: 14.28%;
+    height: 100%;
+    /* background-color: #068a3d; */
+}
+
+.footer nav ul li a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-image: url(../img/nav.png);
+    background-repeat: no-repeat;
+    background-size: 25rem 5.3125rem;
+    transition: all 0.5s ease 0s;
+}
+
+.footer nav ul li.current a {
+    background-position-y: -0.2rem;
+}
+
+.footer nav li:nth-child(1) a {
+    background-position: -0.1rem -2.85rem;
+}
+.footer nav li:nth-child(2) a {
+    background-position: -4.1rem -2.85rem;
+}
+.footer nav li:nth-child(3) a {
+    background-position: -7.7rem -2.85rem;
+}
+.footer nav li:nth-child(4) a {
+    background-position: -11.2rem -2.85rem;
+}
+.footer nav li:nth-child(5) a {
+    background-position: -14.8rem -2.85rem;
+}
+.footer nav li:nth-child(6) a {
+    background-position: -18.4rem -2.85rem;
+}
+.footer nav li:nth-child(7) a {
+    background-position: -21.8rem -2.85rem;
+}
+
+.footer .slider {
+    height: 0.5rem;
+}
+
+.footer .slider li {
+    float: left;
+    height: 0.5rem;
+    width: 14.28%;
+    background-color: #fff;
+    transition: all 0.5s ease 0s;
+}
+
+.footer .slider li.current {
+    background-color: #f73a3a;
+}
