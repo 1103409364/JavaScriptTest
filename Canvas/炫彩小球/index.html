@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas">浏览器不支持canvas，请升级</canvas>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ballArr = [];
+        // 设置画布尺寸
+        canvas.height = document.documentElement.clientHeight / 2;
+        canvas.width = document.documentElement.clientWidth / 2;
+        var ctx = canvas.getContext("2d");
+        // 小球类
+        function Ball(x, y) {
+            this.x = x;
+            this.y = y;
+            this.r = 40;
+            this.color = "rgba(" + parseInt(Math.random() * 256) + "," + parseInt(Math.random() * 256) + "," + parseInt(
+                Math.random() * 256) + ",0.7)";
+
+            this.dx = parseInt(Math.random() * 9) - 4; //x的变化值
+            this.dy = parseInt(Math.random() * 9) - 4; //y的变化值
+            ballArr.push(this); //让自己进入数组
+        }
+        // 渲染小球
+        Ball.prototype.render = function () {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.r, 0, 6.3, false);
+            ctx.fill();
+        }
+        // 更新小球
+        Ball.prototype.update = function () {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r-=0.8;
+            // 半径小于0就自杀
+            if (this.r < 0) {
+                this.die();
+            }
+        }
+        // 删除小球
+        Ball.prototype.die = function () {
+            for (var i = 0; i < ballArr.length; i++) {
+                if (ballArr[i] === this) {
+                    ballArr.splice(i, 1);
+                }
+            }
+        }
+        // 监听鼠标移动
+        canvas.onmousemove = function (e) {
+            var x = e.clientX;
+            var y = e.clientY;
+
+            new Ball(x, y);
+        }
+        // 帧数
+        var frame = 0;
+        setInterval(() => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            frame++;
+            ctx.fillStyle = "#000";
+            ctx.font = "14px serif";
+            ctx.fillText("frame:" + frame, 0, 20);
+            // 渲染小球
+            for (var i = 0; i < ballArr.length; i++) {
+                ballArr[i].update();
+                ballArr[i] && ballArr[i].render();
+            }
+        }, 20);
+    </script>
+</body>
+
+</html>
