@@ -15,6 +15,7 @@
         this.t = 0;
         // 鸟旋转的角度
         this.degree = 0;
+        this.die = false;
     }
 
     Bird.prototype.render = function () {
@@ -33,29 +34,47 @@
         if (this.y < 0) {
             this.y = 0;
         }
+
+        if (this.y > game.canvas.height * 0.76 - 15) {
+            this.goDie()
+        }
         //  当t>30表示小鸟在下落，改变角度让鸟头向下
         if (this.t > 30) {
             this.degree += 0.2;
             // 头朝下停止煽动翅膀
             this.imgno = 1;
         } else {
-            game.fno % 3 == 0 && this.imgno++;
-            if (this.imgno > 2) {
-                this.imgno = 0;
-            }
+            game.fno % 5 == 0 && this.imgno++;
+            this.imgno = this.imgno > 2 ? 0 : this.imgno++;
         }
+        // 最大旋转角度，让鸟头向下
         if (this.degree > Math.PI / 2) {
             this.degree = Math.PI / 2;
         }
+        // 小鸟的矩形边界，碰撞检测用,分别是上右下左
+        this.T = this.y - 12;
+        this.R = this.x + 17;
+        this.B = this.y + 12;
+        this.L = this.x - 17;
     }
     // 上升
     Bird.prototype.fly = function () {
-        this.t = 0;
-        this.v = -7;
-        //旋转一个角度，让鸟头抬起
-        this.degree = -0.5;
-        // 播放声音
-        game.R.fly.load();
-        game.R.fly.play();
+        if (!this.die) {
+            this.t = 0;
+            this.v = -7;
+            //旋转一个角度，让鸟头抬起
+            this.degree = -0.5;
+            // 播放声音
+            game.R.fly.load();
+            game.R.fly.play();
+        }
+    }
+
+    Bird.prototype.goDie = function () {
+        //死亡播放音效
+        game.R.hit.load();
+        game.R.hit.play();
+        this.die = true;
+        clearInterval(game.timer);
     }
 })()
