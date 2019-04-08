@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FlappyBird</title>
+    <link rel="shortcut icon" href="R/favicon.ico" type="image/x-icon" /> 
+    <style>
+        body,
+        html {
+            margin: 0;
+        }
+
+        #canvas {
+            background-color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas">浏览器不支持，请升级</canvas>
+
+    <script src="js/Game.js"></script>
+    <script src="js/Background.js"></script>
+    <script src="js/Land.js"></script>
+    <script src="js/Piple.js"></script>
+    <script src="js/Bird.js"></script>
+    <script>
+        var game = new Game({
+            "id": "canvas",
+            "dataUrl": "/data/R.json"
+        })
+    </script>
+</body>
+
+</html>

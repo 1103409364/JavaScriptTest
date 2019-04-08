@@ -1,0 +1,27 @@
+{
+	"images" : [
+		{"name" : "bg_day" , "url" : "R/images/bg_day.png"},
+		{"name" : "bg_night" , "url" : "R/images/bg_night.png"},
+		{"name" : "land" , "url" : "R/images/land.png"},
+		{"name" : "pipe_down" , "url" : "R/images/pipe_down.png"},
+		{"name" : "pipe2_down" , "url" : "R/images/pipe2_down.png"},
+		{"name" : "pipe_up" , "url" : "R/images/pipe_up.png"},
+		{"name" : "pipe2_up" , "url" : "R/images/pipe2_up.png"},
+		{"name" : "bird0_0" , "url" : "R/images/bird0_0.png"},
+		{"name" : "bird0_1" , "url" : "R/images/bird0_1.png"},
+		{"name" : "bird0_2" , "url" : "R/images/bird0_2.png"},
+		{"name" : "bird1_0" , "url" : "R/images/bird1_0.png"},
+		{"name" : "bird1_1" , "url" : "R/images/bird1_1.png"},
+		{"name" : "bird1_2" , "url" : "R/images/bird1_2.png"},
+		{"name" : "bird2_0" , "url" : "R/images/bird2_0.png"},
+		{"name" : "bird2_1" , "url" : "R/images/bird2_1.png"},
+		{"name" : "bird2_2" , "url" : "R/images/bird2_2.png"}
+	],
+	"audio" :[
+		{"name" : "bgm", "url" : "R/audio/bgm.mp3"},
+		{"name" : "fly", "url" : "R/audio/fly.mp3"},
+		{"name" : "hit", "url" : "R/audio/hit.mp3"},
+		{"name" : "point", "url" : "R/audio/point.mp3"}
+
+	]
+}
