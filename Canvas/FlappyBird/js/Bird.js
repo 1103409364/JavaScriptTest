@@ -1,12 +1,19 @@
 (function () {
     var Bird = window.Bird = function () {
-        this.image = [game.R.bird0_0, game.R.bird0_1, game.R.bird0_2];
+        this.image = game.R.bird;
         // 图片编号
         this.imgno = 1;
+        // 用来制作上下浮动效果，漂浮
+        this.deltaY = 0;
+        this.flag = true;
+        // 真实宽高92*64
+        this.realW = 276 / 3;
+        this.realH = 64;
         this.height = 48;
         this.width = 48;
-        this.x = game.canvas.width / 2 - this.width;
-        this.y = game.canvas.height * (1 - 0.618);
+        // 初始位置
+        this.x = game.canvas.width / 2;
+        this.y = game.canvas.height * 0.3
         // 向上的速度
         this.v = 0;
         // 向下的加速度
@@ -23,7 +30,8 @@
         // 改变坐标系
         game.ctx.translate(this.x, this.y);
         game.ctx.rotate(this.degree);
-        game.ctx.drawImage(this.image[this.imgno], -24, -24);
+        // 默认显示中间切片
+        game.ctx.drawImage(this.image, this.realW * this.imgno, 0, this.realW, this.realW, -this.width / 2, -this.height / 2, this.width, this.height);
         game.ctx.restore();
     }
 
@@ -34,8 +42,8 @@
         if (this.y < 0) {
             this.y = 0;
         }
-
-        if (this.y > game.canvas.height * 0.76 - 15) {
+        // 地面在0.76的位置
+        if (this.y > game.canvas.height * 0.76 - 20) {
             this.goDie()
         }
         //  当t>30表示小鸟在下落，改变角度让鸟头向下
@@ -44,8 +52,7 @@
             // 头朝下停止煽动翅膀
             this.imgno = 1;
         } else {
-            game.fno % 5 == 0 && this.imgno++;
-            this.imgno = this.imgno > 2 ? 0 : this.imgno++;
+            this.wing();
         }
         // 最大旋转角度，让鸟头向下
         if (this.degree > Math.PI / 2) {
@@ -59,6 +66,7 @@
     }
     // 上升
     Bird.prototype.fly = function () {
+        // 死了不能飞
         if (!this.die) {
             this.t = 0;
             this.v = -7;
@@ -70,11 +78,17 @@
         }
     }
 
+    Bird.prototype.wing = function () {
+        game.fno % 5 === 0 && this.imgno++;
+        this.imgno = this.imgno > 2 ? 0 : this.imgno++;
+    }
+
     Bird.prototype.goDie = function () {
         //死亡播放音效
         game.R.hit.load();
         game.R.hit.play();
         this.die = true;
-        clearInterval(game.timer);
+        // 死了去场景4
+        game.sm.enter(4);
     }
 })()

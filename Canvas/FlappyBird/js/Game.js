@@ -1,4 +1,5 @@
 (function () {
+    // game类持有场景管理器，通过场景管理器来更新和渲染各种不同场景
     var Game = window.Game = function (json) {
         this.canvas = document.querySelector("#" + json.id);
         // 取得画布的上下文
@@ -7,16 +8,23 @@
         this.dataUrl = json.dataUrl;
         // 提供一个对象R,把取回的资源放在R中
         this.R = {};
+        // 管子数组
+        this.pipeArr = [];
         // 帧编号
         this.fno = 0;
+        //分数
+		this.score = 0;
         // 初始化，自适应不同的视口
         this.init();
+        // 是否载入游戏
+        this.load = false;
         // 加载资源，异步操作需要回调函数处理后续的任务
         var _this = this;
         this.loadResource(function () {
-            console.log("加载完毕");
+            // console.log("加载完毕")开始游戏
             _this.start();
-        })
+        });
+        this.gameOver = false;
     }
     // 初始化视口
     Game.prototype.init = function () {
@@ -28,9 +36,13 @@
         // 限制画布宽高，pixel 2xL视口为411*823
         if (this.windowHeight > 823) {
             this.canvas.height = 823;
+        } else if( this.windowHeight < 480) {
+            this.canvas.height = 480;
         }
         if (this.windowWidth > 414) {
             this.canvas.width = 414;
+        } else if (this.windowWidth < 320) {
+            this.canvas.width = 320;
         }
 
     }
@@ -38,6 +50,7 @@
     Game.prototype.loadResource = function (callback) {
         var _this = this; //备份this
         var loadDoneNumber = 0; //加载图片计数
+        var loadAudioNumber = 0; //加载音频计数
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
@@ -50,6 +63,7 @@
                     for (let j = 0; j < audio.length; j++) {
                         _this.R[audio[j].name] = new Audio();
                         _this.R[audio[j].name].src = audio[j].url;
+                        loadAudioNumber++;
                     }
                     // 图片资源
                     for (let i = 0; i < images.length; i++) {
@@ -69,8 +83,6 @@
                             }
                         }
                     }
-
-
                 }
             }
         }
@@ -80,54 +92,30 @@
     }
 
     Game.prototype.start = function () {
-        // 播放bgm
-        // this.R.bgm.load();
-        // this.R.bgm.play();
-        // 实例化背景
-        this.background = new Background();
-        // 实例化大地
-        this.land = new Land();
-        // 管子类
-        this.pipleArr = [];
-        // 鸟类
-        this.bird = new Bird();
+        // game类的场景管理器
+        this.sm = new SceneManager();
         var _this = this;
+      
+        // 改到场景管理器中实例化各种类，和添加监听
+        // 实例化
         // 画布点击监听
-        this.canvas.addEventListener("click", function () {
-            // 点击时获得一个向上的速度
-            _this.bird.fly();
-        })
-        // // 触摸监听
-        // this.canvas.addEventListener("touchstart", function () {
-        //     // 点击时获得一个向上的速度
-        //     _this.bird.fly();
-        // })
+ 
 
         // 全局一个定时器
         this.timer = setInterval(function () {
+            // 清除画布
             _this.ctx.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
+            // 全局帧编号
             _this.fno++;
-            if (_this.fno % 150 === 0) {
-                new Piple();
-            }
-            // 更新背景渲染背景
-            _this.background.update();
-            _this.background.render();
-            // 更新大地渲染大地
-            _this.land.update();
-            _this.land.render();
-            // 更新管子渲染管子
-            for (var i = 0; i < _this.pipleArr.length; i++) {
-                _this.pipleArr[i] && _this.pipleArr[i].update();
-                _this.pipleArr[i] && _this.pipleArr[i].render();
-            }
-            // 更新鸟类渲染鸟类
-            _this.bird.update();
-            _this.bird.render();
-            // 后画的会被先画的覆盖
-            _this.ctx.font = "14px 微软雅黑";
-            _this.ctx.fillStyle = "#000"
-            _this.ctx.fillText(_this.fno, 20, 20);
+            _this.sm.update();
+            _this.sm.render()
+
+            _this.ctx.font = "20px FB";
+            _this.ctx.textAlign = "left";
+			_this.ctx.fillStyle = "#fff";
+			_this.ctx.fillText("F NO. : " + _this.fno , 10 ,20);
+			_this.ctx.fillText("Scene : " + _this.sm.sceneNumber , 10 ,40);
+            // 渲染和更新也放到场景管理器中
         }, 20)
     }
 })()
