@@ -16,8 +16,6 @@
 		this.score = 0;
         // 初始化，自适应不同的视口
         this.init();
-        // 是否载入游戏
-        this.load = false;
         // 加载资源，异步操作需要回调函数处理后续的任务
         var _this = this;
         this.loadResource(function () {
@@ -25,6 +23,7 @@
             _this.start();
         });
         this.gameOver = false;
+        this.bgm = document.getElementById("bgm");
     }
     // 初始化视口
     Game.prototype.init = function () {

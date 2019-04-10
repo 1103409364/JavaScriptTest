@@ -97,22 +97,12 @@
     SceneManager.prototype.render = function () {
         switch (this.sceneNumber) {
             case 1:
-                // 进入场景1播放bgm
-                if (!game.load) {
-                    // 监听bgm能不能播放
-                    game.R.bgm.addEventListener("canplaythrough", function () {
-                        game.R.bgm.play();
-                    })
-                }
-                // 游戏结束后重新播放
-                if (game.gameOver) {
-                    console.log(1)
-                    // 播放bgm
-                    game.R.bgm.load();
-                    game.R.bgm.play();
+                // 游戏结束后回场景1时，重新播放bgm
+                if(game.gameOver) {
+                    game.bgm.load();
+                    game.bgm.play();
                 }
                 game.gameOver = false;
-                game.load = true;
                 //渲染背景
                 game.bg.render();
                 //渲染大地
@@ -126,6 +116,8 @@
                 game.ctx.drawImage(game.R["button_play"], this.button_playX, this.button_playY);
                 break;
             case 2:
+                // 停止背景音乐
+                game.bgm.pause();
                 //渲染背景
                 game.bg.render();
                 //渲染大地
@@ -156,7 +148,7 @@
                 var scoreLength = game.score.toString().length;
                 //循环语句去设置图片的显示，有一个基准位置就是self.canvas.width / 2 - scoreLength / 2 * 34
                 for (var i = 0; i < scoreLength; i++) {
-                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height *0.1);
+                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height * 0.1);
                 }
                 //渲染小鸟，小鸟应该后渲染，盖住其他对象
                 game.bird.render();
@@ -183,7 +175,7 @@
                 var scoreLength = game.score.toString().length;
                 //循环语句去设置图片的显示，有一个基准位置就是self.canvas.width / 2 - scoreLength / 2 * 34
                 for (var i = 0; i < scoreLength; i++) {
-                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height *0.1);
+                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height * 0.1);
                 }
                 break;
             case 5:
@@ -202,11 +194,11 @@
                 var scoreLength = game.score.toString().length;
                 //循环语句去设置图片的显示，有一个基准位置就是self.canvas.width / 2 - scoreLength / 2 * 34
                 for (var i = 0; i < scoreLength; i++) {
-                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height *0.1);
+                    game.ctx.drawImage(game.R["shuzi" + game.score.toString().charAt(i)], game.canvas.width / 2 - scoreLength / 2 * 34 + 34 * i, game.canvas.height * 0.1);
                 }
 
                 //渲染game over
-                game.ctx.drawImage(game.R["text_game_over"], game.canvas.width / 2 - 102, game.canvas.height *(1-0.618));
+                game.ctx.drawImage(game.R["text_game_over"], game.canvas.width / 2 - 102, game.canvas.height * (1 - 0.618));
         }
     }
     SceneManager.prototype.enter = function (number) {
@@ -268,8 +260,6 @@
                     //进入1号场景，检测用户是否点到按钮，无法给按钮添加监听，通过点击位置判断
                     if (mousex > _this.button_playX && mousex < _this.button_playX + 116 && mousey > _this.button_playY && mousey < _this.button_playY + 70) {
                         _this.enter(2); //去2号场景
-                        // 停止背景音乐
-                        game.R.bgm.pause();
                     }
                     break;
                 case 2:
