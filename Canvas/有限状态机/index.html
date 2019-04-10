@@ -133,6 +133,7 @@
             game.ctx.save();
             game.ctx.font = "14px consolas";
             game.ctx.fillText("  FNO: " + game.fno, 20, 20);
+            // 实际上看到的状态是progress一闪一闪的，因为进到某个状态后会马上切换到progress转让，防止回调重复执行
             game.ctx.fillText("state: " + game.state, 20, 40);
             game.ctx.restore();
             // 根据不同的状态，做不同的事
