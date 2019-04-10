@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>有限状态机Demo</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+        }
+
+        h1 {
+            text-align: left;
+            font-size: 20px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>有限状态机和canvas中的回调函数</h1>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // 状态，A,B,C,D,stop,progress最后一个状态表示某状态正在进行中，其他什么都不干，相当于函数节流
+        // 防止重复促发回调函数
+        function Game() {
+            this.canvas = document.querySelector("#canvas");
+            this.canvas.width = 1000;
+            this.canvas.height = 800;
+            this.ctx = this.canvas.getContext("2d");
+            this.fno = 0;
+            // 初始状态
+            this.state = "stop";
+
+            // 回调函数，df帧之后开始执行
+            this.callbackObj = {};
+            this.rect = new Rect();
+            var _this = this;
+            this.start(50, function () {
+                _this.state = "A";
+
+            })
+        }
+        // 游戏开始
+        Game.prototype.start = function (df, callback) {
+            this.state = "progress";
+            this.registerCallback(df, callback);
+        }
+        // 注册回调函数
+        //两个参数，第一个参数表示多少帧之后
+        Game.prototype.registerCallback = function (df, callback) {
+            // 当前帧 + df和作为对象属性
+            this.callbackObj[this.fno + df] = callback;
+        }
+
+        // 查看当前帧有没有注册过回调函数，有就执行回调函数
+        Game.prototype.hasCallback = function () {
+            if (this.callbackObj.hasOwnProperty(this.fno)) {
+                this.callbackObj[this.fno]();
+                delete this.callbackObj[this.fno];
+            }
+        }
+        // 方块类
+        function Rect() {
+            this.height = 100;
+            this.width = 100;
+            this.x = 100;
+            this.y = 100;
+            this.color = "red";
+
+            this.dx = 0;
+            this.dy = 0;
+        }
+
+        Rect.prototype.update = function () {
+            this.x += this.dx;
+            this.y += this.dy;
+        }
+
+        Rect.prototype.render = function () {
+            game.ctx.save();
+            game.ctx.fillStyle = this.color;
+            game.ctx.fillRect(this.x, this.y, this.width, this.height);
+            game.ctx.restore();
+        }
+        // 方块的运动方法
+        Rect.prototype.goRight = function (df, callback) {
+            this.dx = 10;
+            this.dy = 0;
+
+            game.registerCallback(df, callback);
+        }
+
+        Rect.prototype.goDown = function (df, callback) {
+            this.dx = 0;
+            this.dy = 10;
+
+            game.registerCallback(df, callback);
+        }
+
+        Rect.prototype.goLeft = function (df, callback) {
+            this.dx = -10;
+            this.dy = 0;
+            game.registerCallback(df, callback);
+        }
+
+        Rect.prototype.goUp = function (df, callback) {
+            this.dx = 0;
+            this.dy = -10;
+            game.registerCallback(df, callback);
+        }
+
+        Rect.prototype.stop = function (df, callback) {
+            this.dx = 0;
+            this.dy = 0;
+
+            game.registerCallback(df, callback);
+        }
+        // 实例化Game
+        var game = new Game();
+        // 主定时器
+        setInterval(() => {
+            game.fno++;
+            game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+            game.rect.render();
+            game.rect.update();
+            // 在定时器中不断检查回调函数组成的对象中，是否有当前帧注册的回调函数
+            game.hasCallback();
+            // 显示帧编号，和状态
+            game.ctx.save();
+            game.ctx.font = "14px consolas";
+            game.ctx.fillText("  FNO: " + game.fno, 20, 20);
+            game.ctx.fillText("state: " + game.state, 20, 40);
+            game.ctx.restore();
+            // 根据不同的状态，做不同的事
+            switch (game.state) {
+                case "A":
+                    game.rect.goRight(50, function () {
+                        game.state = "B";
+                    });
+                    game.state = "progress";
+
+                    break;
+                case "B":
+                    game.rect.goDown(50, function () {
+                        game.state = "C";
+                    });
+                    game.state = "progress";
+                    break;
+                case "C":
+                    game.rect.goLeft(50, function () {
+                        game.state = "D";
+                    });
+                    game.state = "progress";
+                    break;
+                case "D":
+                    game.rect.goUp(50, function () {
+                        game.state = "stop";
+                    });
+                    game.state = "progress";
+                    break;
+                case "stop":
+                    game.rect.stop(100, function () {
+                        console.log("暂停100帧去A")
+                        game.state = "A";
+                    });
+                    game.state = "progress";
+                    break;
+            }
+        }, 20);
+    </script>
+</body>
+
+</html>
