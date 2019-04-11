@@ -43,11 +43,7 @@
 
             })
         }
-        // 游戏开始
-        Game.prototype.start = function (df, callback) {
-            this.rect.state = "progress";
-            this.registerCallback(df, callback);
-        }
+
         // 注册回调函数
         //两个参数，第一个参数表示多少帧之后
         Game.prototype.registerCallback = function (df, callback) {
@@ -62,6 +58,71 @@
                 delete this.callbackObj[this.fno];
             }
         }
+
+        // 有限状态机
+        Game.prototype.FSM = function () {
+            var _this = this;
+            switch (this.rect.state) {
+                case "A":
+                    this.rect.goRight(50, function () {
+                        _this.rect.state = "B";
+                    });
+                    this.rect.state = "progress goRight";
+
+                    break;
+                case "B":
+                    this.rect.goDown(50, function () {
+                        _this.rect.state = "C";
+                    });
+                    this.rect.state = "progress goDown";
+                    break;
+                case "C":
+                    this.rect.goLeft(50, function () {
+                        _this.rect.state = "D";
+                    });
+                    this.rect.state = "progress goLeft";
+                    break;
+                case "D":
+                    this.rect.goUp(50, function () {
+                        _this.rect.state = "stop";
+                    });
+                    this.rect.state = "progress goUp";
+                    break;
+                case "stop":
+                    this.rect.stop(100, function () {
+                        console.log("暂停100帧去A")
+                        _this.rect.state = "A";
+                    });
+                    this.rect.state = "progress stop";
+                    break;
+            }
+        }
+
+        // 游戏开始
+        Game.prototype.start = function (df, callback) {
+            this.rect.state = "progress";
+            this.registerCallback(df, callback);
+            var _this = this;
+            // 主定时器
+            setInterval(() => {
+                _this.fno++;
+                _this.ctx.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
+                _this.rect.render();
+                _this.rect.update();
+                // 在定时器中不断检查回调函数组成的对象中，是否有当前帧注册的回调函数，有就执行
+                _this.hasCallback();
+                // 显示帧编号，和状态
+                _this.ctx.save();
+                _this.ctx.font = "14px consolas";
+                _this.ctx.fillText("Frame Number: " + _this.fno, 20, 20);
+                // 进到某个状态后会马上切换到 "progress" 防止回调重复执行
+                _this.ctx.fillText("Rect State: " + _this.rect.state, 20, 40);
+                _this.ctx.restore();
+                // 状态机运行
+                _this.FSM();
+            }, 20);
+        }
+
         // 方块类
         function Rect() {
             this.height = 100;
@@ -121,59 +182,9 @@
 
             game.registerCallback(df, callback);
         }
+
         // 实例化Game
         var game = new Game();
-        // 主定时器
-        setInterval(() => {
-            game.fno++;
-            game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
-            game.rect.render();
-            game.rect.update();
-            // 在定时器中不断检查回调函数组成的对象中，是否有当前帧注册的回调函数，有就执行
-            game.hasCallback();
-            // 显示帧编号，和状态
-            game.ctx.save();
-            game.ctx.font = "14px consolas";
-            game.ctx.fillText("Frame Number: " + game.fno, 20, 20);
-            // 实际上看到的状态是progress一闪一闪的，因为进到某个状态后会马上切换到progress转让，防止回调重复执行
-            game.ctx.fillText("Rect State: " + game.rect.state, 20, 40);
-            game.ctx.restore();
-            // 定时器不断的查看状态，只要状态一改吧，就执行对应操作，通过注册在第几帧之后改变状态，实现回调
-            switch (game.rect.state) {
-                case "A":
-                    game.rect.goRight(50, function () {
-                        game.rect.state = "B";
-                    });
-                    game.rect.state = "progress";
-
-                    break;
-                case "B":
-                    game.rect.goDown(50, function () {
-                        game.rect.state = "C";
-                    });
-                    game.rect.state = "progress";
-                    break;
-                case "C":
-                    game.rect.goLeft(50, function () {
-                        game.rect.state = "D";
-                    });
-                    game.rect.state = "progress";
-                    break;
-                case "D":
-                    game.rect.goUp(50, function () {
-                        game.rect.state = "stop";
-                    });
-                    game.rect.state = "progress";
-                    break;
-                case "stop":
-                    game.rect.stop(100, function () {
-                        console.log("暂停100帧去A")
-                        game.rect.state = "A";
-                    });
-                    game.rect.state = "progress";
-                    break;
-            }
-        }, 20);
     </script>
 </body>
 
