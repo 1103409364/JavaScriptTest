@@ -1,9 +1,10 @@
 {
 	"images" : [
 		{"name" : "appear" , "url" : "R/images/bullet.jpg"},
-		{"name" : "block" , "url" : "R/images/block.bmp"},
+		{"name" : "block" , "url" : "R/images/block.png"},
 		{"name" : "crack" , "url" : "R/images/crack.bmp"},
 		{"name" : "boom" , "url" : "R/images/boom.jpg"},
+		{"name" : "shellproof" , "url" : "R/images/shellproof.jpg"},
 		{"name" : "bullet" , "url" : "R/images/bullet.png"},
 		{"name" : "enemy" , "url" : "R/images/enemy.bmp"},
 		{"name" : "flag" , "url" : "R/images/flag.bmp"},
@@ -17,6 +18,7 @@
 		{"name" : "attack", "url" : "R/audio/attack.mp3"},
 		{"name" : "move", "url" : "R/audio/move.mp3"},
 		{"name" : "crack", "url" : "R/audio/crack.mp3"},
+		{"name" : "bulletCrack", "url" : "R/audio/bulletCrack.mp3"},
 		{"name" : "prop", "url" : "R/audio/prop.mp3"},
 		{"name" : "start", "url" : "R/audio/start.mp3"}
 	]

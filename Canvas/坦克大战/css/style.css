@@ -1,0 +1,36 @@
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: block;
+    height: 0;
+}
+
+.container {
+    margin: 0 auto;
+    width: 600px;
+}
+.container .legend {
+    /* background-color: rgb(209, 209, 209); */
+    height: 32px;
+    margin-bottom: 10px;
+}
+.container canvas {
+    border: 1px solid #000;
+    float: left;
+}
+
+.prompt {
+    float: left;
+    width: 150px;
+    padding-left: 10px;
+    margin-left: 20px;
+    border: 1px solid #000;
+    background-color: rgb(209, 209, 209);
+    height: 416px;
+}
+
+h1 {
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+}   
