@@ -1,0 +1,12 @@
+{
+	"images" : [
+		{"name" : "bg_day" , "url" : "R/images/bg_day.png"},
+		{"name" : "bg_night" , "url" : "R/images/bg_night.png"}
+	],
+	"audio" :[
+		{"name" : "fly", "url" : "R/audio/fly.mp3"},
+		{"name" : "hit", "url" : "R/audio/hit.mp3"},
+		{"name" : "point", "url" : "R/audio/point.mp3"}
+
+	]
+}
