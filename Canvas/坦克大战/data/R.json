@@ -1,12 +1,23 @@
 {
 	"images" : [
-		{"name" : "bg_day" , "url" : "R/images/bg_day.png"},
-		{"name" : "bg_night" , "url" : "R/images/bg_night.png"}
+		{"name" : "appear" , "url" : "R/images/bullet.jpg"},
+		{"name" : "block" , "url" : "R/images/block.bmp"},
+		{"name" : "crack" , "url" : "R/images/crack.bmp"},
+		{"name" : "boom" , "url" : "R/images/boom.jpg"},
+		{"name" : "bullet" , "url" : "R/images/bullet.png"},
+		{"name" : "enemy" , "url" : "R/images/enemy.bmp"},
+		{"name" : "flag" , "url" : "R/images/flag.bmp"},
+		{"name" : "gameover" , "url" : "R/images/gameover.bmp"},
+		{"name" : "number" , "url" : "R/images/number.bmp"},
+		{"name" : "p" , "url" : "R/images/p.jpg"},
+		{"name" : "player1" , "url" : "R/images/player1.bmp"},
+		{"name" : "player2" , "url" : "R/images/player2.bmp"}
 	],
 	"audio" :[
-		{"name" : "fly", "url" : "R/audio/fly.mp3"},
-		{"name" : "hit", "url" : "R/audio/hit.mp3"},
-		{"name" : "point", "url" : "R/audio/point.mp3"}
-
+		{"name" : "attack", "url" : "R/audio/attack.mp3"},
+		{"name" : "move", "url" : "R/audio/move.mp3"},
+		{"name" : "crack", "url" : "R/audio/crack.mp3"},
+		{"name" : "prop", "url" : "R/audio/prop.mp3"},
+		{"name" : "start", "url" : "R/audio/start.mp3"}
 	]
 }
