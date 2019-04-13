@@ -106,3 +106,41 @@ h1 {
 .btn a:active {
     background-color: #383838;
 }
+
+.prompt a {
+    display: block;
+    width: 120px;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #999999;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.prompt ul li {
+    font-size: 14px;
+    color: #ebebeb;
+    width: 130px;
+    line-height: 30px;
+    margin: 10px 0;
+    padding: 0 0 0 10px;
+    background-color: #999999;
+}
+
+.prompt ul li span {
+    display: inline-block;
+    width: 80px;
+}
+
+.prompt ul li input {
+    font-size: 14px;
+    padding: 0 5px;
+}
+
+p {
+    font-size: 12px;
+}

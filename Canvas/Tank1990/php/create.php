@@ -9,9 +9,9 @@
 	//看数量
 	$number = sizeof($file) + 1;
   
-	//打开一个文件
-	$myfile = fopen("../maps/{$number}.tkm", "w");
-	//写入
+	// 打开一个文件，文件不存在，自动创建文件
+	$myfile = fopen("../maps/{$number}.m", "w");
+	//写入空
 	fwrite($myfile, "");
 	//关闭文件
 	fclose($myfile);

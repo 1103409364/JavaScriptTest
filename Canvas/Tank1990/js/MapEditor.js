@@ -30,7 +30,6 @@ function MapEditor() {
     this.image.onload = function () {
         _this.init();
     }
-
     this.bindEvent();
 }
 
@@ -41,9 +40,7 @@ MapEditor.prototype.init = function () {
     // 当前列和行,初始化为-1，刚好点到初始位置，saveState会少记录一个，
     this.col = -1;
     this.row = -1;
-
-    // 初始化地图矩阵26*26
-    this.MAP = [
+    this.defaultMap = [
         "00000000000000000000000000",
         "00000000000000000000000000",
         "00000000000000000000000000",
@@ -71,6 +68,8 @@ MapEditor.prototype.init = function () {
         "00000000000055000000000000",
         "00000000000055000000000000",
     ];
+    // 初始化地图矩阵26*26,深拷贝
+    this.MAP = this.defaultMap.slice();
 
     // 保存状态,用于撤消，恢复,保存初始状态
     this.state.push(this.MAP.slice(0));
@@ -90,6 +89,17 @@ MapEditor.prototype.init = function () {
         "width": this.bwidth,
         "height": this.bheight,
         "position": "absolute",
+    });
+    
+    // 显示文件列表
+    this.level = 1;
+    this.$filelist = $(".filelist");
+    // 路径?
+    $.get("php/list.php", { "z": Math.random() },function (data) {
+        var filelist = JSON.parse(data);
+        for (var i = 0; i < filelist.length; i++) {
+            $("<li><span>" + filelist[i] + "</span><input type='button' value='编辑' data-file='" + filelist[i] + "' class='editbtn'/></li>").appendTo(_this.$filelist);
+        }
     });
 }
 
@@ -170,9 +180,49 @@ MapEditor.prototype.bindEvent = function () {
         // console.log(_this.MAP)
     })
 
+    // 保存按钮
     this.$save.on("click", function () {
-        $.post("php/write.php", {"mapArr": _this.MAP});
+        // 发送写入请求，nowEdit要写入的文件名，mapArr需要序列化成字符串
+        $.post("php/write.php",{ "z": Math.random(), "nowEdit": _this.nowEdit, "mapArr": JSON.stringify(_this.MAP) });
     })
+
+    // 编辑按钮事件委托
+    $(".filelist").on("click", ".editbtn", function () {
+        // 点击编辑按钮，改变当前正在编辑文件名
+        _this.nowEdit = $(this).attr("data-file");
+        $(".nowEdit").html("正在编辑>>>>> " + _this.nowEdit);
+        //清除画布
+        _this.ctx.clearRect(0,0,416,416);
+        // Ajax读取本地文件,缓存问题，要清除缓存才能看到效果
+        $.get("maps/" + $(this).attr("data-file"), { "z": Math.random() }, function (data) {
+            //如果.m文件是一个空文件，渲染默认地图
+            if (data === "") {
+                // 注意深拷贝数组
+                _this.MAP = _this.defaultMap.slice();
+                _this.drawMap(_this.MAP);
+                return;
+            }
+            var arr = JSON.parse(data);
+
+            _this.drawMap(arr);
+            _this.MAP = arr;
+        })
+    })
+
+    // 创建文件按钮
+    $(".createBtn").on("click", function () {
+        $.get("php/create.php", { "z": Math.random() },function (data) {
+            // 读取文件列表
+            console.log(data)
+            $.get("php/list.php", { "z": Math.random() },function (data) {
+                var filelist = JSON.parse(data);
+                _this.$filelist.empty();
+                for (var i = 0; i < filelist.length; i++) {
+                    $("<li><span>" + filelist[i] + "</span><input type='button' value='编辑' data-file='" + filelist[i] + "' class='editbtn'/></li>").appendTo(_this.$filelist);
+                }
+            });
+        });
+    });
 }
 
 // 画图、修改地图矩阵

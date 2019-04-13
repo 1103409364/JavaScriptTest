@@ -26,12 +26,8 @@
         this.canvas.height = this.windowHeight;
         this.canvas.width = this.windowWidth;
         // 限制画布宽高，pixel 2xL视口为411*823
-        if (this.windowHeight > 823) {
-            this.canvas.height = 823;
-        }
-        if (this.windowWidth > 414) {
-            this.canvas.width = 414;
-        }
+        this.canvas.height = 416;
+        this.canvas.width = 416;
 
     }
     // 加载资源
@@ -89,7 +85,7 @@
         this.timer = setInterval(function () {
             _this.ctx.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
             _this.fno++;
-           
+
             // 后画的会被先画的覆盖
             _this.ctx.font = "14px 微软雅黑";
             _this.ctx.fillStyle = "#000"
