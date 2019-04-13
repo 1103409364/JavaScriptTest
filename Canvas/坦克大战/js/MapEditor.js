@@ -159,7 +159,7 @@ MapEditor.prototype.bindEvent = function () {
         _this.cancel();
         // 撤消后改变当前地图矩阵，数组要深拷贝，否则会出错
         _this.MAP = _this.state[_this.state.length - 1].slice(0);
-        console.log(_this.MAP)
+        // console.log(_this.MAP)
     })
 
     // 恢复按钮绑定监听
@@ -167,7 +167,7 @@ MapEditor.prototype.bindEvent = function () {
         _this.restore();
         // 恢复后改变当前地图矩阵
         _this.MAP = _this.state[_this.state.length - 1].slice(0);
-        console.log(_this.MAP)
+        // console.log(_this.MAP)
     })
 
 }
@@ -238,7 +238,7 @@ MapEditor.prototype.saveState = function () {
     // this.hisstate.push(this.state.shift());
 }
 
-// 撤消，两个数组之间来回倒
+// 撤消和恢复，用数组模拟堆栈来做
 MapEditor.prototype.cancel = function () {
     if (this.state.length > 1) {
         var state = this.state.pop();
