@@ -170,6 +170,9 @@ MapEditor.prototype.bindEvent = function () {
         // console.log(_this.MAP)
     })
 
+    this.$save.on("click", function () {
+        $.post("php/write.php", {"mapArr": _this.MAP});
+    })
 }
 
 // 画图、修改地图矩阵
