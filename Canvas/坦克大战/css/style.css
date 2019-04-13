@@ -3,6 +3,7 @@
     clear: both;
     display: block;
     height: 0;
+    visibility: hidden;
 }
 
 .container {
@@ -14,18 +15,20 @@
     height: 32px;
     margin-bottom: 10px;
 }
-.container canvas {
-    border: 1px solid #000;
+.container .canvasWrap {
+    font-size: 0;
+    /* border: 2px solid #ff0000; */
+    background-color: #000;
     float: left;
 }
 
 .prompt {
     float: left;
-    width: 150px;
+    width: 146px;
     padding-left: 10px;
     margin-left: 20px;
-    border: 1px solid #000;
-    background-color: rgb(209, 209, 209);
+    border: 2px solid rgb(255, 0, 0);
+    background-color: #d1d1d1;
     height: 416px;
 }
 
@@ -33,4 +36,73 @@ h1 {
     text-align: center;
     line-height: 50px;
     font-size: 20px;
-}   
+}
+
+.legend li {
+    float: left;
+    width: 32px;
+    height: 32px;
+    border: 3px solid #fff;
+    margin-right: 10px;
+    background: url(../R/images/block.png) no-repeat 0 0;
+}
+
+.legend li.current {
+    border-color: #ff0000;
+}
+
+.legend [data-type="0"] {
+    background: none;
+    background-color: #000;
+}
+.legend [data-type="1"] {
+    background-position: -64px 0;
+}
+
+
+.legend [data-type="2"] {
+    background-position: -96px 0;
+}
+
+.legend li:nth-of-type(4) {
+    width: 16px;
+    height: 16px;
+}
+.legend li:nth-of-type(6) {
+    width: 16px;
+    height: 16px;
+}
+
+.legend [data-type="4"] {
+    background-position: -32px 0;
+}
+.legend [data-type="4sm"] {
+    background-position: -32px 0;
+}
+
+.legend [data-type="5"] {
+    background-position: -160px 0;
+}
+
+.canvasWrap {
+    position: relative;
+}
+
+.btn {
+    text-align: center;
+}
+
+.btn a {
+    font-size: 14px;
+    float: left;
+    line-height: 30px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: #999999;
+    margin-right: 10px;
+    padding: 0 10px;
+}
+
+.btn a:active {
+    background-color: #383838;
+}

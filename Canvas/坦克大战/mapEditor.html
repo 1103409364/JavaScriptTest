@@ -13,26 +13,38 @@
 <body>
     <div class="container">
         <h1>地图编辑器</h1>
-        <ul class="legend">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+        <ul class="legend clearfix">
+            <li data-type="0"></li>
+            <li data-type="1"></li>
+            <li data-type="2"></li>
+            <li data-type="3sm"></li>
+            <li data-type="3"  class="current"></li>
+            <li data-type="4sm"></li>
+            <li data-type="4"></li>
         </ul>
-        <div class="canvasWrap clearfix">
-            <canvas width="416px" height="416px"></canvas>
+
+        <div class="clearfix main">
+            <div class="canvasWrap clearfix">
+                <span class="cursor"></span>
+                <canvas width="416px" height="416px"></canvas>
+            </div>
 
             <div class="prompt clearfix">
                 <h3>地图文件</h3>
-
+            </div>
+            <div class="btn">
+                <a href="javascript:;" class="cancel">撤消</a>
+                <a href="javascript:;" class="restore">恢复</a>
+                <a href="javascript:;" class="save">保存</a>
             </div>
         </div>
-        <div class="menu">
-        </div>
     </div>
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/MapEditor.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>
