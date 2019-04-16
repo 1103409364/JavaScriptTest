@@ -1,0 +1,16 @@
+{
+  "name": "student_management",
+  "version": "1.0.0",
+  "description": "express+MongoDB的学生管理系统，两个表格：一个服务端渲染，一个前端渲染",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
+  }
+}
