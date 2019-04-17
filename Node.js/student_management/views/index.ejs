@@ -58,15 +58,13 @@
         var domstr = "";
 
         $.get("/allStudent", (data) => {
-            console.log(data.result);
+            // console.log(data.result);
             _.each(data.result, (dictionary) => {
                 domstr += compile(dictionary);
             })
 
             $("#tb2").append(domstr);
         })
-
-
     </script>
 </body>
 
