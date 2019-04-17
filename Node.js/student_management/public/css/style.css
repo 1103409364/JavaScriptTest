@@ -35,3 +35,10 @@ th {
 #tb1 {
     margin-bottom: 30px;
 }
+
+[href="/add"] {
+    display: block;
+    text-align: right;
+    text-decoration: none;
+    color: #9b1818;
+}

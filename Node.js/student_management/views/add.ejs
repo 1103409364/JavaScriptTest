@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>增加</title>
+    <style>
+        section {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        [type="button"] {
+            width: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <p>
+            姓名
+            <input type="text" name="uname" id="uname">
+        </p>
+        <p>
+            年龄
+            <input type="text" name="age" id="age">
+        </p>
+        <p>
+            性别
+            <input type="radio" name="sex" id="sex" value="男">男
+            <input type="radio" name="sex" id="sex" value="女">女
+        </p>
+        <p>
+            籍贯
+            <input type="text" name="province" id="province">
+        </p>
+        <p>
+            <input type="button" name="" id="btn" value="确认">
+        </p>
+    </section>
+
+    <script type="text/javascript" src="/js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="/js/underscore_mod.js"></script>
+    <script>
+        // 监听按钮手动提交表单
+        $("#btn").click(() => {
+            $.post("/add", {
+                "uname": $("#uname").val(),
+                "age": $("#age").val(),
+                "sex": $("input[name=sex]:checked").val(),
+                "province": $("#province").val(),
+            }, (info) => {
+                console.log(info);
+            })
+        })
+    </script>
+</body>
+
+</html>
