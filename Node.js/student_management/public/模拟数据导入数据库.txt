@@ -1,9 +1,0 @@
-{"uname":"李灵黛","age":12,"sex":"男","province":"上海"}
-{"uname":"柳辰飞","age":13,"sex":"女","province":"北京"}
-{"uname":"江城子","age":17,"sex":"男","province":"广东"}
-{"uname":"萧合凰","age":37,"sex":"女","province":"河北"}
-{"uname":"西粼宿","age":16,"sex":"男","province":"广东"}
-{"uname":"千湄","age":13,"sex":"女","province":"广东"}
-{"uname":"林墨瞳","age":13,"sex":"女","province":"吉林"}
-{"uname":"柳婵诗","age":14,"sex":"女","province":"河北"}
-{"uname":"李念儿","age":19,"sex":"女","province":"广东"}

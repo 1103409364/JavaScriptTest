@@ -1,0 +1,3 @@
+{"uname":"小明","age":12,"sex":"男","province":"浙江"}
+{"uname":"小花","age":13,"sex":"女","province":"河北"}
+{"uname":"小果","age":17,"sex":"男","province":"纽约"}

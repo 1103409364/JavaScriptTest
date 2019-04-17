@@ -1,7 +1,7 @@
 {
   "name": "student_management",
   "version": "1.0.0",
-  "description": "express+MongoDB的学生管理系统，两个表格：一个服务端渲染，一个客户端渲染，练习mvc",
+  "description": "结合express和MongoDB的学生管理系统，两个表格：第一个服务端渲染，第二个表格客户端渲染，练习mvc",
   "main": "app.js",
   "scripts": {
     "test": "test"
