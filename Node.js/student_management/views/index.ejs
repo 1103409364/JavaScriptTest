@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section>
+        <h1>学生管理系统</h1>
+        <table id="tb1">
+            <tr>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>籍贯</th>
+            </tr>
+            <%
+            for (var i = 0; i < dictionary.length; i++) {
+            %>
+            <tr>
+                <td><%= dictionary[i].uname %></td>
+                <td><%= dictionary[i].age %></td>
+                <td><%= dictionary[i].sex %></td>
+                <td><%= dictionary[i].province %></td>
+            </tr>
+            <%
+            }
+            %>
+        </table>
+
+        <table id="tb2">
+            <tr>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>籍贯</th>
+            </tr>
+        </table>
+    </section>
+     
+    <script type="text/template" id="template">
+        <tr>
+            <td>@@= uname @@</td>
+            <td>@@= age @@</td>
+            <td>@@= sex @@</td>
+            <td>@@= province @@</td>
+        </tr>
+    </script>
+    <!-- 静态资源public作为根目录，用绝对路径 -->
+    <script type="text/javascript" src="/js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="/js/underscore_mod.js"></script>
+    <script>
+        // 渲染，使用underscore的模板引擎
+        var compile = _.template($("#template").html());
+        var domstr = "";
+
+        $.get("/allStudent", (data) => {
+            console.log(data.result);
+            _.each(data.result, (dictionary) => {
+                domstr += compile(dictionary);
+            })
+
+            $("#tb2").append(domstr);
+        })
+
+
+    </script>
+</body>
+
+</html>
