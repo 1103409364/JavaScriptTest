@@ -1,0 +1,19 @@
+td, th, tr {
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 50px;
+    height: 50px !important;
+    padding: 0 !important;
+}
+
+.breadcrumb {
+    margin-top: 20px;
+}
+
+body {
+    font-family: '微软雅黑', Courier, monospace;
+}
+ 
+.alert-danger {
+    display: none;
+}

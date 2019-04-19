@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>学生管理系统</title>
+
+    <!-- 使用绝对路径，防止路由变化导致加载失败 -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/modern-business.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <!-- 回到首页 -->
+            <a class="navbar-brand" href="/">学生管理系统</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">学生列表</a>
+            </li>
+            <li class="breadcrumb-item active">新增</li>
+        </ol>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+        <form class="form" action="/add">
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="number" class="form-control" name="sid" id="sid" placeholder="学号">
+                <div class="alert alert-danger" role="alert">
+                    学号格式错误，学号是6位数字
+                </div>
+            </div>
+
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="text" class="form-control" id="sname" placeholder="姓名">
+            </div>
+
+            <div class="form-group  mx-sm-12 mb-2 col-lg-12">
+                <input type="number" class="form-control" id="age" placeholder="年龄">
+            </div>
+
+            <div class="form-group mx-sm-12 mb-2 col-lg-12" id="radio">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="男">
+                    <label class="form-check-label" for="inlineRadio1">男</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="女">
+                    <label class="form-check-label" for="inlineRadio2">女</label>
+                </div>
+            </div>
+
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="text" class="form-control" id="address" placeholder="籍贯">
+            </div>
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <button type="button" class="btn btn-primary" id="saveBtn">保存</button>
+            </div>
+        </form>
+    </div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; xxx 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $("#saveBtn").click(() => {
+            var sid = parseInt($("input[name=sid]").val());
+            // 检查学号是否合法
+            if (!/^\d{6}$/.test(sid)) {
+                return;
+            }
+            // 这个页面是跳转过来的http://127.0.0.1:3000/student/add
+            $.post("add", {
+                "sid": $("#sid").val(),
+                "sname": $("#sname").val(),
+                "sex": $("input[type=radio]:checked").val(),
+                "address": $("#address").val(),
+                "age": $("#age").val(),
+            }, (data) => {
+                if (data.result === "1") {
+                    $(".alert").slideUp();
+                    alert("保存成功");
+                }
+
+                if (data.result === "-") {
+                    alert("保存失败");
+                }
+
+                if (data.result === "-2") {
+                    $(".alert").removeClass("alert-success").addClass("alert-danger").html("学号重复了，请重新填写6位数字!!").slideDown();
+                }
+            })
+        })
+
+        $("input[name=sid]").blur(() => {
+            var sid = parseInt($("input[name=sid]").val());
+            // 检查学号是否合法
+            if (!/^\d{6}$/.test(sid)) {
+                $(".alert").html("学号格式错误，请填写6位数字!!").slideDown();
+                return;
+            }
+
+            $.ajax({
+                type: "propfind",
+                url: "/student/" + $("input[name=sid]").val(),
+                success: function (data) {
+                    console.log(data.result)
+                    if (data.result) {
+                        $(".alert").removeClass("alert-success").addClass("alert-danger").html("学号重复了，请重新填写6位数字").slideDown();
+                    } else {
+                        $(".alert").removeClass("alert-danger").addClass("alert-success").html("学号可以使用").slideDown();
+                    }
+                }
+            });
+        });
+
+        //得到焦点的时候，隐藏提示框
+        $("input[name=sid]").focus(function () {
+            $(".alert").slideUp();
+        });
+    </script>
+</body>
+
+</html>

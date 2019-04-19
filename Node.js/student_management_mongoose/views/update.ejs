@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>学生管理系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/modern-business.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <!-- 回到首页 -->
+            <a class="navbar-brand" href="/">学生管理系统</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">学生列表</a>
+            </li>
+            <li class="breadcrumb-item active">修改</li>
+        </ol>
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+        <form class="form" action="/add">
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="text" class="form-control" id="name" placeholder="学号" name="sid" disabled
+                    value=<%= result.sid %>>
+            </div>
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="text" class="form-control" id="sname" placeholder="姓名" name="name"
+                    value=<%= result.sname %>>
+            </div>
+
+            <div class="form-group  mx-sm-12 mb-2 col-lg-12">
+                <input type="number" class="form-control" id="age" placeholder="年龄" name="age" value=<%= result.age %>>
+            </div>
+
+            <div class="form-group mx-sm-12 mb-2 col-lg-12" id="radio">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="男"
+                        <% if(result.sex === "男") {%> checked
+                        <%}%> >
+                    <label class="form-check-label" for="inlineRadio1">男</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="女"<% if(result.sex === "女") {%> checked <%}%>>
+                    <label class="form-check-label" for="inlineRadio2">女</label>
+                </div>
+            </div>
+
+            <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                <input type="text" class="form-control" id="address" placeholder="籍贯" value=<%= result.address %>>
+                </div>
+                <div class="form-group mx-sm-12 mb-2 col-lg-12">
+                    <button type="button" class="btn btn-primary" id="updateBtn">保存</button>
+                </div>
+        </form>
+    </div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; xxx 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        //点击提交按钮的时候做的事情
+        $("#updateBtn").click(() => {
+            var sid = parseInt($("input[name=sid]").val());
+            console.log(sid)
+            $.post("/student/" + sid, {
+                "sid": sid,
+                "sname": $("#sname").val(),
+                "sex": $("input[type=radio]:checked").val(),
+                "address": $("#address").val(),
+                "age": $("#age").val(),
+            }, function (data) {
+                if (data.result == 1) {
+                    alert("修改成功！");
+                    // 跳转到首页
+                    window.location = "/";
+                } else {
+                    alert("保存失败");
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

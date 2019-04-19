@@ -1,0 +1,2 @@
+{ "_id" : ObjectId("5cb985ce65f1b32cd867ed66"), "sid" : 343343, "sname" : "老王", "sex" : "女", "address" : "北京", "age" : 44, "__v" : 0 }
+{ "_id" : ObjectId("5cb985fc65f1b32cd867ed67"), "sid" : 666666, "sname" : "星星", "sex" : "男", "address" : "香港", "age" : 6, "__v" : 0 }

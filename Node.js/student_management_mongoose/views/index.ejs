@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>学生管理系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/modern-business.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">学生管理系统</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">学生列表</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/student/add">新增</a>
+            </li>
+        </ol>
+        <table class="table">
+            <thead class="thead-light">
+                <tr class="mb-2 ">
+                    <th scope="col">学号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">性别</th>
+                    <th scope="col">年龄</th>
+                    <th scope="col">籍贯</th>
+                    <th scope="col" class="text-center" width="150px">操 作</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+                <%
+                    for(var i = 0; i < dictionary.length; i++) {
+                %>
+                <tr class="mb-2 ">
+                    <td><%= dictionary[i].sid %></td>
+                    <td><%= dictionary[i].sname %></td>
+                    <td><%= dictionary[i].sex %></td>
+                    <td><%= dictionary[i].age %></td>
+                    <td><%= dictionary[i].address %></td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-secondary update"
+                            data-sid=<%= dictionary[i].sid %>>修改</button>
+                        <button type="button" class="btn btn-danger delete"
+                            data-sid=<%= dictionary[i].sid %>>删除</button>
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
+            </tbody>
+        </table>
+
+        <div id="pagenavbox"></div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; xxx</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <script src="js/PageNav.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $("#body").on("click", ".update", function () {
+            var sid = $(this).attr("data-sid")
+            window.location = "student/" + sid;
+        }
+        )
+
+        $("#body").on("click", ".delete", function () {
+            // 删除前确认
+            if (!confirm("确定要删除么？")) {
+                return;
+            }
+            var $this = $(this);
+            var sid = $(this).attr("data-sid")
+            console.log(sid)
+            $.ajax({
+                url: "/student/" + sid,
+                type: "delete",
+                success: (data) => {
+                    console.log(data)
+                    if (data.results == 1) {
+                        // alert("删除成功");
+                        $this.parents("tr").remove();
+                    } else {
+                        alert("服务器错误！");
+                    }
+                }
+            })
+        })
+
+        // 分页
+    </script>
+
+</body>
+
+</html>

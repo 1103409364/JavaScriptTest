@@ -1,0 +1,18 @@
+{
+  "name": "student_management",
+  "version": "2.0.0",
+  "description": "结合express和mongoose的简版学生管理系统",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "wcs",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.2"
+  }
+}
