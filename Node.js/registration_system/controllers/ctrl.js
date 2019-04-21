@@ -30,13 +30,13 @@ exports.studentImport = (req, res) => {
     				console.log("删除文件错误");
     				return;
     			}
-    			res.send("请重新上传");
+    			res.send("文件无效，请重新上传");
     		});
             return;
         }
 
         if(err) {
-            res.send("请重新上传");
+            res.send("上传失败，请重新上传");
         }
         // 读取excel表格，转为数组，length表示子表格数量
         var arr = xlsx.parse("./" + files.studentExcel.path);

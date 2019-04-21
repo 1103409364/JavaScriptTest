@@ -4442,7 +4442,7 @@ input[type="button"].btn-block {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
 }
 
 .navbar > .container,
@@ -6827,7 +6827,7 @@ button.bg-light:focus {
 }
 
 .bg-dark {
-  background-color: #343a40 !important;
+  background-color: #263238 !important;
 }
 
 a.bg-dark:hover, a.bg-dark:focus,
@@ -10487,7 +10487,7 @@ body {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  background-color: #263238;
   min-height: calc(100vh - 56px);
 }
 
