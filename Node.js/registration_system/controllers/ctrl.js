@@ -22,27 +22,27 @@ exports.studentImport = (req, res) => {
     //保留文件后缀
     form.keepExtensions = true; 
     form.parse(req, (err, fields, files) => {
-        // 检查文件，如果是空文件或者其他格式文件，提醒用户重新上传
-        if(files.studentexcel.size === 0 || path.extname(files.studentexcel.path) != ".xlsx") {
+        // 检查文件，如果是空文件或者其他格式文件，提醒用户重新上传studentExcel，文件提交控件的name属性
+        if(files.studentExcel.size === 0 || path.extname(files.studentExcel.path) != ".xlsx") {
             //删除
-    		fs.unlink("./" + files.studentexcel.path,function(err){
+    		fs.unlink("./" + files.studentExcel.path,function(err){
     			if(err){
     				console.log("删除文件错误");
     				return;
     			}
-    			res.send("请选择有效的excel文件<p><a href='/html/fileform.html'>【返回重新上传】</a></p>");
+    			res.send("请重新上传");
     		});
             return;
         }
 
         if(err) {
-            res.send("上传失败<p><a href='/html/fileform.html'>【返回重新上传】</a></p>");
+            res.send("请重新上传");
         }
         // 读取excel表格，转为数组，length表示子表格数量
-        var arr = xlsx.parse("./" + files.studentexcel.path);
+        var arr = xlsx.parse("./" + files.studentExcel.path);
 
         // console.log(arr[0]);
-        res.send("上传成功")
+        res.send("上传成功，返回学生列表即可查看")
     });
 }
 
