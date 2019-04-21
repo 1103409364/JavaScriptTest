@@ -1,0 +1,22 @@
+{
+  "name": "registration_system",
+  "version": "1.0.0",
+  "description": "选修课报名系统，技术栈NodeJS + Express + MongoDB + Mongoose + Ejs + BootStrap + jQuery",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "wcs",
+  "license": "ISC",
+  "dependencies": {
+    "date-format": "^2.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "formidable": "^1.2.1",
+    "mongoose": "^5.5.2",
+    "node-xlsx": "^0.14.1",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {}
+}
