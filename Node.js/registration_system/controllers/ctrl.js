@@ -14,7 +14,7 @@ exports.showStudent = (req, res) => {
 exports.showStudentImport = (req, res) => {
     res.render("admin/stuImport", { "current": "student" });
 }
-
+// 上传文件，导入学生名单
 exports.studentImport = (req, res) => {
     var form = new formidable.IncomingForm();
     // 指定上传文件夹
@@ -24,7 +24,7 @@ exports.studentImport = (req, res) => {
     form.parse(req, (err, fields, files) => {
         // 检查文件，如果是空文件或者其他格式文件，提醒用户重新上传
         if(files.studentexcel.size === 0 || path.extname(files.studentexcel.path) != ".xlsx") {
-            //删除这个不正确的文件
+            //删除
     		fs.unlink("./" + files.studentexcel.path,function(err){
     			if(err){
     				console.log("删除文件错误");
