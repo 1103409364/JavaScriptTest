@@ -94,7 +94,7 @@
                 return;
             }
             // 这个页面是跳转过来的http://127.0.0.1:3000/student/add
-            $.post("add", {
+            $.post("/student/add", {
                 "sid": $("#sid").val(),
                 "sname": $("#sname").val(),
                 "sex": $("input[type=radio]:checked").val(),
