@@ -18,6 +18,7 @@
 
     <!-- Page level plugin CSS-->
     <link href="/css/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="/css/Editor/editor.bootstrap4.css" rel="stylesheet">
 
 </head>
 
@@ -41,7 +42,7 @@
                     </li>
                     <li class="breadcrumb-item active">所有学生</li>
                     <li class="breadcrumb-item">
-                            <a href="/admin/student/import">导入学生</a>
+                        <a href="/admin/student/import">导入学生</a>
                     </li>
                 </ol>
 
@@ -55,93 +56,30 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>年级</th>
+                                        <th>密码</th>
+                                        <th>密码类型</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>年级</th>
+                                        <th>密码</th>
+                                        <th>密码类型</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vivian Harrell</td>
-                                        <td>Financial Controller</td>
-                                        <td>San Francisco</td>
-                                        <td>62</td>
-                                        <td>2009/02/14</td>
-                                        <td>$452,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Timothy Mooney</td>
-                                        <td>Office Manager</td>
-                                        <td>London</td>
-                                        <td>37</td>
-                                        <td>2008/12/11</td>
-                                        <td>$136,200</td>
-                                    </tr>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                    </tr>
+                                <tbody id="tableBody">
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
-
-                <p class="small text-center text-muted my-5">
-                    <em>More table examples coming soon...</em>
-                </p>
-
             </div>
             <!-- /.container-fluid -->
 
@@ -171,13 +109,115 @@
     <script src="/js/chart.js/Chart.min.js"></script>
     <script src="/js/datatables/jquery.dataTables.js"></script>
     <script src="/js/datatables/dataTables.bootstrap4.js"></script>
-
+    <script src="/js/Editor/editor.bootstrap4.js"></script>
+    <!-- 引入underscore,使用它的模板引擎 -->
+    <script src="/js/underscore_mod@@.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
+    <!-- <script src="/js/demo/datatables-demo.js"></script> -->
 
+    <script type="text/template" id="template">
+        <tr>
+            <td>@@= sid @@</td>
+            <td>@@= name @@</td>
+            <td>@@= sex @@</td>
+            <td>@@= grade @@</td>
+            <td>@@= password.pwd @@</td>
+            <td>@@= password.isInitial @@</td>
+        </tr>
+    </script>
+    <script>
+        // 表格内容前端渲染
+        var templateStr = $("#template").html();
+        var compile = _.template(templateStr);
+        var $tableBody = $('#tableBody');
+        // .DataTable();
+        $.post("/admin/student", (data) => {
+            var domStr = "";
+            _.each(data, (dictionary) => {
+                if (dictionary.password.isInitial) {
+                    dictionary.password.isInitial = "初始密码";
+                } else {
+                    dictionary.password.isInitial = "加密密码";
+                }
+                // 字段为空时补一个"",防止字段为空时报错
+                if (dictionary.sid === undefined) {
+                    dictionary.sid = "";
+                }
+                if (dictionary.name === undefined) {
+                    dictionary.name = "";
+                }
+                if (dictionary.sex === undefined) {
+                    dictionary.sex = "";
+                }
+                if (dictionary.grade === undefined) {
+                    dictionary.grade = "";
+                }
+
+                domStr += compile(dictionary);
+            })
+            $tableBody.append(domStr);
+            // console.log(data)
+            var datatable = $('#dataTable').DataTable({
+                language: {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                }
+            });
+
+            var editor = new $.fn.dataTable.Editor({
+                ajax: "../php/staff.php",
+                table: "#dataTable",
+                fields: [{
+                    label: "First name:",
+                    name: "first_name"
+                }, {
+                    label: "Last name:",
+                    name: "last_name"
+                }, {
+                    label: "Position:",
+                    name: "position"
+                }, {
+                    label: "Office:",
+                    name: "office"
+                }, {
+                    label: "Extension:",
+                    name: "extn",
+                    multiEditable: false
+                }, {
+                    label: "Start date:",
+                    name: "start_date",
+                    type: "datetime"
+                }, {
+                    label: "Salary:",
+                    name: "salary"
+                }
+                ]
+            });
+        })
+    </script>
 </body>
 
 </html>

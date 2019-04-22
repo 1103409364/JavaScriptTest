@@ -1,7 +1,9 @@
-var formidable = require("formidable");
-var xlsx = require("node-xlsx");
-var path = require("path");
-var fs = require("fs");
+const formidable = require("formidable");
+const xlsx = require("node-xlsx");
+const path = require("path");
+const fs = require("fs");
+const Student = require("../models/Student.js");
+
 
 exports.showIndex = (req, res) => {
     res.render("admin/index", { "current": "index" });
@@ -11,11 +13,17 @@ exports.showStudent = (req, res) => {
     res.render("admin/student", { "current": "student" });
 }
 
+exports.doShowStudent = (req, res) => {
+    Student.find({}, (err, results) => {
+        res.send(results);
+    });
+}
+
 exports.showStudentImport = (req, res) => {
     res.render("admin/stuImport", { "current": "student" });
 }
 // 上传文件，导入学生名单
-exports.studentImport = (req, res) => {
+exports.doStudentImport = (req, res) => {
     var form = new formidable.IncomingForm();
     // 指定上传文件夹
     form.uploadDir = "./uploads";
@@ -39,9 +47,9 @@ exports.studentImport = (req, res) => {
             res.send("上传失败，请重新上传");
         }
         // 读取excel表格，转为数组，length表示子表格数量
-        var arr = xlsx.parse("./" + files.studentExcel.path);
-
-        // console.log(arr[0]);
+        var stuArr = xlsx.parse("./" + files.studentExcel.path);
+        Student.saveToDB(stuArr);
+        // console.log(arr, arr[0]);
         res.send("上传成功，返回学生列表即可查看")
     });
 }
