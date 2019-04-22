@@ -18,8 +18,6 @@
 
     <!-- Page level plugin CSS-->
     <link href="/css/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="/css/Editor/editor.bootstrap4.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -109,7 +107,6 @@
     <script src="/js/chart.js/Chart.min.js"></script>
     <script src="/js/datatables/jquery.dataTables.js"></script>
     <script src="/js/datatables/dataTables.bootstrap4.js"></script>
-    <script src="/js/Editor/editor.bootstrap4.js"></script>
     <!-- 引入underscore,使用它的模板引擎 -->
     <script src="/js/underscore_mod@@.js"></script>
     <!-- Custom scripts for all pages-->
@@ -185,36 +182,6 @@
                         "sSortDescending": ": 以降序排列此列"
                     }
                 }
-            });
-
-            var editor = new $.fn.dataTable.Editor({
-                ajax: "../php/staff.php",
-                table: "#dataTable",
-                fields: [{
-                    label: "First name:",
-                    name: "first_name"
-                }, {
-                    label: "Last name:",
-                    name: "last_name"
-                }, {
-                    label: "Position:",
-                    name: "position"
-                }, {
-                    label: "Office:",
-                    name: "office"
-                }, {
-                    label: "Extension:",
-                    name: "extn",
-                    multiEditable: false
-                }, {
-                    label: "Start date:",
-                    name: "start_date",
-                    type: "datetime"
-                }, {
-                    label: "Salary:",
-                    name: "salary"
-                }
-                ]
             });
         })
     </script>
