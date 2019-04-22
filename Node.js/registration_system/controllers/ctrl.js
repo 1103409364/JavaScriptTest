@@ -12,11 +12,25 @@ exports.showIndex = (req, res) => {
 exports.showStudent = (req, res) => {
     res.render("admin/student", { "current": "student" });
 }
-
+// 显示学生列表
+// 请求参数：排序主键sid、当前页条数rows、页码page、排序方式
+// 页面载入和换页都会发起请求，就是后端分页
 exports.doShowStudent = (req, res) => {
-    Student.find({}, (err, results) => {
-        res.send(results);
-    });
+    var form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+        var rows = fields.rows;
+        var page = fields.page;
+        Student.find({}, (err, results) => {
+            res.json({
+                "totalpages": parseInt(results.length / rows),
+                "currpage": page,
+                "totalrecords": results.length,
+                "rows": results,
+                "id": "sid",
+                "cell": ["sid", "name", "sex", "grade", "password.pwd", "password.isInitial"]
+            });
+        });
+    })
 }
 
 exports.showStudentImport = (req, res) => {
@@ -28,22 +42,22 @@ exports.doStudentImport = (req, res) => {
     // 指定上传文件夹
     form.uploadDir = "./uploads";
     //保留文件后缀
-    form.keepExtensions = true; 
+    form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
         // 检查文件，如果是空文件或者其他格式文件，提醒用户重新上传studentExcel，文件提交控件的name属性
-        if(files.studentExcel.size === 0 || path.extname(files.studentExcel.path) != ".xlsx") {
+        if (files.studentExcel.size === 0 || path.extname(files.studentExcel.path) != ".xlsx") {
             //删除
-    		fs.unlink("./" + files.studentExcel.path,function(err){
-    			if(err){
-    				console.log("删除文件错误");
-    				return;
-    			}
-    			res.send("文件无效，请重新上传");
-    		});
+            fs.unlink("./" + files.studentExcel.path, function (err) {
+                if (err) {
+                    console.log("删除文件错误");
+                    return;
+                }
+                res.send("文件无效，请重新上传");
+            });
             return;
         }
 
-        if(err) {
+        if (err) {
             res.send("上传失败，请重新上传");
         }
         // 读取excel表格，转为数组，length表示子表格数量

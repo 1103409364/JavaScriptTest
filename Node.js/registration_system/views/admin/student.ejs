@@ -10,14 +10,18 @@
     <meta name="author" content="">
 
     <title>选修课报名系统</title>
+    <!-- jqGrid组件基础样式包-必要 -->
+    <link rel="stylesheet" href="/css/jqgrid/css/ui.jqgrid.css" />
 
+    <!-- jqGrid主题包-非必要 -->
+    <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
+    <link rel="stylesheet" href="/css/jqgrid/css/css/hot-sneaks/jquery-ui-1.8.16.custom.css" />
 
     <link href="/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <link href="/css/sb-admin.css" rel="stylesheet">
 
     <!-- Page level plugin CSS-->
-    <link href="/css/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -49,34 +53,13 @@
                     <div class="card-header">
                         <i class="fas fa-table"></i>
                         学生列表</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>学号</th>
-                                        <th>姓名</th>
-                                        <th>性别</th>
-                                        <th>年级</th>
-                                        <th>密码</th>
-                                        <th>密码类型</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>学号</th>
-                                        <th>姓名</th>
-                                        <th>性别</th>
-                                        <th>年级</th>
-                                        <th>密码</th>
-                                        <th>密码类型</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody id="tableBody">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <!-- <div class="card-body"> -->
+                    <!-- <div class="table-responsive"> -->
+                    <table class="table-responsive table table-bordered" id="list" width="100%" cellspacing="0">
+                    </table>
+                    <div id="pager"></div>
+                    <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -105,85 +88,66 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="/js/chart.js/Chart.min.js"></script>
-    <script src="/js/datatables/jquery.dataTables.js"></script>
-    <script src="/js/datatables/dataTables.bootstrap4.js"></script>
-    <!-- 引入underscore,使用它的模板引擎 -->
-    <script src="/js/underscore_mod@@.js"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <!-- <script src="/js/demo/datatables-demo.js"></script> -->
+    <!-- jqGrid插件包-必要 -->
+    <script type="text/javascript" src="/js/jqgrid/js/jquery.jqGrid.src.js"></script>
 
-    <script type="text/template" id="template">
-        <tr>
-            <td>@@= sid @@</td>
-            <td>@@= name @@</td>
-            <td>@@= sex @@</td>
-            <td>@@= grade @@</td>
-            <td>@@= password.pwd @@</td>
-            <td>@@= password.isInitial @@</td>
-        </tr>
-    </script>
+    <!-- jqGrid插件的多语言包-非必要 -->
+    <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
+    <script type="text/javascript" src="/js/jqgrid/js/i18n/grid.locale-cn.js"></script>
+
     <script>
-        // 表格内容前端渲染
-        var templateStr = $("#template").html();
-        var compile = _.template(templateStr);
-        var $tableBody = $('#tableBody');
-        // .DataTable();
-        $.post("/admin/student", (data) => {
-            var domStr = "";
-            _.each(data, (dictionary) => {
-                if (dictionary.password.isInitial) {
-                    dictionary.password.isInitial = "初始密码";
-                } else {
-                    dictionary.password.isInitial = "加密密码";
-                }
-                // 字段为空时补一个"",防止字段为空时报错
-                if (dictionary.sid === undefined) {
-                    dictionary.sid = "";
-                }
-                if (dictionary.name === undefined) {
-                    dictionary.name = "";
-                }
-                if (dictionary.sex === undefined) {
-                    dictionary.sex = "";
-                }
-                if (dictionary.grade === undefined) {
-                    dictionary.grade = "";
-                }
-
-                domStr += compile(dictionary);
-            })
-            $tableBody.append(domStr);
-            // console.log(data)
-            var datatable = $('#dataTable').DataTable({
-                language: {
-                    "sProcessing": "处理中...",
-                    "sLengthMenu": "显示 _MENU_ 项结果",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate": {
-                        "sFirst": "首页",
-                        "sPrevious": "上页",
-                        "sNext": "下页",
-                        "sLast": "末页"
+        $(function () {
+            //页面加载完成之后执行
+            pageInit();
+        });
+        function pageInit() {
+            //创建jqGrid组件
+            jQuery("#list").jqGrid(
+                {
+                    url: '/admin/student',//组件创建完成之后请求数据的url
+                    datatype: "json",//请求数据返回的类型。可选json,xml,txt
+                    colNames: ['学号', '姓名', '性别', '年级', '密码', '是初始密码?'],//jqGrid的列显示名字
+                    colModel: [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
+                        { name: 'sid', index: 'sid', width: 100, align: "center" },
+                        { name: 'name', index: 'name', width: 100, align: "center" },
+                        { name: 'sex', index: 'sex', width: 100, align: "center" },
+                        { name: 'grade', index: 'grade', width: 100, align: "center" },
+                        { name: 'password.pwd', sortable: false, width: 100, align: "center" },
+                        { name: 'password.isInitial', sortable: false, width: 100, align: "center" },
+                    ],
+                    rowNum: 20,//一页显示多少条
+                    rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
+                    pager: '#pager',//表格页脚的占位符(一般是div)的id
+                    sortname: 'sid',//初始化的时候排序的字段
+                    sortorder: "desc",//排序方式,可选desc,asc
+                    mtype: "post",//向后台请求数据的ajax的类型。可选post,get
+                    viewrecords: true,
+                    height: "100%",
+                    // 设置宽度为容器的宽度
+                    width: $(".container-fluid").width() - 2,
+                    // caption: "JSON Example"//表格的标题名字
+                    // 定义jsonReader来跟服务器端返回的数据做对应
+                    jsonReader: {
+                        root: "rows", //包含实际数据的数组
+                        page: "currpage", //当前页
+                        total: "totalpages", //总页数
+                        records: "totalrecords", //查询出的记录数
+                        cell: "cell"
                     },
-                    "oAria": {
-                        "sSortAscending": ": 以升序排列此列",
-                        "sSortDescending": ": 以降序排列此列"
-                    }
-                }
+                });
+            /*创建jqGrid的操作按钮容器*/
+            /*可以控制界面上增删改查的按钮是否显示*/
+            jQuery("#list").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+
+            $(window).resize(function () {
+                $("#list").setGridWidth($(".container-fluid").width() - 2);
+                $("#list").setGridWidth($(".container-fluid").width() - 2);
             });
-        })
+        }
     </script>
 </body>
 
