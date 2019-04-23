@@ -52,8 +52,7 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        学生列表
-                    </div>
+                        学生列表</div>
                     <!-- <div class="card-body"> -->
                     <!-- <div class="table-responsive"> -->
                     <table class="table-responsive table table-bordered" id="list" width="100%" cellspacing="0">
@@ -107,19 +106,23 @@
         });
         function pageInit() {
             //创建jqGrid组件
-            $("#list").jqGrid(
+            jQuery("#list").jqGrid(
                 {
-                    url: "/admin/student",//组件创建完成之后请求数据的url
-                    editurl: "/admin/student",
+                    url: '/admin/student',//组件创建完成之后请求数据的url
                     datatype: "json",//请求数据返回的类型。可选json,xml,txt
-                    colNames: ['学号', '姓名', '性别', '年级', '密码', '是初始密码?'],//jqGrid的列显示名字
-                    colModel: [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....主键key默认是行号，可以指定一个主键
-                        { name: 'sid', index: 'sid', "editable": true, edittype: "text", width: 100, align: "center", key: true, searchoptions: [] },
+                    colNames: ['学号', '姓名', '性别', '初一', '初二','初三','高一','高二','高三','密码', '是初始密码?'],//jqGrid的列显示名字
+                    colModel: [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
+                        { name: 'sid', index: 'sid', "editable": true, edittype: "text", width: 100, align: "center" },
                         { name: 'name', index: 'name', "editable": true, edittype: "text", width: 100, align: "center" },
                         { name: 'sex', index: 'sex', "editable": true, edittype: "select", editoptions: { value: "1:男;2:女" }, width: 100, align: "center" },
-                        { name: 'grade', index: 'grade', "editable": true, edittype: "select", editoptions: { value: "1:初一;2:初二;3:初三;4:高一;5:高二;6:高三" }, width: 100, align: "center" },
-                        { name: 'password.pwd', sortable: false, search: false, "editable": true,edittype: "text",width: 100, align: "center" },
-                        { name: 'password.isInitial', sortable: false, "editable": true,edittype: "text",width: 100, align: "center" ,edittype: "select", editoptions: { value: "1:是;2:否" }},
+                        { name: 'grade1', index: 'grade', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初一", defaultValue: '初一' }, width: 20, align: "center" },
+                        { name: 'grade2', index: 'grade', "editable": true, edittype: "checkbox", editoptions: { value: "初一:初二:初三:高一:高二:高三" }, width: 20, align: "center" },
+                        { name: 'grade3', index: 'grade', "editable": true, edittype: "checkbox", editoptions: { value: "1:初一;2:初二;3:初三;4:高一;5:高二;6:高三" }, width: 20, align: "center" },
+                        { name: 'grade4', index: 'grade', "editable": true, edittype: "checkbox", editoptions: { value: "1:初一;2:初二;3:初三;4:高一;5:高二;6:高三" }, width: 20, align: "center" },
+                        { name: 'grade5', index: 'grade', "editable": true, edittype: "checkbox", editoptions: { value: "1:初一;2:初二;3:初三;4:高一;5:高二;6:高三" }, width: 20, align: "center" },
+                        { name: 'grade6', index: 'grade', "editable": true, edittype: "checkbox", editoptions: { value: "1:初一;2:初二;3:初三;4:高一;5:高二;6:高三" }, width: 20, align: "center" },
+                        { name: 'password.pwd', sortable: false, search: false, width: 100, align: "center" },
+                        { name: 'password.isInitial', sortable: false, width: 100, align: "center" },
                     ],
                     rowNum: 20,//一页显示多少条
                     rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
@@ -145,8 +148,14 @@
                 });
             /*创建jqGrid的操作按钮容器*/
             /*可以控制界面上增删改查的按钮是否显示*/
-            $("#list").jqGrid('navGrid', '#pager', { edit: true, add: true, del: true, search: true });
-            // 对于搜索的相关样式在语言包js文件中，可以根据自己的需要修改这些设置
+            jQuery("#list").jqGrid('navGrid', '#pager', { edit: true, add: true, del: true });
+
+            jQuery("#list").jqGrid('setGroupHeaders', {
+                useColSpanStyle: false,
+                groupHeaders: [
+                    { startColumnName: 'grade1', numberOfColumns: 6, titleText: '<em>年级</em>' },
+                ]
+            });
 
             $(window).resize(function () {
                 $("#list").setGridWidth($(".container-fluid").width() - 2);

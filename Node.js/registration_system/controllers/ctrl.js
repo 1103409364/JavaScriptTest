@@ -18,6 +18,7 @@ exports.showStudent = (req, res) => {
 exports.doShowStudent = (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
+        console.log(fields);
         var rows = fields.rows;
         var page = fields.page;
         Student.find({}, (err, results) => {

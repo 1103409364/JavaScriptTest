@@ -499,15 +499,17 @@ tr.ui-search-toolbar select {
 
 .ui-jqdialog {
 	display: none;
-	width: 300px;
+	width: 300px !important;
 	position: absolute;
-	padding: .2em;
-	font-size: 11px;
-	overflow: visible
+	padding: .2rem;
+	/* margin-left:30%; */
+	/* 	margin-top:200px; */
+	font-size: 1rem;
+	overflow: visible;
 }
 
 .ui-jqdialog .ui-jqdialog-titlebar {
-	padding: .3em .2em;
+	padding: .2em .2em;
 	position: relative
 }
 
@@ -536,9 +538,9 @@ tr.ui-search-toolbar select {
 
 .ui-jqdialog-content,.ui-jqdialog .ui-jqdialog-content {
 	border: 0;
-	padding: .3em .2em;
+	padding: 0 .1rem;
 	background: 0;
-	height: auto
+	height: auto;
 }
 
 .ui-jqdialog .ui-jqconfirm {
@@ -555,13 +557,10 @@ tr.ui-search-toolbar select {
 }
 
 .ui-jqdialog-content .FormGrid {
-	margin: 0
+	margin: 0;
 }
 
-.ui-jqdialog-content .EditTable {
-	width: 100%;
-	margin-bottom: 0
-}
+.ui-jqdialog-content .EditTable {width: 100%;margin-bottom: 0;}
 
 .ui-jqdialog-content .DelTable {
 	width: 100%;
@@ -583,7 +582,7 @@ tr.ui-search-toolbar select {
 	border-left: 0 none;
 	border-right: 0 none;
 	padding-bottom: 5px;
-	padding-top: 5px
+	padding-top: 5px;
 }
 
 .ui-jqdialog-content td.navButton {
@@ -608,7 +607,7 @@ tr.ui-search-toolbar select {
 	vertical-align: middle;
 	border: 0 none;
 	padding: 2px;
-	white-space: nowrap
+	white-space: nowrap;
 }
 
 .ui-jqdialog-content .DataTD {
@@ -624,16 +623,16 @@ tr.ui-search-toolbar select {
 .fm-button {
 	display: inline-block;
 	margin: 0 4px 0 0;
-	padding: .4em .5em;
+	padding: .2rem .2rem;
 	text-decoration: none !important;
 	cursor: pointer;
 	position: relative;
 	text-align: center;
-	zoom: 1
+	zoom: 1;
 }
 
 .fm-button-icon-left {
-	padding-left: 1.9em
+	padding-left: 1.9em;
 }
 
 .fm-button-icon-right {
