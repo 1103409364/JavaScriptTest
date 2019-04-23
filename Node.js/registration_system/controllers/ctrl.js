@@ -18,19 +18,74 @@ exports.showStudent = (req, res) => {
 exports.doShowStudent = (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
-        console.log(fields);
-        var rows = fields.rows;
-        var page = fields.page;
-        Student.find({}, (err, results) => {
-            res.json({
-                "totalpages": parseInt(results.length / rows),
-                "currpage": page,
-                "totalrecords": results.length,
-                "rows": results,
-                "id": "sid",
-                "cell": ["sid", "name", "sex", "grade", "password.pwd", "password.isInitial"]
+        // 从前端请求中拿到参数
+        var rows = parseInt(fields.rows); //限制行数
+        var page = fields.page; //当前页
+        var sortobj = {};
+        sortobj[fields.sidx] = fields.sord; //排序方式
+        // 删除：根据sid删除 
+        if (fields.oper === "del" && fields.id !== "") {
+            var idArr = fields.id.split(",");
+
+            idArr.forEach((id) => {
+                Student.deleteOne({ "sid": id }, (err, info) => {
+                    if (err) {
+                        res.send("删除失败");
+                        return;
+                    }
+                    // 删除结果
+                    // console.log(info);
+                })
+            })
+        }
+        // 修改：根据姓名修改
+        if (fields.oper === "edit" && fields.name !== "") {
+
+            Student.updateOne({ "name": fields.name }, { "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, { multi: true }, (err, info) => {
+                if (err) {
+                    res.send("修改失败");
+                    return;
+                }
+                console.log(info);
+            })
+        }
+
+        // 增加，姓名和学号必填
+        if (fields.oper === "add" && fields.name && fields.sid != "") {
+            Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, (err, info) => {
+                if (err) {
+                    res.send("添加失败");
+                    return;
+                }
+                console.log(fields);
             });
-        });
+        }
+        // 查询
+        var searchObj = {};// 查询条件
+        if (fields._search === "true") {
+            var searchField = fields.searchField;
+            var searchString = fields.searchString;
+            // 用正则做模糊查询
+            var reg = new RegExp(searchString, "g");
+            searchObj[searchField] = reg;
+        }
+        Student.countDocuments(searchObj, function (err, count) {
+            var totalpages = Math.ceil(count / rows); //总页数
+
+            Student.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
+                
+                // 返回数据格式
+                // console.log(results[0])
+                res.json({
+                    "totalpages": totalpages,
+                    "currpage": page,
+                    "totalrecords": count,
+                    "rows": results,
+                    "id": "sid",
+                    "cell": ["sid", "name", "sex", "grade", "password.pwd", "password.isInitial"]
+                });
+            });
+        })
     })
 }
 

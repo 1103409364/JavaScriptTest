@@ -8,7 +8,7 @@ var studentSchema = new mongoose.Schema({
     "sex": String,
     "password": {
         "pwd": String,
-        "isInitial": Boolean
+        "isInitial": String
     }
 })
 // 静态方法,将上传的数据保存到数据库
@@ -28,7 +28,7 @@ studentSchema.statics.saveToDB = (stuArr) => {
                     "password": {
                         // 学号作为初始加密码,登陆后提示改密码
                         "pwd": stuArr[grade].data[i][0],
-                        "isInitial": true
+                        "isInitial": "是"
                     }
                 });
                 stu.save();

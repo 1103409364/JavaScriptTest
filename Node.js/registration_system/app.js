@@ -20,7 +20,7 @@ app.set('view engine', "ejs");
 app.get('/admin', ctrl.showIndex);
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);
-// 获得学生数据
+// 获得学生数据,CURD
 app.post  ("/admin/student"        , ctrl.doShowStudent);
 // 显示上传文件页面
 app.get   ("/admin/student/import" , ctrl.showStudentImport);
