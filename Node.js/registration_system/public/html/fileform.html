@@ -13,7 +13,7 @@
 <script src="/js/jquery/jquery.min.js"></script>
 <script type="text/javascript">
     $("#fileform").on("submit", () => {
-        if (!confirm("注意！！上传Excel将覆盖已经上传的名单，如需修改、添加、删除，请在学生列表内操作")) {
+        if (!confirm("注意！！上传Excel文件将清空已有的名单，修改、添加、删除，可以在学生列表内操作")) {
             //return false阻止表单提交
             return false;
         }

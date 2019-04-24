@@ -118,8 +118,8 @@
                         { name: 'name', index: 'name', "editable": true, edittype: "text", width: 100, align: "center" },
                         { name: 'sex', index: 'sex', "editable": true, edittype: "select", editoptions: { value: "男:男;女:女" }, width: 100, align: "center" },
                         { name: 'grade', index: 'grade', "editable": true, edittype: "select", editoptions: { value: "初一:初一;初二:初二;初三:初三;高一:高一;高二:高二;高三:高三" }, width: 100, align: "center" },
-                        { name: 'password.pwd', sortable: false, search: false, "editable": true,edittype: "text",width: 100, align: "center" },
-                        { name: 'password.isInitial', sortable: false, "editable": true,edittype: "text",width: 100, align: "center" ,edittype: "select", editoptions: { value: "是:是;否:否" }},
+                        { name: 'password.pwd', sortable: false, search: false, "editable": true, edittype: "text", width: 100, align: "center" },
+                        { name: 'password.isInitial', sortable: false, "editable": true, edittype: "text", width: 100, align: "center", edittype: "select", editoptions: { value: "是:是;否:否" } },
                     ],
                     rowNum: 20,//一页显示多少条
                     rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
@@ -145,8 +145,24 @@
                 });
             /*创建jqGrid的操作按钮容器*/
             /*可以控制界面上增删改查的按钮是否显示*/
-            $("#list").jqGrid('navGrid', '#pager', { edit: true, add: true, del: true, search: true });
             // 对于搜索的相关样式在语言包js文件中，可以根据自己的需要修改这些设置
+            $("#list").jqGrid('navGrid', '#pager', { edit: true, add: true, del: true, search: true });
+            // 添加下载按钮
+            $("#list").navButtonAdd('#pager', {
+                caption: "导出Excel",
+                buttonicon: "ui-icon-excel",
+                onClickButton: function () {
+                    $.post("/admin/student", {
+                        "_search": false,
+                        "oper": "download",
+                    }, (data) => {
+                        // 重定向到文件触发下载
+                        $(window).attr("location",data);
+                        // window.location = "/download/1.mp3";
+                    })
+                },
+                position: "last",
+            });
 
             $(window).resize(function () {
                 $("#list").setGridWidth($(".container-fluid").width() - 2);
