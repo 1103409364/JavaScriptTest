@@ -24,49 +24,55 @@ exports.doShowStudent = (req, res) => {
         var page = fields.page; //当前页
         var sortobj = {};
         sortobj[fields.sidx] = fields.sord; //排序方式
-        // 删除：根据sid删除 
+        // 删除：通过_id找到目标数据，删除，从前端请求中拿到_id
         if (fields.oper === "del") {
             var idArr = fields.id.split(",");
 
             idArr.forEach((id) => {
-                Student.deleteOne({ "sid": id }, (err, info) => {
+                Student.deleteOne({ "_id": id }, (err, info) => {
                     if (err) {
                         res.send("删除失败");
                         return;
                     }
                     // 删除结果
-                    // console.log(info);
-                })
-            })
-        }
-        // 修改：根据姓名修改
-        if (fields.oper === "edit") {
-            // 检查学号是否重复
-            Student.find({ "sid": fields.sid }, (err, results) => {
-                if (results.length === 1) {
-                    fields.sid = "学号：" + fields.sid + "被占用，err：" + Math.random();
-                }
-
-                Student.updateOne({ "sid": fields.id }, { "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, { multi: true }, (err, info) => {
-                    if (err) {
-                        res.send("修改失败");
-                        return;
-                    }
                     console.log(info);
                 })
             })
+        }
+        // 修改：通过_id找到目标，修改
+        if (fields.oper === "edit") {
+            // 检查学号是否重复
+            Student.find({"_id": fields.id}, (err, thisStu) => {
 
+                Student.find({ "sid": fields.sid }, (err, results) => {
+                    // 查找fields.sid如果为0，或者sid不变说明学号不重复，否则学号重复，在学号单元格内提示
+                    if (!(results.length === 0 || fields.sid === thisStu[0].sid)) {
+                        fields.sid = "0学号" + fields.sid + "被占用,请修改";
+                    }
+
+                    Student.updateOne({ "_id": fields.id }, { "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, { multi: true }, (err, info) => {
+                        if (err) {
+                            res.send("修改失败");
+                            return;
+                        }
+                        console.log(info);
+                    })
+                })
+            })
         }
 
-        // 增加，姓名和学号必填
-        if (fields.oper === "add" && fields.name != "" && fields.sid != "") {
+        // 增加
+        if (fields.oper === "add") {
             // 检查学号是否重复
             Student.find({ "sid": fields.sid }, (err, results) => {
                 if (results.length > 0) {
-                    fields.sid += "学号重复请修改" + (parseInt(Math.random() * 100));
+                    fields.sid += "0学号" + fields.sid + "被占用,请修改";
                 }
-
-                Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, (err, info) => {
+                if (fields.sid === "" || fields.name === "") {
+                    fields.sid += "0学号、姓名漏填了请修改";
+                }
+                // _id在数据库中自动生成，前端提交之后自动拉取数据获得_id，密码初始化为学号
+                Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields.sid, "password.isInitial": fields['password.isInitial'] }, (err, info) => {
                     if (err) {
                         res.send("添加失败");
                         return;
