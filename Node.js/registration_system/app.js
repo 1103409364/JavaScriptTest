@@ -17,17 +17,26 @@ app.use(session({
 app.set('view engine', "ejs");
 
 // 首页接口
-app.get('/admin', ctrl.showIndex);
+app.get   ('/admin'                , ctrl.showIndex);
+
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);
 // 获得学生数据,根据请求参数进行CURD
 app.post  ("/admin/student"        , ctrl.doShowStudent);
-// 显示上传文件页面
+// 显示上传学生名单页面
 app.get   ("/admin/student/import" , ctrl.showStudentImport);
-// 上传Excel文件导入数据库
+// 上传学生Excel文件导入数据库
 app.post  ("/admin/student/import" , ctrl.doStudentImport);
+
 // 课程管理
 app.get   ("/admin/course"         , ctrl.showCourse);
+// 获得课程数据,根据请求参数进行CURD
+app.post   ("/admin/course"         , ctrl.doShowCourse);
+// 显示上传课程清单页面
+app.get   ("/admin/course/import"  , ctrl.showCourseImport);
+// 上传课程Excel文件导入数据库
+app.post   ("/admin/course/import" , ctrl.doCourseImport);
+
 //报表
 app.get   ("/admin/charts"         , ctrl.showCharts);
 

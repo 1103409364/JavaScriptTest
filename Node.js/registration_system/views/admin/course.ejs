@@ -10,15 +10,26 @@
     <meta name="author" content="">
 
     <title>选修课报名系统</title>
+    <!-- jqGrid组件基础样式包-必要 -->
+    <link rel="stylesheet" href="/css/jqgrid/css/ui.jqgrid.css" />
 
+    <!-- jqGrid主题包-非必要 -->
+    <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
+    <link rel="stylesheet" href="/css/jqgrid/css/css/hot-sneaks/jquery-ui-1.8.16.custom.css" />
 
     <link href="/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <link href="/css/sb-admin.css" rel="stylesheet">
 
-    <!-- Page level plugin CSS-->
-    <link href="/css/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <style>
+        /* 课程简介部分太长，自动换行 */
+        .ui-jqgrid tr.jqgrow td {
+            white-space: normal !important;
+            height: auto;
+        }
+    </style>
 
+    <!-- Page level plugin CSS-->
 </head>
 
 <body id="page-top">
@@ -41,7 +52,7 @@
                     </li>
                     <li class="breadcrumb-item active">课程列表</li>
                     <li class="breadcrumb-item">
-                        <a href="/admin/course/new">增加课程</a>
+                        <a href="/admin/course/import">导入课程</a>
                     </li>
                 </ol>
 
@@ -49,99 +60,15 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Data Table Example</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vivian Harrell</td>
-                                        <td>Financial Controller</td>
-                                        <td>San Francisco</td>
-                                        <td>62</td>
-                                        <td>2009/02/14</td>
-                                        <td>$452,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Timothy Mooney</td>
-                                        <td>Office Manager</td>
-                                        <td>London</td>
-                                        <td>37</td>
-                                        <td>2008/12/11</td>
-                                        <td>$136,200</td>
-                                    </tr>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                        课程列表</div>
+                    <!-- <div class="card-body"> -->
+                    <!-- <div class="table-responsive"> -->
+                    <table class="table-responsive table table-bordered" id="list2" width="100%" cellspacing="0">
+                    </table>
+                    <div id="pager2"></div>
+                    <!-- </div> -->
+                    <!-- </div> -->
                 </div>
-
-                <p class="small text-center text-muted my-5">
-                    <em>More table examples coming soon...</em>
-                </p>
-
             </div>
             <!-- /.container-fluid -->
 
@@ -169,15 +96,84 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="/js/chart.js/Chart.min.js"></script>
-    <script src="/js/datatables/jquery.dataTables.js"></script>
-    <script src="/js/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="/js/demo/datatables-demo.js"></script>
+    <!-- jqGrid插件包-必要 -->
+    <script type="text/javascript" src="/js/jqgrid/js/jquery.jqGrid.src.js"></script>
 
+    <!-- jqGrid插件的多语言包-非必要 -->
+    <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
+    <script type="text/javascript" src="/js/jqgrid/js/i18n/grid.locale-cn.js"></script>
+
+    <script>
+        $(function () {
+            //页面加载完成之后执行
+            pageInit2();
+        });
+        function pageInit2() {
+            //创建jqGrid组件
+            $("#list2").jqGrid(
+                {
+                    url: '/admin/course',//组件创建完成之后请求数据的url
+                    editurl: "/admin/course",
+                    datatype: "json",//请求数据返回的类型。可选json,xml,txt
+                    colNames: ['_id', '课程编号', '课程名称', '上课时间', '可报人数', '初一', '初二', '初三', '高一', '高二', '高三', '教师', '课程简介'],//jqGrid的列显示名字
+                    colModel: [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
+                        { name: '_id', index: '_id', "hidden": true, key: true },
+                        { name: 'cid', index: 'cid', "editable": true, edittype: "text", width: 20, align: "center" },
+                        { name: 'name', index: 'name', "editable": true, edittype: "text", width: 20, align: "center" },
+                        { name: 'time', index: 'time', "editable": true, edittype: "select", editoptions: { value: "周一:周二;周三:周三;周四:周四;周五:周五" }, width: 20, align: "center" },
+                        { name: 'number', index: 'number', "editable": true, edittype: "text", width: 15, align: "center" },
+
+                        { name: 'grade1', index: 'grade1', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初一" }, disabled: false, width: 10, align: "center" },
+                        { name: 'grade2', index: 'grade2', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初二" }, disabled: false, width: 10, align: "center" },
+                        { name: 'grade3', index: 'grade3', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初三" }, disabled: false, width: 10, align: "center" },
+                        { name: 'grade4', index: 'grade4', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高一" }, disabled: false, width: 10, align: "center" },
+                        { name: 'grade5', index: 'grade5', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高二" }, disabled: false, width: 10, align: "center" },
+                        { name: 'grade6', index: 'grade6', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高三" }, disabled: false, width: 10, align: "center" },
+                        { name: 'teacher', sortable: false, width: 20, align: "center" },
+                        { name: 'introduction', sortable: false, width: 100, align: "left" },
+                    ],
+                    rowNum: 10,//一页显示多少条
+                    rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
+                    pager: '#pager2',//表格页脚的占位符(一般是div)的id
+                    sortname: 'cid',//初始化的时候排序的字段
+                    sortorder: "asc",//排序方式,可选desc,asc
+                    mtype: "post",//向后台请求数据的ajax的类型。可选post,get
+                    viewrecords: true,
+                    height: "100%",
+                    // 设置宽度为容器的宽度
+                    width: $(".container-fluid").width() - 2,
+                    // caption: "JSON Example",//表格的标题名字
+                    // 定义jsonReader来跟服务器端返回的数据做对应
+                    jsonReader: {
+                        root: "rows", //包含实际数据的数组
+                        page: "currpage", //当前页
+                        total: "totalpages", //总页数
+                        records: "totalrecords", //查询出的记录数
+                        cell: "cell"
+                    },
+                    multiselect: true,
+                    multiboxonly: true, //只有选择checkbox才会起作用
+                });
+            /*创建jqGrid的操作按钮容器*/
+            /*可以控制界面上增删改查的按钮是否显示*/
+            $("#list2").jqGrid("navGrid", "#pager2", { edit: true, add: true, del: true });
+
+            $("#list2").jqGrid("setGroupHeaders", {
+                useColSpanStyle: true,
+                groupHeaders: [
+                    { startColumnName: "grade1", numberOfColumns: 6, titleText: "可报名年级" },
+                ]
+            });
+
+            $(window).resize(function () {
+                $("#list2").setGridWidth($(".container-fluid").width() - 2);
+            });
+        }
+    </script>
 </body>
 
 </html>

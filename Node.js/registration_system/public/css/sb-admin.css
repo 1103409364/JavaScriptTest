@@ -4904,6 +4904,11 @@ input[type="button"].btn-block {
   border-radius: 0.25rem;
 }
 
+.ui-jqgrid-hdiv {
+  text-align: center;
+
+}
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;

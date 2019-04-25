@@ -1,0 +1,21 @@
+<link href="/css/sb-admin.css" rel="stylesheet">
+
+<form id="fileform" action="/admin/course/import" method="post" enctype="multipart/form-data">
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="exampleFormControlFile1">请选择Excel文件</label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="courseExcel" width="200px" />
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+        <button type="submit" class="btn btn-primary btn-sm" id="submit">上传文件</button>
+    </div>
+</form>
+
+<script src="/js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#fileform").on("submit", () => {
+        if (!confirm("注意！！上传Excel文件将清空已有的课程，修改、添加、删除，可以在课程管理内操作")) {
+            //return false阻止表单提交
+            return false;
+        }
+    });
+</script>
