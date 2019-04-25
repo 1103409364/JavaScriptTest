@@ -118,13 +118,13 @@ exports.doShowStudent = (req, res) => {
                     }
                     //整理数据
                     Student.find({ "grade": gradeArr[i] }, (err, results) => {
-                        // sheetR子表，每个子表表示一个年级，补一个表头
-                        var sheetR = [["学号", "姓名", "年级", "性别", "密码", "是初始密码？"]];
+                        // sheetR子表，每个子表表示一个年级，先放一个表头
+                        var sheetR = [["学号", "姓名", "性别", "密码", "是初始密码？"]];
                         results.forEach( (item) => {
+                            // 每一列的数据，"学号", "姓名", "性别", "密码", "是初始密码？" 按照这个顺序推入数组
                             sheetR.push([
                                 item.sid,
                                 item.name,
-                                item.grade,
                                 item.sex,
                                 item.password.pwd,
                                 item.password.isInitial
