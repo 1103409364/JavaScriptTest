@@ -258,7 +258,7 @@ exports.doShowCourse = (req, res) => {
             idArr.forEach((id) => {
                 Course.deleteOne({ "_id": id }, (err, info) => {
                     if (err) {
-                        res.send("删除失败");
+                        res.send("-1");
                         return;
                     }
                     // 删除结果
@@ -277,8 +277,6 @@ exports.doShowCourse = (req, res) => {
                     if (!(results.length === 0 || parseInt(fields.cid) === thisCou[0].cid)) {
                         // 编号重复就不改编号，其他项目照常修改
                         fields.cid = thisCou[0].cid;
-                    res.send("-1");
-                    return;
                     }
 
                     Course.updateOne({ "_id": fields.id }, { "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, { multi: true }, (err, info) => {
@@ -397,7 +395,7 @@ exports.doShowCourse = (req, res) => {
                     "totalrecords": count,
                     "rows": results,
                     "id": "cid",
-                    "cell": ["cid", "name", "time", "number", "grade1", "grade2", "grade3", "grade4", "grade5", "grade6", "teacher", "introduction"]
+                    "success": true,
                 });
             });
             // }

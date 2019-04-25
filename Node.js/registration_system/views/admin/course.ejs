@@ -157,8 +157,17 @@
                     multiselect: true,
                     multiboxonly: true, //只有选择checkbox才会起作用
 
-                    loadError: Z_AfterSubmit_Edit,
+                    loadError: (xhr,status,error) => {  
+                        alert("服务器错误");    
+                    },
+
+                    loadComplete : (response, err) => {
+                        if(!response) {
+                           alert("修改失败");
+                        }
+                    }
                 });
+                
             /*创建jqGrid的操作按钮容器*/
             /*可以控制界面上增删改查的按钮是否显示*/
             $("#list2").jqGrid("navGrid", "#pager2", { edit: true, add: true, del: true });
@@ -177,30 +186,6 @@
                 },
                 position: "last",
             });
-
-            function Z_AfterSubmit_Edit(response, postdata) {
-                console.log(response, postdata)
-                // var DialogVars = $.parseJSON(response.responseText);//响应信息
-                // $infoTr = $("#TblGrid_" + $.jgrid.jqID(this.id) + ">tbody>tr.tinfo"),
-                //     $infoTd = $infoTr.children("td.topinfo");//信息栏
-                // if (DialogVars.success) {
-                //     var myInfo = '<div class="ui-state-highlight ui-corner-all">' +
-                //         '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                //         DialogVars.message +
-                //         '</div>'
-                //     $infoTd.html(myInfo);
-                //     $infoTr.show();
-                //     return [true, myInfo, ""];
-                // } else {
-                //     var myInfo = //'<div class="ui-state-highlight ui-corner-all">' +
-                //         '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
-                //         DialogVars.message +
-                //         '</div>'
-                //     //错误信息是在id为FormError的单元格显示
-                //     $infoTr.hide();//隐藏信息栏以免同时显示info和FormError
-                //     return [false, myInfo, ""];
-                // }
-            }
 
             $(window).resize(() => {
                 $("#list2").setGridWidth($(".container-fluid").width() - 2);
