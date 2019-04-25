@@ -87,7 +87,7 @@ exports.doShowStudent = (req, res) => {
         if (fields._search === "true") {
             var searchField = fields.searchField;
             var searchString = fields.searchString;
-            // 用正则做模糊查询
+            // 用正则做模糊查询，找含有searchString的文档
             var reg = new RegExp(searchString, "g");
             searchObj[searchField] = reg;
         }
