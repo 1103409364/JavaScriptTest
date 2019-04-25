@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 // mongoose.connect('mongodb://localhost/registration_system', { useNewUrlParser: true });
 
 var courseSchema = new mongoose.Schema({
-    "cid": String,
+    "cid": Number, //按照数值排序，这里需要为Number类型
     "name": String,
     "time": String,
     "number": Number,

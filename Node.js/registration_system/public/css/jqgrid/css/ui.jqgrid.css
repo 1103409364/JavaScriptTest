@@ -499,7 +499,7 @@ tr.ui-search-toolbar select {
 
 .ui-jqdialog {
 	display: none;
-	width: 300px !important;
+/* 	width: 300px !important; */
 	position: absolute;
 	padding: .2rem;
 	/* margin-left:30%; */

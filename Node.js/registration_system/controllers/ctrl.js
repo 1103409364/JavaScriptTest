@@ -14,7 +14,7 @@ exports.showIndex = (req, res) => {
 exports.showStudent = (req, res) => {
     res.render("admin/student", { "current": "student" });
 }
-// 给前端提供学生列表的表格数据
+// 给前端提供学生列表的数据
 // 请求参数：排序主键sid、当前页条数rows、页码page、排序方式
 // 页面载入和换页都会发起请求，就是后端分页
 exports.doShowStudent = (req, res) => {
@@ -33,7 +33,7 @@ exports.doShowStudent = (req, res) => {
             idArr.forEach((id) => {
                 Student.deleteOne({ "_id": id }, (err, info) => {
                     if (err) {
-                        res.send("删除失败");
+                        console.log(err);
                         return;
                     }
                     // 删除结果
@@ -41,11 +41,11 @@ exports.doShowStudent = (req, res) => {
                 })
             })
         }
-        
+
         // 修改：通过_id找到目标，修改
         if (fields.oper === "edit") {
             // 检查学号是否重复
-            Student.find({"_id": fields.id}, (err, thisStu) => {
+            Student.find({ "_id": fields.id }, (err, thisStu) => {
 
                 Student.find({ "sid": fields.sid }, (err, results) => {
                     // 查找fields.sid如果为0，或者sid不变说明学号不重复，否则学号重复，在学号单元格内提示
@@ -55,7 +55,7 @@ exports.doShowStudent = (req, res) => {
 
                     Student.updateOne({ "_id": fields.id }, { "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, { multi: true }, (err, info) => {
                         if (err) {
-                            res.send("修改失败");
+                            console.log(err);
                             return;
                         }
                         console.log(info);
@@ -74,10 +74,10 @@ exports.doShowStudent = (req, res) => {
                 if (fields.sid === "" || fields.name === "") {
                     fields.sid += "0学号、姓名漏填了请修改";
                 }
-                // _id在数据库中自动生成，前端提交之后自动拉取数据获得_id，密码初始化为学号
+                // _id在数据库中自动生成，前端提交之后jqGrid立即拉取数据获得_id，密码初始化为学号
                 Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields.sid, "password.isInitial": fields['password.isInitial'] }, (err, info) => {
                     if (err) {
-                        res.send("添加失败");
+                        console.log(err);
                         return;
                     }
                     console.log(fields);
@@ -108,14 +108,14 @@ exports.doShowStudent = (req, res) => {
                         //此时TableR中已经是6个年级的大数组了！
                         var buffer = xlsx.build(TableR);
                         //生成文件
-                        var dateStr =format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
+                        var dateStr = format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
                         var filePath = "/download/学生名单" + dateStr + ".xlsx";
-                        fs.writeFile("./public"+ filePath, buffer, (err) => {
-                            if(err) {
+                        fs.writeFile("./public" + filePath, buffer, (err) => {
+                            if (err) {
                                 res.send("文件写入失败");
                             }
                             console.log("ok");
-                       
+
                             res.send(filePath);
                         });
                     }
@@ -123,7 +123,7 @@ exports.doShowStudent = (req, res) => {
                     Student.find({ "grade": gradeArr[i] }, (err, results) => {
                         // sheetR子表，每个子表表示一个年级，先放一个表头
                         var sheetR = [["学号", "姓名", "性别", "密码", "是初始密码？"]];
-                        results.forEach( (item) => {
+                        results.forEach((item) => {
                             // 每一列的数据，"学号", "姓名", "性别", "密码", "是初始密码？" 按照这个顺序推入数组
                             sheetR.push([
                                 item.sid,
@@ -240,7 +240,7 @@ exports.doStudentImport = (req, res) => {
 exports.showCourse = (req, res) => {
     res.render("admin/course", { "current": "course" });
 }
-// 给前端提供课程列表的表格数据
+// 给前端提供课程列表的数据
 exports.doShowCourse = (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
@@ -248,66 +248,87 @@ exports.doShowCourse = (req, res) => {
         var rows = parseInt(fields.rows); //限制行数
         var page = fields.page; //当前页
         var sortobj = {};
-        sortobj[fields.sidx] = fields.sord; //排序方式
+        sortobj[fields.sidx] = fields.sord; //排序方式sidx jqGrid提交的排序字段
 
-        // // 删除：通过_id找到目标数据，删除，从前端请求中拿到_id
-        // if (fields.oper === "del") {
-        //     var idArr = fields.id.split(",");
+        // 删除：通过_id找到目标数据， jqGrid中将_id设置为主键，这样del操作提交的id就是数据库中的_id
+        if (fields.oper === "del") {
+            // 可能是多选，删除多条
+            var idArr = fields.id.split(",");
 
-        //     idArr.forEach((id) => {
-        //         Student.deleteOne({ "_id": id }, (err, info) => {
-        //             if (err) {
-        //                 res.send("删除失败");
-        //                 return;
-        //             }
-        //             // 删除结果
-        //             console.log(info);
-        //         })
-        //     })
-        // }
-        
-        // // 修改：通过_id找到目标，修改
-        // if (fields.oper === "edit") {
-        //     // 检查学号是否重复
-        //     Student.find({"_id": fields.id}, (err, thisStu) => {
+            idArr.forEach((id) => {
+                Course.deleteOne({ "_id": id }, (err, info) => {
+                    if (err) {
+                        res.send("删除失败");
+                        return;
+                    }
+                    // 删除结果
+                    console.log(info);
+                })
+            })
+        }
 
-        //         Student.find({ "sid": fields.sid }, (err, results) => {
-        //             // 查找fields.sid如果为0，或者sid不变说明学号不重复，否则学号重复，在学号单元格内提示
-        //             if (!(results.length === 0 || fields.sid === thisStu[0].sid)) {
-        //                 fields.sid = "0学号" + fields.sid + "被占用,请修改";
-        //             }
+        // 修改：通过_id找到目标，修改
+        if (fields.oper === "edit") {
+            // 检查课程编号是否重复
+            Course.find({ "_id": fields.id }, (err, thisCou) => {
 
-        //             Student.updateOne({ "_id": fields.id }, { "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields['password.pwd'], "password.isInitial": fields['password.isInitial'] }, { multi: true }, (err, info) => {
-        //                 if (err) {
-        //                     res.send("修改失败");
-        //                     return;
-        //                 }
-        //                 console.log(info);
-        //             })
-        //         })
-        //     })
-        // }
+                Course.find({ "cid": fields.cid }, (err, results) => {
+                    // 查找fields.cid如果为0或者cid不变说明学号不重复，否则学号重复，在学号单元格内提示
+                    if (!(results.length === 0 || parseInt(fields.cid) === thisCou[0].cid)) {
+                        // 编号重复就不改编号，其他项目照常修改
+                        fields.cid = thisCou[0].cid;
+                    res.send("-1");
+                    return;
+                    }
 
-        // // 增加
-        // if (fields.oper === "add") {
-        //     // 检查学号是否重复
-        //     Student.find({ "sid": fields.sid }, (err, results) => {
-        //         if (results.length > 0) {
-        //             fields.sid += "0学号" + fields.sid + "被占用,请修改";
-        //         }
-        //         if (fields.sid === "" || fields.name === "") {
-        //             fields.sid += "0学号、姓名漏填了请修改";
-        //         }
-        //         // _id在数据库中自动生成，前端提交之后自动拉取数据获得_id，密码初始化为学号
-        //         Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields.sid, "password.isInitial": fields['password.isInitial'] }, (err, info) => {
-        //             if (err) {
-        //                 res.send("添加失败");
-        //                 return;
-        //             }
-        //             console.log(fields);
-        //         });
-        //     })
-        // }
+                    Course.updateOne({ "_id": fields.id }, { "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, { multi: true }, (err, info) => {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                        console.log(info);
+                    })
+
+                })
+            })
+        }
+
+        // 增加
+        if (fields.oper === "add") {
+            // 检查学号是否重复
+            Course.find({ "cid": fields.cid }, (err, results) => {
+                // 课程编号重复或者漏填，补一个cid，值为最大cid +1
+                if (results.length > 0 || fields.cid === "") {
+                    // 寻找最大cid
+                    Course.find({}, (err, results) => {
+                        var maxId = results[0].cid;
+                        results.forEach((item) => {
+                            if (item.cid > maxId) {
+                                maxId = item.cid;
+                            }
+                        })
+
+                        fields.cid = maxId + 1;
+                        // console.log(maxId);
+                        
+                        Course.create({ "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, (err, info) => {
+                            if (err) {
+                                console.log(err);
+                                return;
+                            }
+                        });
+                    });
+                    return;
+                }
+              
+                Course.create({ "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, (err, info) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                });
+            })
+        }
 
         // // 查询
         var searchObj = {};// 查询条件
@@ -339,7 +360,7 @@ exports.doShowCourse = (req, res) => {
             //                     res.send("文件写入失败");
             //                 }
             //                 console.log("ok");
-                       
+
             //                 res.send(filePath);
             //             });
             //         }
@@ -366,19 +387,19 @@ exports.doShowCourse = (req, res) => {
 
             //     iterator(0);
             // } else {
-                // 分页
-                Course.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
-                    // 返回数据格式
-                    // console.log(results[0])
-                    res.json({
-                        "totalpages": totalpages,
-                        "currpage": page,
-                        "totalrecords": count,
-                        "rows": results,
-                        "id": "cid",
-                        "cell": ["cid", "name", "time", "number", "grade1", "grade2","grade3","grade4","grade5","grade6","teacher", "introduction"]
-                    });
+            // 分页
+            Course.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
+                // 返回数据格式
+                // console.log(results[0])
+                res.json({
+                    "totalpages": totalpages,
+                    "currpage": page,
+                    "totalrecords": count,
+                    "rows": results,
+                    "id": "cid",
+                    "cell": ["cid", "name", "time", "number", "grade1", "grade2", "grade3", "grade4", "grade5", "grade6", "teacher", "introduction"]
                 });
+            });
             // }
         });
     });
@@ -386,7 +407,7 @@ exports.doShowCourse = (req, res) => {
 
 // 显示导入课程页面
 exports.showCourseImport = (req, res) => {
-    res.render("admin/courseImport", {"current": "course"})
+    res.render("admin/courseImport", { "current": "course" })
 }
 
 // 上传文件，导入课程
@@ -414,13 +435,13 @@ exports.doCourseImport = (req, res) => {
             return;
         }
 
-        // 读取excel表格，转为数组，length表示子表格数量,课程列表的数据结构和学生名单相同
+        // 读取excel表格，parse转为数组，length表示子表格数量,课程列表的数据结构和学生名单相同
         var courseArr = xlsx.parse("./" + files.courseExcel.path);
         // 检查表格表头是否正确
         var cidArr = [];
         for (var c = 0; c < courseArr.length; c++) {
             // 检查表头关键字段
-            if (courseArr[c].data[0][0] != "课程编号" || courseArr[c].data[0][1] != "课程名称" || courseArr[c].data[0][2] != "上课时间"|| courseArr[c].data[0][3] != "可报人数"|| courseArr[c].data[0][4] != "可报年级"|| courseArr[c].data[0][4] != "可报年级") {
+            if (courseArr[c].data[0][0] != "课程编号" || courseArr[c].data[0][1] != "课程名称" || courseArr[c].data[0][2] != "上课时间" || courseArr[c].data[0][3] != "可报人数" || courseArr[c].data[0][4] != "可报年级" || courseArr[c].data[0][4] != "可报年级") {
                 //删除文件
                 fs.unlink("./" + files.courseExcel.path, function (err) {
                     if (err) {
@@ -432,8 +453,9 @@ exports.doCourseImport = (req, res) => {
                 return;
             }
 
-            // 整理数据将可报年级转为数组，跳过表头
-            for( var l = 1; l < courseArr[c].data.length; l++) {
+            // 整理数据
+            // 将可报年级转为数组，跳过表头
+            for (var l = 1; l < courseArr[c].data.length; l++) {
                 // 字符串转数组
                 // console.log(courseArr[c].data[l][4].split("、"))
                 var gradeArr = []
@@ -466,7 +488,7 @@ exports.doCourseImport = (req, res) => {
             }
         }
 
-        
+
         // 保存到数据库
         Course.saveToDB(courseArr);
         res.send("上传成功，返回课程列表即可查看")

@@ -26,6 +26,8 @@
         .ui-jqgrid tr.jqgrow td {
             white-space: normal !important;
             height: auto;
+            vertical-align: middle;
+            font-size: 14px;
         }
     </style>
 
@@ -116,25 +118,22 @@
             //创建jqGrid组件
             $("#list2").jqGrid(
                 {
-                    url: '/admin/course',//组件创建完成之后请求数据的url
+                    url: "/admin/course",//组件创建完成之后请求数据的url
                     editurl: "/admin/course",
                     datatype: "json",//请求数据返回的类型。可选json,xml,txt
-                    colNames: ['_id', '课程编号', '课程名称', '上课时间', '可报人数', '初一', '初二', '初三', '高一', '高二', '高三', '教师', '课程简介'],//jqGrid的列显示名字
+                    colNames: ['_id', '课程编号', '课程名称', '上课时间', '可报人数', '可报名年级', '教师', '课程简介'],//jqGrid的列显示名字
                     colModel: [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
-                        { name: '_id', index: '_id', "hidden": true, key: true },
-                        { name: 'cid', index: 'cid', "editable": true, edittype: "text", width: 20, align: "center" },
-                        { name: 'name', index: 'name', "editable": true, edittype: "text", width: 20, align: "center" },
-                        { name: 'time', index: 'time', "editable": true, edittype: "select", editoptions: { value: "周一:周二;周三:周三;周四:周四;周五:周五" }, width: 20, align: "center" },
-                        { name: 'number', index: 'number', "editable": true, edittype: "text", width: 15, align: "center" },
+                        { name: '_id', index: '_id', "hidden": true, key: true},
+                        // editrules表单验证，比如必填不能为空
+                        { name: 'cid', index: 'cid', "editable": true, edittype: "text", width: 15, align: "center", editrules: {edithidden:true,required:true,number:true,minValue:0}},
+                        { name: 'name', index: 'name', "editable": true, edittype: "text", width: 30, align: "center", editrules: {edithidden:true,required:true}},
+                        { name: 'time', index: 'time', "editable": true, edittype: "select", editoptions: { value: "周一:周一;周二:周二;周三:周三;周四:周四;周五:周五" }, width: 15, align: "center" },
+                        { name: 'number', index: 'number', "editable": true, edittype: "text", width: 15, align: "center" ,  editrules: {edithidden:true,required:true,number:true,minValue:0}},
+                        // 允许报名的年级，后台返回字符串数组可以直接显示。逗号分隔的字符串提交到后台mongoose会根据schema自动转为数组存入数据库
+                        { name: 'permitGrade', index: 'permitGrade', "editable": true, edittype: "text", width: 30, align: "center", editrules:{edithidden:true,required:true} },
 
-                        { name: 'grade1', index: 'grade1', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初一" }, disabled: false, width: 10, align: "center" },
-                        { name: 'grade2', index: 'grade2', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初二" }, disabled: false, width: 10, align: "center" },
-                        { name: 'grade3', index: 'grade3', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "初三" }, disabled: false, width: 10, align: "center" },
-                        { name: 'grade4', index: 'grade4', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高一" }, disabled: false, width: 10, align: "center" },
-                        { name: 'grade5', index: 'grade5', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高二" }, disabled: false, width: 10, align: "center" },
-                        { name: 'grade6', index: 'grade6', "editable": true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "高三" }, disabled: false, width: 10, align: "center" },
-                        { name: 'teacher', sortable: false, width: 20, align: "center" },
-                        { name: 'introduction', sortable: false, width: 100, align: "left" },
+                        { name: 'teacher', sortable: false, width: 15, align: "center", editrules:{edithidden:true,required:true}},
+                        { name: 'introduction', "editable": true, edittype: "textarea", sortable: false, width: 100, align: "left", editrules:{edithidden:true,required:true} },
                     ],
                     rowNum: 10,//一页显示多少条
                     rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
@@ -157,19 +156,53 @@
                     },
                     multiselect: true,
                     multiboxonly: true, //只有选择checkbox才会起作用
+
+                    loadError: Z_AfterSubmit_Edit,
                 });
             /*创建jqGrid的操作按钮容器*/
             /*可以控制界面上增删改查的按钮是否显示*/
             $("#list2").jqGrid("navGrid", "#pager2", { edit: true, add: true, del: true });
-
-            $("#list2").jqGrid("setGroupHeaders", {
-                useColSpanStyle: true,
-                groupHeaders: [
-                    { startColumnName: "grade1", numberOfColumns: 6, titleText: "可报名年级" },
-                ]
+            // 添加下载按钮
+            $("#list2").navButtonAdd('#pager2', {
+                caption: "导出Excel",
+                buttonicon: "ui-icon-excel",
+                onClickButton: () => {
+                    $.post("/admin/course", {
+                        "_search": false,
+                        "oper": "download",
+                    }, (data) => {
+                        // 重定向到文件触发下载
+                        $(window).attr("location", data);
+                    })
+                },
+                position: "last",
             });
 
-            $(window).resize(function () {
+            function Z_AfterSubmit_Edit(response, postdata) {
+                console.log(response, postdata)
+                // var DialogVars = $.parseJSON(response.responseText);//响应信息
+                // $infoTr = $("#TblGrid_" + $.jgrid.jqID(this.id) + ">tbody>tr.tinfo"),
+                //     $infoTd = $infoTr.children("td.topinfo");//信息栏
+                // if (DialogVars.success) {
+                //     var myInfo = '<div class="ui-state-highlight ui-corner-all">' +
+                //         '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+                //         DialogVars.message +
+                //         '</div>'
+                //     $infoTd.html(myInfo);
+                //     $infoTr.show();
+                //     return [true, myInfo, ""];
+                // } else {
+                //     var myInfo = //'<div class="ui-state-highlight ui-corner-all">' +
+                //         '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
+                //         DialogVars.message +
+                //         '</div>'
+                //     //错误信息是在id为FormError的单元格显示
+                //     $infoTr.hide();//隐藏信息栏以免同时显示info和FormError
+                //     return [false, myInfo, ""];
+                // }
+            }
+
+            $(window).resize(() => {
                 $("#list2").setGridWidth($(".container-fluid").width() - 2);
             });
         }
