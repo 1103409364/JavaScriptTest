@@ -104,7 +104,7 @@ exports.doShowStudent = (req, res) => {
                 //迭代器！强行把异步函数变为同步的！当读取完毕初一的时候，才去读取初二……
                 //i为0、1、2、3、4、5，表示读取初一、初二……高三的信息
                 function iterator(i) {
-                    if (i == 6) {
+                    if (i == gradeArr.length) {
                         //此时TableR中已经是6个年级的大数组了！
                         var buffer = xlsx.build(TableR);
                         //生成文件
@@ -330,61 +330,67 @@ exports.doShowCourse = (req, res) => {
 
         // // 查询
         var searchObj = {};// 查询条件
-        // if (fields._search === "true") {
-        //     var searchField = fields.searchField;
-        //     var searchString = fields.searchString;
-        //     // 用正则做模糊查询，找含有searchString的文档
-        //     var reg = new RegExp(searchString, "g");
-        //     searchObj[searchField] = reg;
-        // }
+        if (fields._search === "true") {
+            var searchField = fields.searchField;
+            var searchString = fields.searchString;
+            // 用正则做模糊查询，找含有searchString的文档
+            var reg = new RegExp(searchString, "g");
+            searchObj[searchField] = reg;
+
+            if(searchField === "cid") {
+                searchObj[searchField] = parseInt(searchString);
+            }
+        }
 
         Course.countDocuments(searchObj, function (err, count) {
             var totalpages = Math.ceil(count / rows); //总页数
+
             // 导出Excel
-            // if (fields.oper === "download") {
-            //     var TableR = [];
-            //     var gradeArr = ["初一", "初二", "初三", "高一", "高二", "高三"];
-            //     //迭代器！强行把异步函数变为同步的！当读取完毕初一的时候，才去读取初二……
-            //     //i为0、1、2、3、4、5，表示读取初一、初二……高三的信息
-            //     function iterator(i) {
-            //         if (i == 6) {
-            //             //此时TableR中已经是6个年级的大数组了！
-            //             var buffer = xlsx.build(TableR);
-            //             //生成文件
-            //             var dateStr =format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
-            //             var filePath = "/download/学生名单" + dateStr + ".xlsx";
-            //             fs.writeFile("./public"+ filePath, buffer, (err) => {
-            //                 if(err) {
-            //                     res.send("文件写入失败");
-            //                 }
-            //                 console.log("ok");
+            if (fields.oper === "download") {
+                var TableR = [];
+                // 只有一个表
+                var courseArr = ["课程列表"];
+    
+                function iterator(i) {
+                    if (i == courseArr.length) {
+                       
+                        var buffer = xlsx.build(TableR);
+                        //生成文件
+                        var dateStr =format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
+                        var filePath = "/download/课程清单" + dateStr + ".xlsx";
+                        fs.writeFile("./public"+ filePath, buffer, (err) => {
+                            if(err) {
+                                res.send("文件写入失败");
+                            }
+                            console.log("ok");
 
-            //                 res.send(filePath);
-            //             });
-            //         }
-            //         //整理数据
-            //         Student.find({ "grade": gradeArr[i] }, (err, results) => {
-            //             // sheetR子表，每个子表表示一个年级，先放一个表头
-            //             var sheetR = [["学号", "姓名", "性别", "密码", "是初始密码？"]];
-            //             results.forEach( (item) => {
-            //                 // 每一列的数据，"学号", "姓名", "性别", "密码", "是初始密码？" 按照这个顺序推入数组
-            //                 sheetR.push([
-            //                     item.sid,
-            //                     item.name,
-            //                     item.sex,
-            //                     item.password.pwd,
-            //                     item.password.isInitial
-            //                 ]);
-            //             });
-            //             // name年级，data对应年级的数据
-            //             TableR.push({ "name": gradeArr[i], data: sheetR });
+                            res.send(filePath);
+                        });
+                    }
+                    //整理数据,课程只有一个表，find没有限制条件
+                    Course.find({}, (err, results) => {
+                        // sheetR子表，每个子表先放一个表头
+                        var sheetR = [["课程编号", "课程名称", "上课时间", "可报人数", "可报年级", "教师","课程简介"]];
+                        results.forEach( (item) => {
+                            sheetR.push([
+                                item.cid,
+                                item.name,
+                                item.time,
+                                item.number,
+                                item.permitGrade,
+                                item.teacher,
+                                item.introduction
+                            ]);
+                        });
+                        // name表名，data对应年级的数据
+                        TableR.push({ "name": courseArr[i], data: sheetR });
 
-            //             iterator(++i);
-            //         });
-            //     }
+                        iterator(++i);
+                    });
+                }
 
-            //     iterator(0);
-            // } else {
+                iterator(0);
+            } else {
             // 分页
             Course.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
                 // 返回数据格式
@@ -398,7 +404,7 @@ exports.doShowCourse = (req, res) => {
                     "success": true,
                 });
             });
-            // }
+            }
         });
     });
 }
@@ -451,15 +457,16 @@ exports.doCourseImport = (req, res) => {
                 return;
             }
 
-            // 整理数据
-            // 将可报年级转为数组，跳过表头
-            for (var l = 1; l < courseArr[c].data.length; l++) {
-                // 字符串转数组
-                // console.log(courseArr[c].data[l][4].split("、"))
-                var gradeArr = []
-                gradeArr = courseArr[c].data[l][4].split("、")
-                courseArr[c].data[l][4] = gradeArr;
-            }
+            // 将可报年级转为数组，跳过表头 不转直接存字符串
+            // for (var l = 1; l < courseArr[c].data.length; l++) {
+            //     // 字符串转数组
+            //     // console.log(courseArr[c].data[l][4].split("、"))
+            //     var gradeArr = []
+            //     gradeArr = courseArr[c].data[l][4].split("、")
+            //     courseArr[c].data[l][4] = gradeArr;
+            // }
+
+
             // =1 跳过表头
             for (var i = 1; i < courseArr[c].data.length; i++) {
                 // 转为字符串后查重

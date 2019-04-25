@@ -129,7 +129,7 @@
                         { name: 'name', index: 'name', "editable": true, edittype: "text", width: 30, align: "center", editrules: {edithidden:true,required:true}},
                         { name: 'time', index: 'time', "editable": true, edittype: "select", editoptions: { value: "周一:周一;周二:周二;周三:周三;周四:周四;周五:周五" }, width: 15, align: "center" },
                         { name: 'number', index: 'number', "editable": true, edittype: "text", width: 15, align: "center" ,  editrules: {edithidden:true,required:true,number:true,minValue:0}},
-                        // 允许报名的年级，后台返回字符串数组可以直接显示。逗号分隔的字符串提交到后台mongoose会根据schema自动转为数组存入数据库
+                     
                         { name: 'permitGrade', index: 'permitGrade', "editable": true, edittype: "text", width: 30, align: "center", editrules:{edithidden:true,required:true} },
 
                         { name: 'teacher', sortable: false, width: 15, align: "center", editrules:{edithidden:true,required:true}},
@@ -167,7 +167,7 @@
                         }
                     }
                 });
-                
+
             /*创建jqGrid的操作按钮容器*/
             /*可以控制界面上增删改查的按钮是否显示*/
             $("#list2").jqGrid("navGrid", "#pager2", { edit: true, add: true, del: true });

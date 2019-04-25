@@ -6,7 +6,7 @@ var courseSchema = new mongoose.Schema({
     "name": String,
     "time": String,
     "number": Number,
-    "permitGrade": [String],
+    "permitGrade": String,
     "teacher": String,
     "introduction": String
 })
