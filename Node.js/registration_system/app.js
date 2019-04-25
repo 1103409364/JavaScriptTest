@@ -31,7 +31,7 @@ app.post  ("/admin/student/import" , ctrl.doStudentImport);
 // 课程管理
 app.get   ("/admin/course"         , ctrl.showCourse);
 // 获得课程数据,根据请求参数进行CURD
-app.post   ("/admin/course"         , ctrl.doShowCourse);
+app.post   ("/admin/course"        , ctrl.doShowCourse);
 // 显示上传课程清单页面
 app.get   ("/admin/course/import"  , ctrl.showCourseImport);
 // 上传课程Excel文件导入数据库

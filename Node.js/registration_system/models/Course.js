@@ -25,7 +25,7 @@ courseSchema.statics.saveToDB = (courseArr) => {
                     "cid": courseArr[c].data[i][0],
                     "name": courseArr[c].data[i][1],
                     "time": courseArr[c].data[i][2],
-                    "number":courseArr[c].data[i][3],
+                    "number": courseArr[c].data[i][3],
                     "permitGrade": courseArr[c].data[i][4],
                     "teacher": courseArr[c].data[i][5],
                     "introduction": courseArr[c].data[i][6],

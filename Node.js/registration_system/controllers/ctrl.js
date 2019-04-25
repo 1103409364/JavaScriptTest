@@ -308,7 +308,7 @@ exports.doShowCourse = (req, res) => {
 
                         fields.cid = maxId + 1;
                         // console.log(maxId);
-                        
+
                         Course.create({ "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, (err, info) => {
                             if (err) {
                                 console.log(err);
@@ -318,7 +318,7 @@ exports.doShowCourse = (req, res) => {
                     });
                     return;
                 }
-              
+
                 Course.create({ "cid": fields.cid, "name": fields.name, "time": fields.time, "number": fields.number, "permitGrade": fields.permitGrade, "teacher": fields.teacher, "introduction": fields.introduction }, (err, info) => {
                     if (err) {
                         console.log(err);
@@ -337,7 +337,7 @@ exports.doShowCourse = (req, res) => {
             var reg = new RegExp(searchString, "g");
             searchObj[searchField] = reg;
 
-            if(searchField === "cid") {
+            if (searchField === "cid") {
                 searchObj[searchField] = parseInt(searchString);
             }
         }
@@ -350,16 +350,16 @@ exports.doShowCourse = (req, res) => {
                 var TableR = [];
                 // 只有一个表
                 var courseArr = ["课程列表"];
-    
+
                 function iterator(i) {
                     if (i == courseArr.length) {
-                       
+
                         var buffer = xlsx.build(TableR);
                         //生成文件
-                        var dateStr =format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
+                        var dateStr = format.asString("yyyy-MM-dd-hh-mm-ss.SSS", new Date());
                         var filePath = "/download/课程清单" + dateStr + ".xlsx";
-                        fs.writeFile("./public"+ filePath, buffer, (err) => {
-                            if(err) {
+                        fs.writeFile("./public" + filePath, buffer, (err) => {
+                            if (err) {
                                 res.send("文件写入失败");
                             }
                             console.log("ok");
@@ -370,8 +370,8 @@ exports.doShowCourse = (req, res) => {
                     //整理数据,课程只有一个表，find没有限制条件
                     Course.find({}, (err, results) => {
                         // sheetR子表，每个子表先放一个表头
-                        var sheetR = [["课程编号", "课程名称", "上课时间", "可报人数", "可报年级", "教师","课程简介"]];
-                        results.forEach( (item) => {
+                        var sheetR = [["课程编号", "课程名称", "上课时间", "可报人数", "可报年级", "教师", "课程简介"]];
+                        results.forEach((item) => {
                             sheetR.push([
                                 item.cid,
                                 item.name,
@@ -391,19 +391,19 @@ exports.doShowCourse = (req, res) => {
 
                 iterator(0);
             } else {
-            // 分页
-            Course.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
-                // 返回数据格式
-                // console.log(results[0])
-                res.json({
-                    "totalpages": totalpages,
-                    "currpage": page,
-                    "totalrecords": count,
-                    "rows": results,
-                    "id": "cid",
-                    "success": true,
+                // 分页
+                Course.find(searchObj).sort(sortobj).limit(rows).skip(rows * (page - 1)).exec((err, results) => {
+                    // 返回数据格式
+                    // console.log(results[0])
+                    res.json({
+                        "totalpages": totalpages,
+                        "currpage": page,
+                        "totalrecords": count,
+                        "rows": results,
+                        "id": "cid",
+                        "success": true,
+                    });
                 });
-            });
             }
         });
     });
