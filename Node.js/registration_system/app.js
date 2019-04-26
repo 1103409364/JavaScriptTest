@@ -6,7 +6,7 @@ var ctrl = require('./controllers/ctrl');
 var app = express();
 // 链接数据库registration_system
 mongoose.connect('mongodb://localhost/registration_system', { useNewUrlParser: true });
-//使用session
+//session用于登陆
 app.use(session({
     secret: 'registrationSystem',
     cookie: { maxAge: 60000 },
@@ -16,13 +16,17 @@ app.use(session({
 // 设置模板引擎
 app.set('view engine', "ejs");
 // 添加管理员账号接口
-// app.get   ('/addadmin'             , ctrl.showAddAdmin);
-// app.post  ('/addadmin'             , ctrl.doAddAdmin);
+app.get   ('/addadmin'             , ctrl.showAddAdmin);
+app.post  ('/addadmin'             , ctrl.doAddAdmin);
 
 // 首页接口
 app.get   ('/admin'                , ctrl.showAdmin);
+// 提供报表数据
 app.post  ('/admin'                , ctrl.doShowAdmin);
-
+// 登陆
+app.get   ('/admin/login'          , ctrl.showAdminLogin);
+// 登陆验证
+app.post   ('/admin/login'         , ctrl.doLogin);
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);
 // 获得学生数据,根据请求参数进行CURD

@@ -31,14 +31,17 @@ exports.doAddAdmin = (req, res) => {
         res.send("添加成功");
     })
 }
-
-// 管理员面板
+// 管理员面板首页
 exports.showAdmin = (req, res) => {
-    res.render("admin/admin", { "current": "index" });
+    if(session.adminLogin === true) {
+        res.render("admin/admin", { 
+            "current": "index",
+            "username": session.adminUsername,
+     });
+    }
 }
 // 返回报名情况的数据
 exports.doShowAdmin = (req, res) => {
-    console.log(1)
     var data = {};
 
     Course.find({}, (err, couresults) => {
@@ -57,23 +60,47 @@ exports.doShowAdmin = (req, res) => {
         })
     })
 }
-// 学生列表页面
+// 显示管理员登陆页面
+exports.showAdminLogin = (req, res) => {
+    res.render("admin/adminLogin");
+}
+
+exports.doLogin = (req, res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, (err, fields) => {
+        var adminUsername = fields.username;
+        var sha256Pwd = crypto.createHash("sha256").update(fields.password).digest("hex");
+
+        Admin.find({"adminUsername": adminUsername}, (err, results) => {
+            if(results.length >0 && results[0].password === sha256Pwd) {
+                console.log("管理员登陆成功");
+                // 下发session
+                req.session.adminLogin = true;
+                req.session.username = adminUsername;
+                res.redirect("/admin")
+            }
+        })
+    });
+}
+
+
+// 学生管理页面
 exports.showStudent = (req, res) => {
     res.render("admin/student", { "current": "student" });
 }
-// 给前端提供学生列表的数据
+// 提供学生列表的数据
 // 请求参数：排序主键sid、当前页条数rows、页码page、排序方式
 // 页面载入和换页都会发起请求，就是后端分页
 exports.doShowStudent = (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
-        // 从前端请求中拿到参数
+        // 从请求中拿到参数
         var rows = parseInt(fields.rows); //限制行数
         var page = fields.page; //当前页
         var sortobj = {};
         sortobj[fields.sidx] = fields.sord; //排序方式
 
-        // 删除：通过_id找到目标数据，删除，从前端请求中拿到_id
+        // 删除：通过_id找到目标数据，删除，从请求中拿到_id
         if (fields.oper === "del") {
             var idArr = fields.id.split(",");
 
@@ -121,7 +148,7 @@ exports.doShowStudent = (req, res) => {
                 if (fields.sid === "" || fields.name === "") {
                     fields.sid += "0学号、姓名漏填了请修改";
                 }
-                // _id在数据库中自动生成，前端提交之后jqGrid立即拉取数据获得_id，密码初始化为学号
+                // _id在数据库中自动生成，请求提交之后jqGrid立即拉取数据获得_id，密码初始化为学号
                 Student.create({ "sid": fields.sid, "name": fields.name, "sex": fields.sex, "grade": fields.grade, "password.pwd": fields.sid, "password.isInitial": fields['password.isInitial'] }, (err, info) => {
                     if (err) {
                         console.log(err);
@@ -144,6 +171,7 @@ exports.doShowStudent = (req, res) => {
 
         Student.countDocuments(searchObj, function (err, count) {
             var totalpages = Math.ceil(count / rows); //总页数
+
             // 导出Excel
             if (fields.oper === "download") {
                 var TableR = [];
@@ -162,7 +190,7 @@ exports.doShowStudent = (req, res) => {
                                 res.send("文件写入失败");
                             }
                             console.log("ok");
-
+                            // res.redirect(filePath); 无法触发下载
                             res.send(filePath);
                         });
                     }
@@ -287,11 +315,11 @@ exports.doStudentImport = (req, res) => {
 exports.showCourse = (req, res) => {
     res.render("admin/course", { "current": "course" });
 }
-// 给前端提供课程列表的数据
+// 提供课程列表的数据
 exports.doShowCourse = (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
-        // 从前端请求中拿到参数
+        // 从请求中拿到参数
         var rows = parseInt(fields.rows); //限制行数
         var page = fields.page; //当前页
         var sortobj = {};
