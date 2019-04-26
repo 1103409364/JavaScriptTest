@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/registration_system', { useNewUrlParser: t
 //session用于登陆
 app.use(session({
     secret: 'registrationSystem',
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 3600000 }, //在线时长
     resave: false,
     saveUninitialized: true
 }));
@@ -26,7 +26,7 @@ app.post  ('/admin'                , ctrl.doShowAdmin);
 // 登陆
 app.get   ('/admin/login'          , ctrl.showAdminLogin);
 // 登陆验证
-app.post   ('/admin/login'         , ctrl.doLogin);
+app.post  ('/admin/login'         , ctrl.doLogin);
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);
 // 获得学生数据,根据请求参数进行CURD

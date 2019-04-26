@@ -18,7 +18,7 @@ exports.doAddAdmin = (req, res) => {
 
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields) => {
-        if(err) {
+        if (err) {
             console.log(err);
         }
         adminInfo.adminUsername = fields.adminUsername;
@@ -31,17 +31,56 @@ exports.doAddAdmin = (req, res) => {
         res.send("添加成功");
     })
 }
+
+// 显示管理员登陆页面
+exports.showAdminLogin = (req, res) => {
+    res.render("admin/adminLogin");
+}
+// 登陆验证
+exports.doLogin = (req, res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, (err, fields) => {
+        var adminUsername = fields.username;
+        var sha256Pwd = crypto.createHash("sha256").update(fields.password).digest("hex");
+
+        Admin.find({ "adminUsername": adminUsername }, (err, results) => {
+            if (results.length > 0 && results[0].password === sha256Pwd) {
+                console.log("管理员登陆成功");
+                // 下发session
+                req.session.adminLogin = true;
+                // 记录用户名，可以用户页面显示
+                req.session.adminUsername = adminUsername;
+                res.redirect("/admin")
+            } else {
+                res.send("密码错误，请返回重新登陆");
+                // res.redirect("/admin/login");
+            }
+        })
+    });
+}
+
 // 管理员面板首页
 exports.showAdmin = (req, res) => {
-    if(session.adminLogin === true) {
-        res.render("admin/admin", { 
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+        // 第二个参数用于给sidebar加class，显示用户名
+        res.render("admin/admin", {
             "current": "index",
-            "username": session.adminUsername,
-     });
+            "adminUsername": req.session.adminUsername,
+        });
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
     }
 }
-// 返回报名情况的数据
+// 返回学生和课程数据的数据
 exports.doShowAdmin = (req, res) => {
+    // 检查session登陆状态
+    if (req.session.adminLogin !== true) {
+        res.redirect("/admin/login");
+        return;
+    }
     var data = {};
 
     Course.find({}, (err, couresults) => {
@@ -60,38 +99,33 @@ exports.doShowAdmin = (req, res) => {
         })
     })
 }
-// 显示管理员登陆页面
-exports.showAdminLogin = (req, res) => {
-    res.render("admin/adminLogin");
-}
-
-exports.doLogin = (req, res) => {
-    var form = new formidable.IncomingForm();
-    form.parse(req, (err, fields) => {
-        var adminUsername = fields.username;
-        var sha256Pwd = crypto.createHash("sha256").update(fields.password).digest("hex");
-
-        Admin.find({"adminUsername": adminUsername}, (err, results) => {
-            if(results.length >0 && results[0].password === sha256Pwd) {
-                console.log("管理员登陆成功");
-                // 下发session
-                req.session.adminLogin = true;
-                req.session.username = adminUsername;
-                res.redirect("/admin")
-            }
-        })
-    });
-}
-
 
 // 学生管理页面
 exports.showStudent = (req, res) => {
-    res.render("admin/student", { "current": "student" });
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+
+        res.render("admin/student", {
+            "current": "student",
+            "adminUsername": req.session.adminUsername,
+        });
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
+    }
+
 }
 // 提供学生列表的数据
 // 请求参数：排序主键sid、当前页条数rows、页码page、排序方式
 // 页面载入和换页都会发起请求，就是后端分页
 exports.doShowStudent = (req, res) => {
+    // 检查session登陆状态，如果不在登陆状态跳转到登陆页面
+    if (req.session.adminLogin !== true) {
+        res.redirect("/admin/login");
+        return;
+    }
+
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         // 从请求中拿到参数
@@ -236,11 +270,28 @@ exports.doShowStudent = (req, res) => {
 }
 // 显示导入学生名单页面
 exports.showStudentImport = (req, res) => {
-    // 第二个参数用于给sidebar加class
-    res.render("admin/stuImport", { "current": "student" });
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+        // 第二个参数用于给sidebar加class，显示用户名
+        res.render("admin/stuImport", {
+            "current": "student",
+            "adminUsername": req.session.adminUsername,
+        });
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
+    }
+
 }
 // 上传文件，导入学生名单
 exports.doStudentImport = (req, res) => {
+    // 检查session登陆状态，如果不在登陆状态跳转到登陆页面
+    if (req.session.adminLogin !== true) {
+        res.redirect("/admin/login");
+        return;
+    }
+
     var form = new formidable.IncomingForm();
     // 指定上传文件夹
     form.uploadDir = "./uploads";
@@ -313,10 +364,27 @@ exports.doStudentImport = (req, res) => {
 }
 // 显示课程列表页面
 exports.showCourse = (req, res) => {
-    res.render("admin/course", { "current": "course" });
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+        res.render("admin/course", {
+            "current": "course",
+            "adminUsername": req.session.adminUsername,
+        });
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
+    }
+
 }
-// 提供课程列表的数据
+// 返回课程列表的数据
 exports.doShowCourse = (req, res) => {
+    // 检查session登陆状态，如果不在登陆状态跳转到登陆页面
+    if (req.session.adminLogin !== true) {
+        res.redirect("/admin/login");
+        return;
+    }
+
     var form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         // 从请求中拿到参数
@@ -486,11 +554,27 @@ exports.doShowCourse = (req, res) => {
 
 // 显示导入课程页面
 exports.showCourseImport = (req, res) => {
-    res.render("admin/courseImport", { "current": "course" })
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+        res.render("admin/courseImport", {
+            "current": "course",
+            "adminUsername": req.session.adminUsername,
+        })
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
+    }
 }
 
 // 上传文件，导入课程
 exports.doCourseImport = (req, res) => {
+    // 检查session登陆状态，如果不在登陆状态跳转到登陆页面
+    if (req.session.adminLogin !== true) {
+        res.redirect("/admin/login");
+        return;
+    }
+
     var form = new formidable.IncomingForm();
     // 指定上传文件夹
     form.uploadDir = "./uploads";
@@ -568,7 +652,6 @@ exports.doCourseImport = (req, res) => {
             }
         }
 
-
         // 保存到数据库
         Course.saveToDB(courseArr);
         res.send("上传成功，返回课程列表即可查看")
@@ -577,7 +660,18 @@ exports.doCourseImport = (req, res) => {
 
 // 显示报表
 exports.showCharts = (req, res) => {
-    res.render("admin/charts", { "current": "charts" });
+    // 检查session登陆状态
+    if (req.session.adminLogin === true) {
+        res.render("admin/charts", {
+            "current": "charts",
+            "adminUsername": req.session.adminUsername,
+        });
+    } else {
+        // 跳转到登陆页面
+        res.redirect("/admin/login");
+        return;
+    }
+
 }
 // 显示404页面
 exports.show404 = (req, res) => {
