@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/registration_system', { useNewUrlParser: t
 //session用于登陆
 app.use(session({
     secret: 'registrationSystem',
-    cookie: { maxAge: 3600000 }, //在线时长
+    cookie: { maxAge: 3600000 }, //登陆过期时间
     resave: false,
     saveUninitialized: true
 }));
