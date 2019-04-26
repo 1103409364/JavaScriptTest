@@ -1,14 +1,40 @@
-const formidable = require("formidable");
-const xlsx = require("node-xlsx");
-const path = require("path");
-const fs = require("fs");
-const format = require('date-format');
+const formidable = require("formidable");  //处理post请求
+const xlsx = require("node-xlsx");  //读写Excel
+const path = require("path"); //解析文件后缀
+const fs = require("fs"); //读写文件
+const format = require('date-format'); //格式化日期
+const crypto = require("crypto"); //用来加密密码
+
 const Student = require("../models/Student.js");
 const Course = require("../models/Course.js");
+const Admin = require("../models/Admin.js");
 
+// 添加管理员
+exports.showAddAdmin = (req, res) => {
+    res.render("admin/addAdmin", { "current": "addAdmin" });
+}
+exports.doAddAdmin = (req, res) => {
+    var adminInfo = {};
 
-exports.showIndex = (req, res) => {
-    res.render("admin/index", { "current": "index" });
+    var form = new formidable.IncomingForm();
+    form.parse(req, (err, fields) => {
+        if(err) {
+            console.log(err);
+        }
+        adminInfo.adminUsername = fields.adminUsername;
+        var sha256Pwd = crypto.createHash("sha256").update(fields.password).digest("hex");
+
+        adminInfo.password = sha256Pwd;
+        // 数据库保存加密后的密码
+        Admin.saveToDB(adminInfo);
+        // console.log(adminInfo);
+    })
+    res.send("添加成功");
+}
+
+// 管理员面板
+exports.showAdmin = (req, res) => {
+    res.render("admin/admin", { "current": "index" });
 }
 // 学生列表页面
 exports.showStudent = (req, res) => {
