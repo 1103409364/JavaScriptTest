@@ -15,12 +15,13 @@ app.use(session({
 }));
 // 设置模板引擎
 app.set('view engine', "ejs");
-// 添加管理员接口,添加后隐藏
-app.get   ('/addadmin'             , ctrl.showAddAdmin);
-app.post  ('/addadmin'             , ctrl.doAddAdmin);
+// 添加管理员账号接口
+// app.get   ('/addadmin'             , ctrl.showAddAdmin);
+// app.post  ('/addadmin'             , ctrl.doAddAdmin);
 
 // 首页接口
 app.get   ('/admin'                , ctrl.showAdmin);
+app.post  ('/admin'                , ctrl.doShowAdmin);
 
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);

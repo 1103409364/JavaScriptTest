@@ -8,7 +8,8 @@ var courseSchema = new mongoose.Schema({
     "number": Number,
     "permitGrade": String,
     "teacher": String,
-    "introduction": String
+    "introduction": String,
+    "students": [String],
 })
 // 静态方法,将上传的数据保存到数据库
 courseSchema.statics.saveToDB = (courseArr) => {

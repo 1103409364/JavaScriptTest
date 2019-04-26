@@ -9,7 +9,8 @@ var studentSchema = new mongoose.Schema({
     "password": {
         "pwd": String,
         "isInitial": String
-    }
+    },
+    "myCourse": [Number],
 })
 // 静态方法,将上传的数据保存到数据库
 studentSchema.statics.saveToDB = (stuArr) => {

@@ -28,13 +28,34 @@ exports.doAddAdmin = (req, res) => {
         // 数据库保存加密后的密码
         Admin.saveToDB(adminInfo);
         // console.log(adminInfo);
+        res.send("添加成功");
     })
-    res.send("添加成功");
 }
 
 // 管理员面板
 exports.showAdmin = (req, res) => {
     res.render("admin/admin", { "current": "index" });
+}
+// 返回报名情况的数据
+exports.doShowAdmin = (req, res) => {
+    console.log(1)
+    var data = {};
+
+    Course.find({}, (err, couresults) => {
+        if (err) {
+            console.log(err);
+            res.send("-1")
+        }
+        Student.find({}, (err, sturesults) => {
+            if (err) {
+                console.log(err);
+                res.send("-1");
+            }
+            data.course = couresults;
+            data.student = sturesults;
+            res.json(data);
+        })
+    })
 }
 // 学生列表页面
 exports.showStudent = (req, res) => {
