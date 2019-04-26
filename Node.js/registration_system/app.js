@@ -51,13 +51,23 @@ app.post  ("/admin/course/import"  , adminctrl.doCourseImport);
 app.get   ("/admin/charts"         , adminctrl.showCharts);
 
 // 学生登陆报名
+// 首页，显示所有课程页面
+app.get   ('/'                     , stuctrl.showAllCoerce);
+// 获得课程数据
+app.post  ('/'                     , stuctrl.doShowAllCoerce);
+// 登陆页
 app.get   ('/student/login'        , stuctrl.showStudentLogin);
 // 登陆验证
 app.post  ('/student/login'        , stuctrl.doLogin);
 // 更改密码页面
 app.get   ('/student/changePwd'    , stuctrl.showchangePwd);
 // 更改密码
-// app.post  ('/student/changePwd'    , stuctrl.doChangePwd);
+app.post  ('/student/changePwd'    , stuctrl.doChangePwd);
+// 已选课程页面
+app.get   ('/student/myCourse'     , stuctrl.showMyCoerce);
+app.post  ('/student/myCourse'     , stuctrl.doShowMyCoerce);
+// 学生退出登陆
+app.get   ('/student/logout'       , stuctrl.doLogout)
 
 // 静态文件
 app.use(express.static('public'));

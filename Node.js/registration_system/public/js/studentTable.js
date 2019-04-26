@@ -15,12 +15,12 @@ function pageInit() {
                 // mongoDB自动生成唯一的_id,把它作为主键，并隐藏该列单元格，jqgrid会把key提交，就是请求头中的id
                 { name: '_id', index: '_id', "hidden": true, key: true },
                 // , editrules: {edithidden:true,required:true}表单验证
-                { name: 'sid', index: 'sid', "editable": true, edittype: "text", width: 100, align: "center", editrules: { edithidden: true, required: true, number: true, minValue: 0 } },
-                { name: 'name', index: 'name', "editable": true, edittype: "text", width: 100, align: "center", editrules: { edithidden: true, required: true } },
-                { name: 'sex', index: 'sex', "editable": true, edittype: "select", editoptions: { value: "男:男;女:女" }, width: 100, align: "center", editrules: { edithidden: true, required: true } },
-                { name: 'grade', index: 'grade', "editable": true, edittype: "select", editoptions: { value: "初一:初一;初二:初二;初三:初三;高一:高一;高二:高二;高三:高三" }, width: 100, align: "center" },
+                { name: 'sid', index: 'sid', "editable": true, edittype: "text", width: 30, align: "center", editrules: { edithidden: true, required: true, number: true, minValue: 0 } },
+                { name: 'name', index: 'name', "editable": true, edittype: "text", width: 30, align: "center", editrules: { edithidden: true, required: true } },
+                { name: 'sex', index: 'sex', "editable": true, edittype: "select", editoptions: { value: "男:男;女:女" }, width: 30, align: "center", editrules: { edithidden: true, required: true } },
+                { name: 'grade', index: 'grade', "editable": true, edittype: "select", editoptions: { value: "初一:初一;初二:初二;初三:初三;高一:高一;高二:高二;高三:高三" }, width: 30, align: "center" },
                 { name: 'password.pwd', sortable: false, search: false, "editable": true, edittype: "text", width: 100, align: "center" },
-                { name: 'password.isInitial', sortable: false, "editable": true, edittype: "text", width: 100, align: "center", edittype: "select", editoptions: { value: "是:是;否:否" } },
+                { name: 'password.isInitial', sortable: false, "editable": true, edittype: "text", width: 30, align: "center", edittype: "select", editoptions: { value: "是:是;否:否" } },
             ],
             rowNum: 15,//一页显示多少条
             rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
