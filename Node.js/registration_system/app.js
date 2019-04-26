@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var session = require('express-session');
-var ctrl = require('./controllers/ctrl');
+var ctrl = require('./controllers/adminctrl');
 
 var app = express();
 // 链接数据库registration_system
