@@ -26,7 +26,9 @@ app.post  ('/admin'                , ctrl.doShowAdmin);
 // 登陆
 app.get   ('/admin/login'          , ctrl.showAdminLogin);
 // 登陆验证
-app.post  ('/admin/login'         , ctrl.doLogin);
+app.post  ('/admin/login'          , ctrl.doLogin);
+// 退出登陆状态
+app.get   ('/admin/logout'         , ctrl.doLogout);
 // 学生管理页面
 app.get   ("/admin/student"        , ctrl.showStudent);
 // 获得学生数据,根据请求参数进行CURD

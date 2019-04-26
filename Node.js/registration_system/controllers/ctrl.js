@@ -58,7 +58,12 @@ exports.doLogin = (req, res) => {
         })
     });
 }
-
+// 退出登陆状态
+exports.doLogout = (req, res) => {
+    req.session.adminLogin = false;
+    res.redirect("/admin/login");
+    console.log("退出登陆");
+}
 // 管理员面板首页
 exports.showAdmin = (req, res) => {
     // 检查session登陆状态
