@@ -1,7 +1,8 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var session = require('express-session');
-var ctrl = require('./controllers/adminctrl');
+var adminctrl = require('./controllers/adminctrl');
+var stuctrl = require('./controllers/stuctrl');
 
 var app = express();
 // 链接数据库registration_system
@@ -15,45 +16,53 @@ app.use(session({
 }));
 // 设置模板引擎
 app.set('view engine', "ejs");
+
 // 添加管理员账号接口
-app.get   ('/addadmin'             , ctrl.showAddAdmin);
-app.post  ('/addadmin'             , ctrl.doAddAdmin);
+app.get   ('/addadmin'             , adminctrl.showAddAdmin);
+app.post  ('/addadmin'             , adminctrl.doAddAdmin);
 
 // 首页接口
-app.get   ('/admin'                , ctrl.showAdmin);
+app.get   ('/admin'                , adminctrl.showAdmin);
 // 提供报表数据
-app.post  ('/admin'                , ctrl.doShowAdmin);
+app.post  ('/admin'                , adminctrl.doShowAdmin);
 // 登陆
-app.get   ('/admin/login'          , ctrl.showAdminLogin);
+app.get   ('/admin/login'          , adminctrl.showAdminLogin);
 // 登陆验证
-app.post  ('/admin/login'          , ctrl.doLogin);
+app.post  ('/admin/login'          , adminctrl.doLogin);
 // 退出登陆状态
-app.get   ('/admin/logout'         , ctrl.doLogout);
+app.get   ('/admin/logout'         , adminctrl.doLogout);
 // 学生管理页面
-app.get   ("/admin/student"        , ctrl.showStudent);
+app.get   ("/admin/student"        , adminctrl.showStudent);
 // 获得学生数据,根据请求参数进行CURD
-app.post  ("/admin/student"        , ctrl.doShowStudent);
+app.post  ("/admin/student"        , adminctrl.doShowStudent);
 // 显示上传学生名单页面
-app.get   ("/admin/student/import" , ctrl.showStudentImport);
+app.get   ("/admin/student/import" , adminctrl.showStudentImport);
 // 上传学生Excel文件导入数据库
-app.post  ("/admin/student/import" , ctrl.doStudentImport);
-
+app.post  ("/admin/student/import" , adminctrl.doStudentImport);
 // 课程管理
-app.get   ("/admin/course"         , ctrl.showCourse);
+app.get   ("/admin/course"         , adminctrl.showCourse);
 // 获得课程数据,根据请求参数进行CURD
-app.post   ("/admin/course"        , ctrl.doShowCourse);
+app.post  ("/admin/course"         , adminctrl.doShowCourse);
 // 显示上传课程清单页面
-app.get   ("/admin/course/import"  , ctrl.showCourseImport);
+app.get   ("/admin/course/import"  , adminctrl.showCourseImport);
 // 上传课程Excel文件导入数据库
-app.post   ("/admin/course/import" , ctrl.doCourseImport);
-
+app.post  ("/admin/course/import"  , adminctrl.doCourseImport);
 //报表
-app.get   ("/admin/charts"         , ctrl.showCharts);
+app.get   ("/admin/charts"         , adminctrl.showCharts);
+
+// 学生登陆报名
+app.get   ('/student/login'        , stuctrl.showStudentLogin);
+// 登陆验证
+app.post  ('/student/login'        , stuctrl.doLogin);
+// 更改密码页面
+app.get   ('/student/changePwd'    , stuctrl.showchangePwd);
+// 更改密码
+// app.post  ('/student/changePwd'    , stuctrl.doChangePwd);
 
 // 静态文件
 app.use(express.static('public'));
 // 从上往下拦截,都没有匹配的项,最后到404
-app.use(ctrl.show404);
+app.use(adminctrl.show404);
 
 app.listen(3000);
 console.log('服务器已运行,端口:3000')
