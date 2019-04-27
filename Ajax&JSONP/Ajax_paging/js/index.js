@@ -184,7 +184,7 @@ Pagination.prototype.addEvent = function () {
     });
 }
 
-// 管理员-------------------------------------
+// 管理员类-------------------------------------
 function Administrator() {
     this.$DOM = $("#job_container");
     this.$rowContainer =this.$DOM.find("#job_ulli");

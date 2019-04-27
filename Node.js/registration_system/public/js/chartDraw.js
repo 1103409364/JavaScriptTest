@@ -72,7 +72,7 @@ function drawBar(barLabels, barData) {
                     ticks: {
                         min: 0,
                         max: max,
-                        maxTicksLimit: 50
+                        maxTicksLimit: 10
                     },
                     gridLines: {
                         display: true

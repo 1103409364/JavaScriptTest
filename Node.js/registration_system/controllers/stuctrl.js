@@ -4,6 +4,7 @@ const crypto = require("crypto"); //用来加密密码
 
 const Student = require("../models/Student.js");
 const Course = require("../models/Course.js");
+const Admin = require("../models/Admin.js");
 
 // 显示所有课程页面
 exports.showAllCoerce = (req, res) => {
@@ -19,15 +20,27 @@ exports.showAllCoerce = (req, res) => {
 }
 // 取课程数据返回
 exports.doShowAllCoerce = (req, res) => {
+    var data = {};
     // 检查是否在登陆状态
     if(req.session.stuLogin === true) {
         Course.find({}, (err, docs) => {
             if(err) {
                 console.log(err);
-                res.json({"result": -1});
-            } else {
-                res.json({"data": docs, "result": 1});
-            }
+                data.result = -1;
+                res.json(data);
+                return;
+            } 
+            data.courses = docs;
+            Admin.find({}, (err, docs) => {
+                if(err) {
+                    data.result = -1;
+                    res.json(data);
+                    return;
+                }
+                data.isOpen = docs[0].isOpen;
+                data.result = 1; //成功返回1，出错返回-1
+                res.json(data);
+            })
         })
     } else {
         res.redirect("/student/login");
