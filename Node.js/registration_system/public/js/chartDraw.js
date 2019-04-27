@@ -1,6 +1,6 @@
 /* 
 *  两个业务
-*1 管理员系统首页图表绘制
+*1 管理员首页图表绘制
 *2 报名系统开放关闭
 */
 
@@ -111,7 +111,7 @@ function drawTable(a, b, c, d, e) {
 // 显示系统状态
 function showState(isOpen) {
     if(isOpen) {
-        $("#sysState").html("系统开放中");
+        $("#sysState").html("报名进行中");
         $("#onSys").addClass("disabled");
         $("#offSys").removeClass("disabled");
     } else {

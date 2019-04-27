@@ -22,7 +22,7 @@
             //覆盖默认参数
             myOptions = options
             opts = $.extend(defaults, options);
-            console.log(opts, 998, this)
+            // console.log(opts, 998, this)
             //主函数
             return this.each(function () {
                 //激活事件
@@ -111,12 +111,12 @@
                     var $this = $(this);
                     var pageshow = parseInt($this.find('a').html());
                     var nowshow = parseInt($('.' + opts.activeClass).html());
-                    console.log(l, 256)
+                    // console.log(l, 256)
                     if (pageshow == nowshow) {
                         return false;
                     }
                     if (l > 9) {
-                        console.log(1234567, pageshow, l)
+                        // console.log(1234567, pageshow, l)
                         if (pageshow > l - 5 && pageshow < l + 1) {
                             $('.' + opts.activeClass).removeClass(opts.activeClass);
                             $this.find('a').addClass(opts.activeClass);
@@ -131,7 +131,7 @@
                             fpageShow();
                         }
                     } else {
-                        console.log(123456)
+                        // console.log(123456)
                         $('.' + opts.activeClass).removeClass(opts.activeClass);
                         $this.find('a').addClass(opts.activeClass);
                     }

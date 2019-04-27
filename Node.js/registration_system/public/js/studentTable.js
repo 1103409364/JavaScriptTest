@@ -22,7 +22,7 @@ function pageInit() {
                 { name: 'password.pwd', sortable: false, search: false, "editable": true, edittype: "text", width: 100, align: "center" },
                 { name: 'password.isInitial', sortable: false, "editable": true, edittype: "text", width: 30, align: "center", edittype: "select", editoptions: { value: "是:是;否:否" } },
             ],
-            rowNum: 15,//一页显示多少条
+            rowNum: 20,//一页显示多少条
             rowList: [10, 20, 30, 40, 50, 100],//可供用户选择一页显示多少条
             pager: '#pager',//表格页脚的占位符(一般是div)的id
             sortname: 'sid',//初始化的时候排序的字段

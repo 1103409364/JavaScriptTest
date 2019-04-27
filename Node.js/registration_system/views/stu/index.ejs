@@ -26,10 +26,6 @@
         #courseTb {
             font-size: 14px;
         }
-
-        #courseTb tr td {
-            overflow: hidden;
-        }
     </style>
 
 </head>
@@ -55,7 +51,8 @@
                                             <th scope="col" class="text-center" width="80px">编号</th>
                                             <th scope="col" class="text-center">课程名称</th>
                                             <th scope="col" class="text-center">上课时间</th>
-                                            <th scope="col" class="text-center">可报人数</th>
+                                            <th scope="col" class="text-center">剩余人数</th>
+                                            <th scope="col" class="text-center">可报年级</th>
                                             <th scope="col" class="text-center">教师</th>
                                             <th scope="col" class="text-center" width="700px">课程简介</th>
                                             <th scope="col" class="text-center" width="200px">操作</th>
@@ -104,7 +101,7 @@
         // 拉取数据，前端分页
         $.post("/", (data) => {
             if (data.result === 1) {
-                console.log(data);
+                // console.log(data);
                 renderCourseTb(data);
             } else {
                 alert("服务器错误");
@@ -115,6 +112,7 @@
             $courseTb = $("#courseTb");
             var isOpen = data.isOpen;
             var courseArr = data.courses;
+            // var
             var rows = 8; //每页10条
             // 分页总页数
             var pageNo = Math.ceil(courseArr.length / rows);
@@ -129,39 +127,94 @@
                 leng: 10,//初始分页数
                 activeClass: 'activP', //active 类样式定义
                 clickBack: function (page) {
+
                     // console.log(page);
                     // 跳过几页读一页
                     onePageArr = courseArr.slice((page - 1) * rows, (page - 1) * rows + rows);
-                    renderOnePage(onePageArr);
+                    renderOnePage(onePageArr, data);
                 }
             })
-            renderOnePage(onePageArr);
+            renderOnePage(onePageArr, data);
             // 设置总页数
             $('.paging').setLength(pageNo)
 
 
         }
         // 渲染当前页
-        function renderOnePage(onePageArr) {
+        function renderOnePage(onePageArr, data) {
+
             // 先清空当前页
             $courseTb.html("");
             $.each(onePageArr, (i, item) => {
                 var domStr = "";
                 // console.log(i, item);
+                var btnDomStr = check(item, data)
                 domStr = ["<tr>",
                     "    <td class=\"text-center\">" + item.cid + "</td>",
                     "    <td class=\"text-center\">" + item.name + "</td>",
                     "    <td class=\"text-center\">" + item.time + "</td>",
                     "    <td class=\"text-center\">" + item.number + "</td>",
+                    "    <td class=\"text-center\">" + item.permitGrade + "</td>",
                     "    <td class=\"text-center\">" + item.teacher + "</td>",
                     "    <td class=\"text-left\">" + item.introduction + "</td>",
                     "    <td class=\"text-center\">",
-                    "    <button type=\"button\" class=\"btn btn-primary\">可报名</button>",
+                    btnDomStr,
                     "    </td>",
                     "</tr>"].join("");
                 $courseTb.append(domStr);
             })
         }
+
+        // 后台遍历所有课程，检查能否报名,
+        // 根据后台检查结果显示不同的按钮
+        function check(item, data) {
+            var checkResult = data.checkResult;
+            var btnDomStr = "";
+            if (!data.isOpen) {
+                btnDomStr = "<button type=\"button\" class=\"btn btn-secondary\"  disabled >报名未开始或者已经结束</button>"
+            } else {
+                if (checkResult[item.cid] === "已报名") {
+                    // 已报名提供退报按钮
+                    btnDomStr = "<button type=\"button\" class=\"btn btn-success cancel\" data-cid = " + item.cid + ">已报，点击退报</button>"
+                } else if (checkResult[item.cid] === "可以报名") {
+                    // 显示报名按钮
+                    btnDomStr = "<button type=\"button\" class=\"btn btn-primary register\" data-cid = " + item.cid + ">报名</button>"
+                } else {
+                    btnDomStr = "<button type=\"button\" class=\"btn btn-secondary\" disabled >" + checkResult[item.cid] + "</button>"
+                }
+            }
+            return btnDomStr;
+        }
+
+        // 监听报名按钮点击事件,事件委托
+        $("#courseTb").on("click", ".register", (e) => {
+            var cid = $(e.target).attr("data-cid")
+            // 发送请求，报名
+            $.post("/student/register", { "cid": cid}, (data) => {
+                if(data.result === 1) {
+                    alert("报名成功");
+                    window.location.reload();
+                } else {
+                    alert("服务器错误，请稍后再试");
+                    window.location.reload();
+                }
+            })
+        })
+        // 监听退报按钮
+        $("#courseTb").on("click", ".cancel", (e) => {
+            var cid = $(e.target).attr("data-cid")
+            // 发送请求，报名
+            $.post("/student/cancel", { "cid": cid}, (data) => {
+                // 退报刷新页面
+                if(data.result === 1) {
+                    alert("退报成功");
+                    window.location.reload();
+                } else {
+                    alert("服务器错误，请稍后再试");
+                    window.location.reload();
+                }
+            })
+        })
     </script>
 </body>
 

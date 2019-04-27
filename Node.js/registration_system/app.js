@@ -58,10 +58,10 @@ app.get   ("/admin/offSys"         , adminctrl.offSys);
 
 
 // 学生登陆报名
-// 首页，显示所有课程页面
-app.get   ('/'                     , stuctrl.showAllCoerce);
+// 首页，所有课程和已报课程共用接口
+app.get   ('/'                     , stuctrl.showAllCourse);
 // 获得课程数据
-app.post  ('/'                     , stuctrl.doShowAllCoerce);
+app.post  ('/'                     , stuctrl.doShowAllCourse);
 // 登陆页
 app.get   ('/student/login'        , stuctrl.showStudentLogin);
 // 登陆验证
@@ -71,10 +71,14 @@ app.get   ('/student/changePwd'    , stuctrl.showchangePwd);
 // 更改密码
 app.post  ('/student/changePwd'    , stuctrl.doChangePwd);
 // 已选课程页面
-app.get   ('/student/myCourse'     , stuctrl.showMyCoerce);
-app.post  ('/student/myCourse'     , stuctrl.doShowMyCoerce);
+app.get   ('/student/myCourse'     , stuctrl.showMyCourse);
+app.post  ('/student/myCourse'     , stuctrl.doShowMyCourse);
 // 学生退出登陆
-app.get   ('/student/logout'       , stuctrl.doLogout)
+app.get   ('/student/logout'       , stuctrl.doLogout);
+// 报名接口
+app.post   ('/student/register'     , stuctrl.doRegister);
+// 退报接口
+app.post   ('/student/cancel'       , stuctrl.doCancelRegister);
 
 // 静态文件
 app.use(express.static('public'));

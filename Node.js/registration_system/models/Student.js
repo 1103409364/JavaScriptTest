@@ -11,6 +11,7 @@ var studentSchema = new mongoose.Schema({
         "isInitial": String
     },
     "myCourse": [Number],
+    // "occupyDay": [String],//被课程占用的时间
 })
 // 静态方法,将上传的数据保存到数据库
 studentSchema.statics.saveToDB = (stuArr) => {

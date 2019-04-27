@@ -15,8 +15,7 @@
     "express-session": "^1.16.1",
     "formidable": "^1.2.1",
     "mongoose": "^5.5.2",
-    "node-xlsx": "^0.14.1",
-    "underscore": "^1.9.1"
+    "node-xlsx": "^0.14.1"
   },
   "devDependencies": {}
 }
