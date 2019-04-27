@@ -1,6 +1,8 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#292b2c';
+/* 
+*  两个业务
+*1 管理员系统首页图表绘制
+*2 报名系统开放关闭
+*/
 
 
 // 获取数据data中包含了课程和学生的所有数据
@@ -31,12 +33,13 @@ $.post("/admin", (data) => {
                 defaultPwd++;
             }
         })
+
+        showState(data.isOpen);
         drawBar(barLabels, barData);
         drawPie(pieData);
         drawTable(data.student.length, data.course.length, pieData[0], pieData[1], defaultPwd);
     }
 })
-
 
 function drawBar(barLabels, barData) {
     var ctx = document.getElementById("myBarChart");
@@ -104,3 +107,50 @@ function drawTable(a, b, c, d, e) {
     $("#collectTable td").eq(3).html(d);
     $("#collectTable td").eq(4).html(e);
 }
+
+// 显示系统状态
+function showState(isOpen) {
+    if(isOpen) {
+        $("#sysState").html("系统开放中");
+        $("#onSys").addClass("disabled");
+        $("#offSys").removeClass("disabled");
+    } else {
+        $("#sysState").html("报名系统未开放");
+        $("#offSys").addClass("disabled");
+        $("#onSys").removeClass("disabled");
+    }
+}
+
+$("#onSys").on("click", () =>{
+    // 按钮处于disable状态，阻止发送请求
+    if ($("#onSys").hasClass("disabled")) return;
+
+    $.get("/admin/onSys", (data) => {
+        if (data.result === 1) {
+            $("#sysState").html("系统开放中");
+            $("#onSys").addClass("disabled");
+            $("#offSys").removeClass("disabled");
+        } else {
+            alert("服务器错误，请联系管理员");
+        }
+    });
+})
+
+$("#offSys").on("click", () => {
+    if ($("#offSys").hasClass("disabled")) return;
+    
+    if (confirm("报名系统将被关闭！！如果是误操作，请点击取消")) {
+        $.get("/admin/offSys", (data) => {
+            if(data.result === 1) {
+                $("#sysState").html("报名系统未开放");
+                $("#offSys").addClass("disabled");
+                $("#onSys").removeClass("disabled");
+            } else {
+                alert("服务器错误，请联系管理员");
+            }
+        });
+    }
+
+
+   
+})

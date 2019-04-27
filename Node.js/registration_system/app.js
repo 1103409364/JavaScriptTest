@@ -47,8 +47,15 @@ app.post  ("/admin/course"         , adminctrl.doShowCourse);
 app.get   ("/admin/course/import"  , adminctrl.showCourseImport);
 // 上传课程Excel文件导入数据库
 app.post  ("/admin/course/import"  , adminctrl.doCourseImport);
-//报表
+//报表页面
 app.get   ("/admin/charts"         , adminctrl.showCharts);
+// 报表数据
+// app.post   ("/admin/charts"         , adminctrl.doshowCharts);
+// 开放系统
+app.get   ("/admin/onSys"          , adminctrl.onSys);
+// 关闭系统
+app.get   ("/admin/offSys"         , adminctrl.offSys);
+
 
 // 学生登陆报名
 // 首页，显示所有课程页面

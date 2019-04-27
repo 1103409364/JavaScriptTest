@@ -20,6 +20,7 @@ exports.doAddAdmin = (req, res) => {
     form.parse(req, (err, fields) => {
         if (err) {
             console.log(err);
+            res.send("添加失败");
         }
         adminInfo.adminUsername = fields.adminUsername;
         var sha256Pwd = crypto.createHash("sha256").update(fields.password).digest("hex");
@@ -27,9 +28,41 @@ exports.doAddAdmin = (req, res) => {
         adminInfo.password = sha256Pwd;
         // 数据库保存加密后的密码
         Admin.saveToDB(adminInfo);
-        // console.log(adminInfo);
-        res.send("添加成功");
+        // 添加成功重定向到登录页
+        res.redirect("/admin/login")
     })
+}
+// 开放系统
+exports.onSys = (req, res) => {
+    if(req.session.adminLogin === true) {
+        Admin.updateOne({"adminUsername": req.session.adminUsername}, {"isOpen": true}, (err, docs) => {
+            if(err) {
+                console.log(err);
+                res.json({ "result": -1 });
+                return;
+            }
+            // 返回修改结果
+            res.json({ "result": 1 });
+        });
+    } else {
+        res.redirect("/admin/login");
+    }
+}
+// 关闭系统
+exports.offSys = (req, res) => {
+    if (req.session.adminLogin === true) {
+        Admin.updateOne({ "adminUsername": req.session.adminUsername }, { "isOpen": false }, (err, docs) => {
+            if (err) {
+                console.log(err);
+                res.json({ "result": -1 });
+                return;
+            }
+            // 返回修改结果
+            res.json({ "result": 1 });
+        });
+    } else{
+        res.redirect("/admin/login");
+    }
 }
 
 // 显示管理员登陆页面
@@ -92,15 +125,25 @@ exports.doShowAdmin = (req, res) => {
         if (err) {
             console.log(err);
             res.send("-1")
+            return;
         }
         Student.find({}, (err, sturesults) => {
             if (err) {
                 console.log(err);
                 res.send("-1");
+                return;
             }
-            data.course = couresults;
-            data.student = sturesults;
-            res.json(data);
+            Admin.find({}, (err, adminresults) => {
+                if (err) {
+                    console.log(err);
+                    res.send("-1");
+                    return;
+                }
+                data.course = couresults;
+                data.student = sturesults;
+                data.isOpen = adminresults[0].isOpen;
+                res.json(data);
+            })
         })
     })
 }
