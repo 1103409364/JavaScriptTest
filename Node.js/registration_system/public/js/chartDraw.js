@@ -111,11 +111,11 @@ function drawTable(a, b, c, d, e) {
 // 显示系统状态
 function showState(isOpen) {
     if(isOpen) {
-        $("#sysState").html("报名进行中");
+        $("#sysState").html("报名进行中").addClass("text-success");
         $("#onSys").addClass("disabled");
         $("#offSys").removeClass("disabled");
     } else {
-        $("#sysState").html("报名系统未开放");
+        $("#sysState").html("报名系统已关闭").removeClass("text-success");
         $("#offSys").addClass("disabled");
         $("#onSys").removeClass("disabled");
     }
@@ -127,7 +127,7 @@ $("#onSys").on("click", () =>{
 
     $.get("/admin/onSys", (data) => {
         if (data.result === 1) {
-            $("#sysState").html("系统开放中");
+            $("#sysState").html("报名进行中").addClass("text-success");
             $("#onSys").addClass("disabled");
             $("#offSys").removeClass("disabled");
         } else {
@@ -142,7 +142,7 @@ $("#offSys").on("click", () => {
     if (confirm("报名系统将被关闭！！如果是误操作，请点击取消")) {
         $.get("/admin/offSys", (data) => {
             if(data.result === 1) {
-                $("#sysState").html("报名系统未开放");
+                $("#sysState").html("报名系统未开放").removeClass("text-success");
                 $("#offSys").addClass("disabled");
                 $("#onSys").removeClass("disabled");
             } else {
@@ -150,7 +150,4 @@ $("#offSys").on("click", () => {
             }
         });
     }
-
-
-   
 })

@@ -583,7 +583,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  line-height: 1.5;
+  line-height: 1.7rem;
 }
 
 .row {
@@ -1673,7 +1673,7 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
+  padding: 0.5rem;
   /* vertical-align: top; */
   border-top: 1px solid #dee2e6;
 }
