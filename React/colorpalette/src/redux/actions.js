@@ -1,17 +1,23 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER, UPDATE_TODO } from "./actionTypes";
-let nextTodoId = 0;
+import { UPDATE_R, UPDATE_G, UPDATE_B } from "./actionTypes";
+import { type } from "os";
 
-export const addTodo = content => ({
-	type: ADD_TODO,
+export const updateR = (R) => ({
+	type: UPDATE_R,
 	payload: {
-		id: ++nextTodoId,
-		content
+		R: R
 	}
 });
 
-export const toggleTodo = id => ({
-	type: TOGGLE_TODO,
-	payload: { id }
+export const updateG = (G) => ({
+	type: UPDATE_G,
+	payload: {
+		G: G
+	}
 });
-// payload装载货物，返回{ type: SET_FILTER, payload: { filter } }
-export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
+
+export const updateB = (B) => ({
+	type: UPDATE_B,
+	payload: {
+		B: B
+	}
+});

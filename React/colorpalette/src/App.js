@@ -1,17 +1,27 @@
 import React from "react";
-import AddTodoBox from "./components/AddTodoBox";
-import TodoList from "./components/TodoList"
-import VisibilityFilters from "./components/VisibilityFilters"
-import "./css/style.css";
+import ColorBar from "./components/ColorBar";
+import Display from "./components/Display"
+import { connect } from "react-redux";
+import { getColor}  from './redux/selectors'
 
-// console.log(store.getState())
-export default function ColorApp() {
+const App = (props) => {
 	return (
-		<div className="todo-app">
-			<h1>Todo List</h1>
-			<AddTodoBox></AddTodoBox>
-			<TodoList></TodoList>
-			<VisibilityFilters></VisibilityFilters>
+		<div>
+			<h1>调色板</h1>
+			<Display R= {props.rgb.R} G ={props.rgb.G} B={props.rgb.B}></Display>
+			<ColorBar rgb={props.rgb}></ColorBar>
 		</div>
 	)
 }
+
+const mapStateToProps = (state) => {
+	let rgb = getColor(state);
+	// console.log(rgb);
+
+	return { rgb };
+}
+
+export default connect(
+	mapStateToProps,
+	null
+)(App);

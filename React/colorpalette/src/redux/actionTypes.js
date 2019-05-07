@@ -1,3 +1,3 @@
-export const ADD_TODO = "ADD_TODO";
-export const TOGGLE_TODO = "TOGGLE_TODO";
-export const SET_FILTER = "SET_FILTER";
+export const UPDATE_R = "UPDATE_R";
+export const UPDATE_G = "UPDATE_G";
+export const UPDATE_B = "UPDATE_B";
