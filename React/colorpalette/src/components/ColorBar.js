@@ -17,6 +17,7 @@ class ColorBar extends React.Component {
 	}
 
 	handleChangeR(e) {
+		// console.log(e.target)
 		let v = e.target.value < 0 ? 0 : e.target.value > 255 ? 255 : e.target.value;
 		// v = e.target.value > 255 ? 255: e.target.value;
 		this.setState({
