@@ -9,7 +9,7 @@ const App = (props) => {
 		<div>
 			<h1>调色板</h1>
 			<Display R= {props.rgb.R} G ={props.rgb.G} B={props.rgb.B}></Display>
-			<ColorBar rgb={props.rgb}></ColorBar>
+			<ColorBar></ColorBar>
 		</div>
 	)
 }

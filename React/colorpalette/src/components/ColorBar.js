@@ -2,17 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 // import { bindActionCreators } from "redux";
 import { PropTypes } from "prop-types";
-
 import * as actions from '../redux/actions'
+import { getAll } from '../redux/selectors'
+import Bar from "./Bar";
 
 class ColorBar extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			R: props.rgb.R,
-			G: props.rgb.G,
-			B: props.rgb.B,
-		};
+
 
 		this.handleChangeR = (this.handleChangeR).bind(this);
 		this.handleChangeG = (this.handleChangeG).bind(this);
@@ -50,18 +47,22 @@ class ColorBar extends React.Component {
 		// console.log(this.state)
 		return (
 			<div>
-				<p>R:
-					<input type="range" min="0" max="255" value={this.state.R} onChange={this.handleChangeR} ></input>
-					<input style={{ width: "50px" }} type="number" value={this.state.R} onChange={this.handleChangeR}></input>
-				</p>
-				<p>G:
-					<input type="range" min="0" max="255" value={this.state.G} onChange={this.handleChangeG}></input>
-					<input style={{ width: "50px" }} type="number" value={this.state.G} onChange={this.handleChangeG}></input>
-				</p>
-				<p>B:
-					<input type="range" min="0" max="255" value={this.state.B} onChange={this.handleChangeB} ></input>
-					<input style={{ width: "50px" }} type="number" value={this.state.B} onChange={this.handleChangeB} ></input>
-				</p>
+				{
+					// console.log(this.props.rgb)
+					this.props.rgb.map((item) => {
+						return <Bar item={item} key={item.color} handleChange={item.color === "R" ? this.handleChangeR : item.color === "G" ? this.handleChangeG : item.color === "B" ? this.handleChangeB : null} ></Bar>
+						// if (item.color === "R") {
+						// 	return <Bar item={item} key={item.color} handleChange={this.handleChangeR} ></Bar>
+						// }
+						// if (item.color === "G") {
+						// 	return <Bar item={item} key={item.color} handleChange={this.handleChangeG} ></Bar>
+						// }
+						// if (item.color === "B") {
+						// 	return <Bar item={item} key={item.color} handleChange={this.handleChangeB} ></Bar>
+						// }
+					})
+
+				}
 			</div>
 		)
 	}
@@ -77,6 +78,11 @@ ColorBar.protoTypes = {
 // 	actions: bindActionCreators(actions, dispatch)
 // });
 
+const mapStateToProps = (state) => {
+	// 可以直接返回，需要筛选
+	return getAll(state);
+}
+
 // 可以直接传action creator组成的对象
-export default connect(null, actions)(ColorBar);
+export default connect(mapStateToProps, actions)(ColorBar);
 // export default connect(null, mapDispatchToProps)(ColorBar);
