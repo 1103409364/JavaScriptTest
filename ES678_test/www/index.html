@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>test</title>
+</head>
+
+<body>
+	<h1>test Promise async await fetch()</h1>
+	<button id="getDataBtn1">fetch</button>
+	<button id="getDataBtn2">fetch async await</button>
+
+	<script>
+		var getDataBtn = document.querySelector("#getDataBtn1");
+		var getDataBtn = document.querySelector("#getDataBtn2");
+
+		getDataBtn1.addEventListener("click", () => {
+			getData1()
+		})
+
+		getDataBtn2.addEventListener("click", () => {
+			getData2()
+		})
+
+		// 按顺序，先拿到data1，再拿到data2
+		function getData1() {
+			let a = fetch("/data1", { "method": "get" })
+				.then(response => response.json())
+				.then(myjson => {
+					console.log(myjson);
+					return fetch("/data2", { "method": "get" })
+				})
+				.then(response => response.json())
+				.then(myjson => console.log(myjson));
+			console.log(1);
+		}
+
+		// 按顺序，先拿到data1，再拿到data2，async await写法
+		async function getData2() {
+			let a = await fetch("/data1", { "method": "get" })
+				.then(response => response.json())
+				.then(myjson => myjson);
+			let b = await fetch("/data2", { "method": "get" })
+				.then(response => response.json())
+				.then(myjson => myjson);
+			console.log(a);
+			console.log(b);
+
+			console.log(1);
+		}
+	</script>
+</body>
+
+</html>

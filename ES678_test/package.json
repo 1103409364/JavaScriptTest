@@ -1,0 +1,16 @@
+{
+  "name": "es678_test",
+  "version": "1.0.0",
+  "description": "api for test ES678 features",
+  "main": "api_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node api_server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

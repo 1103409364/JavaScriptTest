@@ -1,0 +1,174 @@
+{
+	"questionList": [
+		{
+			"id": 25877700,
+			"content": "请问支持5G吗？",
+			"clientType": 4,
+			"productId": 100005087998,
+			"status": 1,
+			"lastAnswerTime": "2019-05-04 20:26:40",
+			"praiseCount": 0,
+			"answerCount": 17,
+			"anonymous": 0,
+			"expire": "2024-04-25 14:25:43",
+			"top": 0,
+			"created": "2019-04-27 14:25:43",
+			"modified": "2019-04-27 14:25:45",
+			"followCount": 0,
+			"qtAnswerStatus": 0,
+			"bizAnswerCount": 0,
+			"answerList": [
+				{
+					"id": 113032095,
+					"productId": 100005087998,
+					"status": 1,
+					"clientType": 4,
+					"associatedId": 25877700,
+					"anonymous": 0,
+					"type": 0,
+					"recommend": 0,
+					"top": 0,
+					"created": "2019-05-03 16:42:26",
+					"modified": "2019-05-03 16:42:30",
+					"likeCount": 2,
+					"rewardBeanNum": 0,
+					"rewardCreated": "1970-01-01 08:00:00",
+					"content": "不支持，再说5G都还没有出来",
+					"userInfo": {
+						"imgUrl": "http://storage.360buyimg.com/i.imageUpload/6a645f3561633561656239303130326331343935363336343130343932_sma.jpg",
+						"nickName": "中国移动回家了"
+					},
+					"like": false
+				},
+				{
+					"id": 113017823,
+					"productId": 100005087998,
+					"status": 1,
+					"clientType": 4,
+					"associatedId": 25877700,
+					"anonymous": 0,
+					"type": 0,
+					"recommend": 0,
+					"top": 0,
+					"created": "2019-05-03 13:59:50",
+					"modified": "2019-05-03 13:59:55",
+					"likeCount": 2,
+					"rewardBeanNum": 0,
+					"rewardCreated": "1970-01-01 08:00:00",
+					"content": "没有5g网络，手机支持有什么用",
+					"userInfo": {
+						"imgUrl": "http://m.360buyimg.com/ugc/jfs/t23182/354/1049734912/16510/6d714421/5b4d8186N98c647c4.png",
+						"nickName": "peaceful2014"
+					},
+					"like": false
+				}
+			],
+			"userInfo": {
+				"imgUrl": "http://m.360buyimg.com/ugc/jfs/t23182/354/1049734912/16510/6d714421/5b4d8186N98c647c4.png",
+				"nickName": "jd_136178ahq"
+			},
+			"showRecommend": true,
+			"showLike": true,
+			"haveRecommend": false,
+			"follow": false,
+			"showFollow": true,
+			"haveRewardBeans": false,
+			"showRewardBeans": false,
+			"showCommentReply": true
+		},
+		{
+			"id": 25922550,
+			"content": "有广角拍摄功能吗",
+			"clientType": 4,
+			"productId": 100005087998,
+			"status": 1,
+			"lastAnswerTime": "2019-05-04 20:33:25",
+			"praiseCount": 0,
+			"answerCount": 8,
+			"anonymous": 0,
+			"expire": "2024-04-26 19:50:49",
+			"top": 0,
+			"created": "2019-04-28 19:50:49",
+			"modified": "2019-04-28 19:50:55",
+			"followCount": 0,
+			"qtAnswerStatus": 0,
+			"bizAnswerCount": 0,
+			"answerList": [
+				{
+					"id": 113062316,
+					"productId": 100005087998,
+					"status": 1,
+					"clientType": 4,
+					"associatedId": 25922550,
+					"anonymous": 0,
+					"type": 0,
+					"recommend": 0,
+					"top": 0,
+					"created": "2019-05-03 21:59:44",
+					"modified": "2019-05-03 21:59:50",
+					"likeCount": 0,
+					"rewardBeanNum": 0,
+					"rewardCreated": "1970-01-01 08:00:00",
+					"content": "没有",
+					"userInfo": {
+						"imgUrl": "http://m.360buyimg.com/ugc/jfs/t23182/354/1049734912/16510/6d714421/5b4d8186N98c647c4.png",
+						"nickName": "jd_139392vnln"
+					},
+					"like": false
+				},
+				{
+					"id": 113060303,
+					"productId": 100005087998,
+					"status": 1,
+					"clientType": 4,
+					"associatedId": 25922550,
+					"anonymous": 1,
+					"type": 0,
+					"recommend": 0,
+					"top": 0,
+					"created": "2019-05-03 21:37:59",
+					"modified": "2019-05-03 21:38:05",
+					"likeCount": 0,
+					"rewardBeanNum": 0,
+					"rewardCreated": "1970-01-01 08:00:00",
+					"content": "没有",
+					"userInfo": {
+						"imgUrl": "http://storage.360buyimg.com/i.imageUpload/6a645f3564636163343233323637393131353238343735373136303936_sma.jpg",
+						"nickName": "不***7"
+					},
+					"like": false
+				}
+			],
+			"userInfo": {
+				"imgUrl": "http://m.360buyimg.com/ugc/jfs/t23182/354/1049734912/16510/6d714421/5b4d8186N98c647c4.png",
+				"nickName": "songkaixia"
+			},
+			"showRecommend": true,
+			"showLike": true,
+			"haveRecommend": false,
+			"follow": false,
+			"showFollow": true,
+			"haveRewardBeans": false,
+			"showRewardBeans": false,
+			"showCommentReply": true
+		}
+	],
+	"skuInfo": {
+		"id": 100005087998,
+		"brandId": 12669,
+		"brandName": "魅族",
+		"fullName": "魅族 16s 骁龙855全面屏拍照游戏手机 6GB+128GB 碳纤黑 全网通移动联通电信4G手机 双卡双待",
+		"shortName": "魅族16s",
+		"imgUrl": "jfs/t1/32804/25/14881/277224/5cbf0a08Ecfe815f9/2351cebef4cbe443.jpg",
+		"venderId": 1000001952,
+		"firstCategory": "9987",
+		"secondCategory": "653",
+		"thirdCategory": "655",
+		"firstCategoryName": "手机通讯",
+		"secondCategoryName": "手机",
+		"thirdCategoryName": "手机",
+		"cacheTime": 1557369985135
+	},
+	"totalItem": 642,
+	"resultCode": "0"
+}
