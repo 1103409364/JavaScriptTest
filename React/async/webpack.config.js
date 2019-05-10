@@ -6,7 +6,7 @@ module.exports = {
 	mode: "development", // "production" | "development" | "none"
 	entry: "./src/main", // string | object | array // 这里应用程序开始执行
 	output: {
-		path: path.resolve(__dirname, "www"), // string
+		path: path.resolve(__dirname, "dist"), // string
 		filename: "bundle.js", // string"[name].js",  for multiple entry points
 		// 配置输出文件的虚拟路径
 		// publicPath: "/dev/",
@@ -17,7 +17,7 @@ module.exports = {
 	devtool: 'inline-source-map',
 	// 告诉 dev server，从什么位置查找文件，真实路径，静态文件位置
 	devServer: {
-		contentBase: './www',
+		contentBase: './dist',
 		hot: true
 	},
 	// 使用插件，自动生成HTML文件自动引入生成的bundle.js，配置模板
