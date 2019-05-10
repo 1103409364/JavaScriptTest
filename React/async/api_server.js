@@ -10,7 +10,7 @@ var _data = {
 }
 
 
-//设置跨域访问,代码顺序执行的，要先设置响应头，允许跨域
+//代码顺序执行的，要先设置响应头，允许跨域
 // app.all('*', (req, res, next) => {
 // 	res.header("Access-Control-Allow-Origin", "*");
 // 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
