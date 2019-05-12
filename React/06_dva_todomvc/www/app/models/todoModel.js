@@ -14,7 +14,12 @@ export default {
 			const idArr = state.todos.map(item => {
 				return item.id;
 			})
-			const maxId = Math.max(...idArr);
+
+	
+			let maxId = Math.max(...idArr);
+			if(idArr.length === 0) {
+				maxId = 0;
+			}
 
 			return {
 				...state,
@@ -35,6 +40,18 @@ export default {
 						}
 					};
 					return item;
+				})
+
+			}
+		},
+		delete(state, action) {
+			// console.log(state,action)
+			return {
+				...state,
+				"todos": state.todos.filter(item => {
+					if (item.id !== action.payload.id) {
+						return item;
+					};
 				})
 
 			}

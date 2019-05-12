@@ -10,15 +10,21 @@ class TodoList extends Component {
 	changeTodo(id, newtodo) {
 		this.props.dispatch({ "type": "todoModel/update", "payload": { "id": id, "todo": newtodo } })
 	}
+
+	deleteTodo(id) {
+		this.props.dispatch({ "type": "todoModel/delete", "payload": { "id": id} })
+	}
+
 	render() {
 		return (
 			<ul>
-				{this.props.todos.map((item, index) => {
+				{this.props.todos.map((item) => {
 					return <Todo
-						key={index}
+						key={item.id}
 						item={item}
 						toggleDone={this.toggleDone.bind(this)}
 						changeTodo={this.changeTodo.bind(this)}
+						deleteTodo={this.deleteTodo.bind(this)}
 					/>
 				})}
 			</ul>
