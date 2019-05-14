@@ -21,7 +21,7 @@ app.get("/api", function (req, res) {
 			});
 		});
 
-		//输出大json
+		// 返回json
 		res.json({ "results": dajson });
 	});
 });

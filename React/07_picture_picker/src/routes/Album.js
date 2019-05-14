@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
 import './Album.less';
-import Picker from "../components/Picker"
-
+import SideBox from "../components/SideBox";
+import BigImg from '../components/BigImg'
 
 function Album() {
 	return (
-		<div>
-			<Picker/>
+		<div className="album">
+			<SideBox />
+			<BigImg />
 		</div>
 	);
 }

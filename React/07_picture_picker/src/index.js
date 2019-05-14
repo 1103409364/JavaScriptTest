@@ -1,5 +1,4 @@
 import dva from 'dva';
-import './index.css';
 import router from './router';
 import example from './models/example'
 
