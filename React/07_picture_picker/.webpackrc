@@ -1,0 +1,9 @@
+{
+	"env": {
+		"development": {
+			"extraBabelPlugins": [
+				"dva-hmr"
+			]
+		}
+	}
+}
