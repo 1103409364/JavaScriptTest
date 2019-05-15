@@ -8,33 +8,33 @@ class Preview extends React.Component {
 		}
 	}
 
-	renderPreview(props) {
-		if (Object.keys(props.images).length !== 0) {
-			let imgurlArr = props.images[props.position.color][props.position.album];
-			let pages = parseInt(imgurlArr.length / 6, 10) + 1;
-			// 每一页都用一个ul包起来
-			let pageArr = [];
-			for (let pageIdx = 0; pageIdx < pages; pageIdx++) {
-				let pageImgArr = imgurlArr.slice(pageIdx * 6, pageIdx * 6 + 6);
+renderPreview(props) {
+	if (Object.keys(props.images).length !== 0) {
+		let imgurlArr = props.images[props.position.color][props.position.album];
+		let pages = parseInt(imgurlArr.length / 6, 10) + 1;
+		// 每一页都用一个ul包起来
+let pageArr = [];
+for (let pageIdx = 0; pageIdx < pages; pageIdx++) {
+	let pageImgArr = imgurlArr.slice(pageIdx * 6, pageIdx * 6 + 6);
 
-				pageArr.push(
-					<ul key={pageIdx} className="clearfix">
-						{
-							pageImgArr.map((item, index) => {
-								return <li
-									className={pageIdx * 6 + index === props.position.idx ? "cur" : ""}
-									key={index}
-									// 添加点击事件
-									onClick={() => { props.changePicIdx(pageIdx * 6 + index) }}
-								><img src={item} alt="car" /></li>
-							})
-						}
-					</ul>
-				)
+	pageArr.push(
+		<ul key={pageIdx} className="clearfix">
+			{
+				pageImgArr.map((item, index) => {
+					return <li
+						className={pageIdx * 6 + index === props.position.idx ? "cur" : ""}
+						key={index}
+						// 添加点击事件
+						onClick={() => { props.changePicIdx(pageIdx * 6 + index) }}
+					><img src={item} alt="car" /></li>
+				})
 			}
-			return pageArr;
-		}
+		</ul>
+	)
+}
+return pageArr;
 	}
+}
 
 	renderPicNav(props) {
 		if (Object.keys(props.images).length !== 0) {

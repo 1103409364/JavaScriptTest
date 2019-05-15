@@ -179,7 +179,7 @@ export default {
 					}
 				}
 			} else {
-				alert("回到第一张了！");
+				alert("到第一张了！");
 				return state;
 			}
 		}
