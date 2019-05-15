@@ -87,19 +87,22 @@ export default {
 				}
 			};
 		},
+		// 切换下一张图片
 		nextPic(state) {
 			// images - color -view center detail ,从小到大判断
 			// view center detail
 			var albums = state.images[state.position.color];
-			var albumArr = ["view", "center", "detail"].filter((item) => {
+			// 可能没有center
+			const albumArr = ["view", "center", "detail"].filter((item) => {
 				return albums.hasOwnProperty(item);
 			});
 			var albumIdx = albumArr.indexOf(state.position.album)
-
+			// 所有颜色
 			var colorArr = Object.keys(state.images);
 			var colorIdx = colorArr.indexOf(state.position.color);
-
+			
 			if (state.position.idx < albums[state.position.album].length - 1) {
+				// 没到当前图集最后一张
 				return {
 					...state,
 					"position": {
@@ -108,6 +111,7 @@ export default {
 					}
 				};
 			} else if (albumIdx < albumArr.length - 1) {
+				// 到当前图集最后一张，没到最后一个图集
 				return {
 					...state,
 					"position": {
@@ -117,6 +121,7 @@ export default {
 					}
 				}
 			} else if (colorIdx < colorArr.length - 1) {
+				// 到最后一个图集，没到最后一个颜色
 				return {
 					...state,
 					"position": {
@@ -126,14 +131,58 @@ export default {
 						idx: 0
 					}
 				}
-			}
-
-
-			else {
-				alert("已经到最后了！");
+			} else {
+				// 到最后一个颜色，最后一个图集，图集的最后一张
+				alert("到最后一张了");
 				return state;
 			}
 		},
+		// 上一张图片
+		prevPic(state) {
+			var albums = state.images[state.position.color];
+			var albumArr = ["view", "center", "detail"].filter((item) => {
+				return albums.hasOwnProperty(item);
+			});
+			var albumIdx = albumArr.indexOf(state.position.album)
+
+			const colorArr = Object.keys(state.images);
+			var colorIdx = colorArr.indexOf(state.position.color);
+
+			if (state.position.idx > 0) {
+				// 没到第一张
+				return {
+					...state,
+					"position": {
+						...state.position,
+						"idx": state.position.idx - 1
+					}
+				};
+			} else if (albumIdx > 0) {
+				// 到第一张，但不是第一个图集
+				return {
+					...state,
+					"position": {
+						...state.position,
+						"album": albumArr[albumIdx - 1],
+						"idx": state.images[state.position.color][albumArr[albumIdx - 1]].length -1 //上一个图集的最后一张
+					}
+				}
+			} else if (colorIdx > 0) {
+				// 到第一个图集，没到第一个颜色
+				return {
+					...state,
+					"position": {
+						...state.position,
+						"color": colorArr[colorIdx - 1],
+						"album": albumArr[albumArr.length - 1], //上个颜色的最后一个图集
+						"idx": state.images[colorArr[colorIdx - 1]][albumArr[albumArr.length - 1]].length -1
+					}
+				}
+			} else {
+				alert("回到第一张了！");
+				return state;
+			}
+		}
 	},
 
 };

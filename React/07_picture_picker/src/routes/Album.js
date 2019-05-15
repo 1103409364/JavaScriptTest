@@ -4,7 +4,6 @@ import './Album.less';
 import ImgType from "../components/ImgType";
 import ColorPicker from "../components/ColorPicker";
 import Preview from "../components/Preview";
-import PicNav from "../components/PicNav";
 import BigImg from '../components/BigImg'
 
 class Album extends React.Component {
@@ -38,12 +37,12 @@ class Album extends React.Component {
 						position={this.props.position}
 						changePicIdx={this.props.changePicIdx.bind(this)}
 					/>
-					<PicNav />
 				</div>
 
 				<BigImg
 					imgNow={this.props.imgNow}
 					nextPic={this.props.nextPic.bind(this)}
+					prevPic={this.props.prevPic.bind(this)}
 				/>
 			</div>
 		);
@@ -84,6 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	nextPic() {
 		dispatch({ "type": "albumModel/nextPic" })
+	},
+	prevPic() {
+		dispatch({ "type": "albumModel/prevPic" })
 	}
 })
 

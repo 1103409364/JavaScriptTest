@@ -7,7 +7,7 @@ export default (props) => {
 				<img src={props.imgNow} alt="img" />
 				<div
 					className="leftBtn"
-					// onClick={() => { props.prevtPic() }}
+					onClick={() => { props.prevPic() }}
 				></div>
 				<div
 					className="rightBtn"
