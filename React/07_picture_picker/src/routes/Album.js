@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
 import './Album.less';
-import SideBox from "../components/SideBox";
+import ImgType from "../components/ImgType";
+import ColorPicker from "../components/ColorPicker";
+import Preview from "../components/Preview";
+import PicNav from "../components/PicNav";
 import BigImg from '../components/BigImg'
 
 class Album extends React.Component {
@@ -13,23 +16,46 @@ class Album extends React.Component {
 	render() {
 		return (
 			<div className="album">
-				<SideBox  images = { this.props.images} position = { this.props.position }/>
-				<BigImg  imgNow = { this.props.imgNow } />
+				<div className="sideBox" >
+					<h2>丰田卡罗拉</h2>
+					<p>2199款 AI自动驾驶</p>
+					{/* 图片类型 */}
+					<div className="type">
+						<ImgType
+							images={this.props.images}
+							position={this.props.position}
+							changeType={this.props.changeType.bind(this)}
+						/>
+						<ColorPicker
+							images={this.props.images}
+							position={this.props.position}
+							changeColor={this.props.changeColor.bind(this)}
+						/>
+					</div>
+					{/* 预览小图 */}
+					<Preview
+						images={this.props.images}
+						position={this.props.position}
+						changePicIdx={this.props.changePicIdx.bind(this)}
+					/>
+					<PicNav />
+				</div>
+
+				<BigImg
+					imgNow={this.props.imgNow}
+					nextPic={this.props.nextPic.bind(this)}
+				/>
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = ({ albumModel }) => {
-	console.log(albumModel);
-	
-	if ( Object.keys(albumModel.images).length > 0 ) {
+	if (Object.keys(albumModel.images).length > 0) {
 		const album = albumModel.position.album;
 		const color = albumModel.position.color;
 		const idx = albumModel.position.idx;
-		console.log(albumModel.images[color][album]);
 
-		// console.log(albumModel.images[albumModel.position.album]);
 		return {
 			images: albumModel.images,
 			position: albumModel.position,
@@ -46,8 +72,19 @@ const mapStateToProps = ({ albumModel }) => {
 const mapDispatchToProps = (dispatch) => ({
 	init() {
 		dispatch({ "type": "albumModel/init_async" })
+	},
+	changeType(albumtype) {
+		dispatch({ "type": "albumModel/changeType", payload: { albumtype } })
+	},
+	changeColor(color) {
+		dispatch({ "type": "albumModel/changeColor", payload: { color } })
+	},
+	changePicIdx(index) {
+		dispatch({ "type": "albumModel/changePicIdx", payload: { index } })
+	},
+	nextPic() {
+		dispatch({ "type": "albumModel/nextPic" })
 	}
-
 })
 
 export default connect(

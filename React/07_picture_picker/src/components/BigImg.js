@@ -5,8 +5,14 @@ export default (props) => {
 		<div className="bigImgWrap">
 			<div className="bigImg">
 				<img src={props.imgNow} alt="img" />
-				<div className="leftBtn"></div>
-				<div className="rightBtn"></div>
+				<div
+					className="leftBtn"
+					// onClick={() => { props.prevtPic() }}
+				></div>
+				<div
+					className="rightBtn"
+					onClick={() => { props.nextPic() }}
+				></div>
 			</div>
 		</div>
 	)
