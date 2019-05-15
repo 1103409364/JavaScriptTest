@@ -11,7 +11,7 @@ class Preview extends React.Component {
 	renderPreview(props) {
 		if (Object.keys(props.images).length !== 0) {
 			let imgurlArr = props.images[props.position.color][props.position.album];
-			let pages = parseInt(imgurlArr.length / 6) + 1;
+			let pages = parseInt(imgurlArr.length / 6, 10) + 1;
 			// 每一页都用一个ul包起来
 			let pageArr = [];
 			for (let pageIdx = 0; pageIdx < pages; pageIdx++) {
@@ -39,8 +39,8 @@ class Preview extends React.Component {
 	renderPicNav(props) {
 		if (Object.keys(props.images).length !== 0) {
 			let imgurlArr = props.images[props.position.color][props.position.album];
-			let pages = parseInt(imgurlArr.length / 6) + 1;
-			let pagIdx = parseInt(props.position.idx / 6);
+			let pages = parseInt(imgurlArr.length / 6, 10) + 1;
+			let pagIdx = parseInt(props.position.idx / 6, 10);
 			if (pages > 1) {
 				var arr = [];
 
@@ -67,7 +67,7 @@ class Preview extends React.Component {
 				<div className="preview">
 					<h3>图片预览</h3>
 					<div className="carPreview clearfix"
-						style={{ left: -parseInt(this.props.position.idx / 6) * W + "px" }}
+						style={{ left: -parseInt(this.props.position.idx / 6, 10) * W + "px" }}
 					>
 						{this.renderPreview(this.props)}
 					</div>
