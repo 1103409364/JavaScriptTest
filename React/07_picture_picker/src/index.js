@@ -1,6 +1,6 @@
 import dva from 'dva';
 import router from './router';
-import example from './models/example'
+import albumModel from './models/albumModel.js'
 
 // 1. Initialize
 const app = dva();
@@ -9,7 +9,7 @@ const app = dva();
 // app.use({});
 
 // 3. Model
-app.model(example);
+app.model(albumModel);
 
 // 4. Router
 app.router(router);
