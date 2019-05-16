@@ -8,39 +8,43 @@ class Preview extends React.Component {
 		}
 	}
 
-renderPreview(props) {
-	if (Object.keys(props.images).length !== 0) {
-		let imgurlArr = props.images[props.position.color][props.position.album];
-		let pages = parseInt(imgurlArr.length / 6, 10) + 1;
-		// 每一页都用一个ul包起来
-let pageArr = [];
-for (let pageIdx = 0; pageIdx < pages; pageIdx++) {
-	let pageImgArr = imgurlArr.slice(pageIdx * 6, pageIdx * 6 + 6);
-
-	pageArr.push(
-		<ul key={pageIdx} className="clearfix">
-			{
-				pageImgArr.map((item, index) => {
-					return <li
-						className={pageIdx * 6 + index === props.position.idx ? "cur" : ""}
-						key={index}
-						// 添加点击事件
-						onClick={() => { props.changePicIdx(pageIdx * 6 + index) }}
-					><img src={item} alt="car" /></li>
-				})
-			}
-		</ul>
-	)
-}
-return pageArr;
-	}
-}
-
-	renderPicNav(props) {
+	renderPreview(props) {
 		if (Object.keys(props.images).length !== 0) {
 			let imgurlArr = props.images[props.position.color][props.position.album];
 			let pages = parseInt(imgurlArr.length / 6, 10) + 1;
+
+			let pageArr = [];
+			for (let pageIdx = 0; pageIdx < pages; pageIdx++) {
+				let pageImgArr = imgurlArr.slice(pageIdx * 6, pageIdx * 6 + 6);
+				// 每一页都用一个ul包起来
+				pageArr.push(
+					<ul key={pageIdx} className="clearfix">
+						{
+							pageImgArr.map((item, index) => {
+								return <li
+									className={pageIdx * 6 + index === props.position.idx ? "cur" : ""}
+									key={index}
+									// 添加点击事件
+									onClick={() => { props.changePicIdx(pageIdx * 6 + index) }}
+								><img src={item} alt="car" /></li>
+							})
+						}
+					</ul>
+				)
+			}
+			return pageArr;
+		}
+	}
+
+	renderPicNav(props) {
+		if (Object.keys(props.images).length !== 0) {
+			// 图片url组成的字符串数组
+			let imgurlArr = props.images[props.position.color][props.position.album];
+			// 总页数
+			let pages = Math.ceil(imgurlArr.length / 6, 10);
+			// idx从0开始
 			let pagIdx = parseInt(props.position.idx / 6, 10);
+			// 大于一页的时候才显示分页器
 			if (pages > 1) {
 				var arr = [];
 
