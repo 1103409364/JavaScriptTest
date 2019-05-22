@@ -13,8 +13,6 @@ module.exports = {
 	},
 	//监听，在package.json中配置
 	// watch: true,
-	// 帮助追踪错误
-	devtool: 'inline-source-map',
 	// 告诉 dev server，从什么位置查找文件，真实路径，静态文件位置
 	devServer: {
 		contentBase: './dist',

@@ -9,8 +9,6 @@ module.exports = {
 		path: path.resolve(__dirname, "dist"), // string
 		filename: "bundle.js", // string"[name].js",  for multiple entry points
 	},
-	// 帮助追踪错误
-	devtool: 'inline-source-map',
 	// 告诉 dev server，从什么位置查找文件，真实路径，静态文件位置
 	devServer: {
 		contentBase: './dist',
