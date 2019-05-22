@@ -8,8 +8,6 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "dist"), // string
 		filename: "bundle.js", // string"[name].js",  for multiple entry points
-		// 配置输出文件的虚拟路径
-		// publicPath: "/dev/",
 	},
 	// 帮助追踪错误
 	devtool: 'inline-source-map',
