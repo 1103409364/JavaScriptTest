@@ -2,7 +2,7 @@
 	"name": "reduxthunk",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "main.js",
 	"scripts": {
 		"server": "node api_server ",
 		"start": "webpack-dev-server --open",

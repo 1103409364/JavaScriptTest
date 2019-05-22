@@ -5,11 +5,10 @@ import App from './App.js';
 const rootElement = document.querySelector("#root");
 
 if (module.hot) {
-	module.hot.accept(() => {
+	module.hot.accept((App) => {
 		ReactDom.render(
-			<div>
-				<App />
-			</div>,
+			<div>113331</div>
+			,
 			rootElement
 		)
 	})
