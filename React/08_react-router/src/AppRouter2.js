@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Header from './components/Header'
 
-function App() {
+function AppRouter2() {
 	return (
 		<Router>
 			<div>
@@ -55,4 +55,4 @@ function Topic({ match }) {
 
 }
 
-export default App;
+export default AppRouter2;
