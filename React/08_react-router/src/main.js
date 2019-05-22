@@ -1,22 +1,21 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import App from './App.js';
+import AppRouter from './AppRouter'; //路由组件 demo1
+import AppRouter2 from './AppRouter2'; //加子路由 demo2
+
 
 const rootElement = document.querySelector("#root");
 
 if (module.hot) {
-	module.hot.accept((App) => {
+	module.hot.accept(() => {
 		ReactDom.render(
-			<div>113331</div>
-			,
+			<AppRouter2 />,
 			rootElement
 		)
 	})
 }
 
-// ReactDom.render(
-// 	<div>
-// 		<App />
-// 	</div>,
-// 	rootElement
-// )
+ReactDom.render(
+	<AppRouter2 />,
+	rootElement
+)
