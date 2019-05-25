@@ -218,11 +218,23 @@ Snake.prototype.getDirectiion = function () {
                 break;
         }
     }
-    // 监听虚拟按键
-    up.onclick = eventHandler;
-    down.onclick = eventHandler;
-    left.onclick = eventHandler;
-    right.onclick = eventHandler;
+    // 检测是否是移动设备，给虚拟按钮添加事件
+    if (isMobile()) {
+        up.addEventListener("touchstart", eventHandler);
+        down.addEventListener("touchstart", eventHandler);
+        left.addEventListener("touchstart", eventHandler);
+        right.addEventListener("touchstart", eventHandler);
+    } else {
+        up.onclick = eventHandler;
+        down.onclick = eventHandler;
+        left.onclick = eventHandler;
+        right.onclick = eventHandler;
+    }
+    // up.onclick = eventHandler;
+    // down.onclick = eventHandler;
+    // left.onclick = eventHandler;
+    // right.onclick = eventHandler;
+
     function eventHandler(event) {
         event = event || window.event;
         var target = event.target;
@@ -311,6 +323,21 @@ Food.prototype.createNewPoint = function () {
         }
     }
 }
+
+// 通过ua检测设备类型
+function isMobile() {
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ) return true;
+
+    return false;
+}
+
 // 地图长宽至少为4*4
 var map = new Map(20, 20);
 var snake = new Snake();
