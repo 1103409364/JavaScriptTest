@@ -58,14 +58,6 @@ var HtmlUtil = {
     isNumber: function (n) {
         return !isNaN(Number(n));
     },
-    //class开关
-    toggle: function (element, cls) {
-        if (element.classList.contains(cls)) {
-            element.classList.remove(cls)
-        } else {
-            element.classList.add(cls)
-        }
-    },
     // 获取min到max之间的随机数
     getRandom: function (min, max) {
         var a = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -78,6 +70,19 @@ var HtmlUtil = {
         } else {
             return elem.currentStyle[prop];
         }
-    }
+    },
+    // 设备类型检测
+    isMobile: function () {
+            if (navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+            ) return true;
+            
+            return false;
+        }
 
 };

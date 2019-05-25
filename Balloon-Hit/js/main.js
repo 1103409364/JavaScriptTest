@@ -7,10 +7,11 @@ var balloonContainer = document.getElementById("balloonContainer"),
     scoreWrap = document.getElementById("score"),
     frameNumberWrap = document.getElementById("fnum"),
     speedWrap = document.getElementById("speed");
-const MAXTIME = 50;
+
+const MAXTIME = 10;
 // 总分和时间
 var score = 0,
-    time = MAXTIME,
+    time,
     restart = false;
 
 // 气球类
@@ -18,7 +19,6 @@ function Balloon() {
     // 初始位置
     this.left = HtmlUtil.getRandom(0, balloonContainerWidth - 63);
     this.bottom = -200;
-
 
     // 分值随机
     this.value = HtmlUtil.getRandom(1, 10);
@@ -33,7 +33,7 @@ function Balloon() {
     this.initinal();
     this.fly();
 }
-//添加一个初始化方法
+//初始化
 Balloon.prototype.initinal = function () {
     //创建气球div容器
     this.dom = document.createElement("div");
@@ -54,17 +54,33 @@ Balloon.prototype.initinal = function () {
         y = 0;
     this.dom.style.backgroundPosition = x + "px " + y;
 
-    var _this = this;
-    // 绑定监听事件
-    this.targetDom.onclick = function () {
-        _this.boom();
-        // 累加分数
-        score += _this.value;
-        scoreWrap.innerHTML = score;
-        // 没有load会导致短时间play两次，第二次无法播放的问题
-        boomAudio.load();
-        boomAudio.play();
+    // 绑定事件
+    this.addEvent();
+}
 
+Balloon.prototype.addEvent = function () {
+    var _this = this;
+
+    if (HtmlUtil.isMobile()) {
+        this.targetDom.addEventListener("touchstart", function (event) {
+            event.preventDefault;
+            _this.boom();
+            // 累加分数
+            score += _this.value;
+            scoreWrap.innerHTML = score;
+            // 没有load会导致短时间play两次，第二次无法播放的问题
+            boomAudio.load();
+            boomAudio.play();
+        });
+    } else {
+        this.targetDom.onclick = function () {
+            _this.boom();
+            // 累加分数
+            score += _this.value;
+            scoreWrap.innerHTML = score;
+            boomAudio.load();
+            boomAudio.play();
+        }
     }
 }
 // 气球起飞方法
@@ -90,24 +106,25 @@ Balloon.prototype.boom = function () {
 
 // 游戏开始
 var gameStart = function () {
+    timeInterval = 20;
+
     // 重置总分和时间
     score = 0;
     time = MAXTIME;
-    // bgm.load();
+    bgm.load();
     bgm.play();
     // 帧编号
     var frameNumber = 0;
-    // 500ms出来一个气球
     var timer = setInterval(function () {
         frameNumber++;
         frameNumberWrap.innerHTML = frameNumber;
-        if (frameNumber % 2 == 0) {
-            // 倒计时
-            time--;
-            timeWrap.innerHTML = time
+        // 倒计时
+        time = MAXTIME - parseInt(timeInterval * frameNumber / 1000);
+        timeWrap.innerHTML = time
+        if (frameNumber % 20 == 0) {
+            new Balloon();
         }
-        new Balloon();
-        
+
         restart = false;
         if (time == 0) {
             clearInterval(timer);
@@ -116,7 +133,7 @@ var gameStart = function () {
             scoreWrap.innerHTML += " GAME OVER";
             // alert("GAME OVER 你的分数是" + score);
         }
-    }, 500);
+    }, timeInterval);
     return timer;
 }
 
