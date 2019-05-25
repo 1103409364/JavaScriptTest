@@ -93,12 +93,12 @@
                 }
         }
     }
-
+    // 场景切换
     SceneManager.prototype.render = function () {
         switch (this.sceneNumber) {
             case 1:
                 // 游戏结束后回场景1时，重新播放bgm
-                if(game.gameOver) {
+                if (game.gameOver) {
                     game.bgm.load();
                     game.bgm.play();
                 }
@@ -201,6 +201,7 @@
                 game.ctx.drawImage(game.R["text_game_over"], game.canvas.width / 2 - 102, game.canvas.height * (1 - 0.618));
         }
     }
+    // 进场
     SceneManager.prototype.enter = function (number) {
         this.sceneNumber = number;
         switch (this.sceneNumber) {
@@ -238,20 +239,22 @@
         }
     }
 
+    // 绑定事件
     SceneManager.prototype.bindEvent = function () {
         var _this = this;
         // 触摸事件会覆盖鼠标点击
-        game.canvas.addEventListener("click", function (e) {
-            e.preventDefault();
-            clickHandler(e.clientX, e.clientY);
-            // console.log(1)
-        })
-        game.canvas.addEventListener("touchstart", function (e) {
-            e.preventDefault();
-            clickHandler(event.touches[0].clientX, event.touches[0].clientY);
-            // console.log(2)
-        })
-
+        if (isMobile()) {
+            game.canvas.addEventListener("touchstart", function (event) {
+                event.preventDefault();
+                clickHandler(event.touches[0].clientX, event.touches[0].clientY);
+            })
+        } else {
+            game.canvas.addEventListener("click", function (event) {
+                event.preventDefault();
+                clickHandler(event.clientX, event.clientY);
+                // console.log("click")
+            })
+        }
 
         function clickHandler(mousex, mousey) {
             //根据当前是第几个场景，执行不同的操作
@@ -273,5 +276,18 @@
                     break;
             }
         }
+    }
+
+    function isMobile() {
+        if (navigator.userAgent.match(/Android/i)
+            || navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/BlackBerry/i)
+            || navigator.userAgent.match(/Windows Phone/i)
+        ) return true;
+
+        return false;
     }
 })()
