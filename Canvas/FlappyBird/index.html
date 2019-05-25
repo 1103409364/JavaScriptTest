@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FlappyBird</title>
-    <link rel="shortcut icon" href="R/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./R/favicon.ico" type="image/x-icon" />
     <style>
         body,
         html {
@@ -15,11 +15,11 @@
 
         @font-face {
             font-family: 'FB';
-            src: url('R/fonts/FB.eot');
-            src: url('R/fonts/FB.eot?#iefix') format('embedded-opentype'),
-                url('R/fonts/FB.woff') format('woff'),
-                url('R/fonts/FB.ttf') format('truetype'),
-                url('R/fonts/FB.svg#webfont34M5alKg') format('svg');
+            src: url('./R/fonts/FB.eot');
+            src: url('./R/fonts/FB.eot?#iefix') format('embedded-opentype'),
+                url('./R/fonts/FB.woff') format('woff'),
+                url('./R/fonts/FB.ttf') format('truetype'),
+                url('./R/fonts/FB.svg#webfont34M5alKg') format('svg');
             font-weight: normal;
             font-style: normal;
         }
@@ -32,17 +32,17 @@
     <canvas id="canvas">浏览器不支持，请升级</canvas>
     <audio src="R/audio/bgm.mp3" id="bgm" autoplay></audio>
 
-    <script src="js/Game.js"></script>
-    <script src="js/Background.js"></script>
-    <script src="js/Land.js"></script>
-    <script src="js/Pipe.js"></script>
-    <script src="js/Bird.js"></script>
-    <script src="js/SceneManager.js"></script>
+    <script src="./js/Game.js"></script>
+    <script src="./js/Background.js"></script>
+    <script src="./js/Land.js"></script>
+    <script src="./js/Pipe.js"></script>
+    <script src="./js/Bird.js"></script>
+    <script src="./js/SceneManager.js"></script>
 
     <script>
         var game = new Game({
             "id": "canvas",
-            "dataUrl": "/data/R.json"
+            "dataUrl": "./data/R.json"
         })
     </script>
 </body>
