@@ -41,7 +41,7 @@
         };
 
         function getDataAndRender(page, wrap) {
-            myajax.jsonp("js/蘑菇街" + page + ".js" + "?" + Math.random() * 100, {}, "render", function (data) {
+            myajax.jsonp("js/data" + page + ".js" + "?" + Math.random() * 100, {}, "render", function (data) {
                 var imgdata = [];
                 for (var i = 0; i < data.data.list.length; i++) {
                     if (data.data.list[i].modelData.data) {
