@@ -7,9 +7,9 @@
 	}
 	
 	// 连接到数据库
-	$conn = mysql_connect("localhost", "root", "123456");
+	$conn = mysql_connect("localhost", "qwertyzx_admin", "admin");
 	// 选择一个数据库
-	mysql_select_db("data1", $conn);
+	mysql_select_db("qwertyzx_1", $conn);
 	
 	//设置字符集,不设中文可能乱码
 	mysql_query("SET NAMES UTF8");

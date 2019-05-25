@@ -6,9 +6,9 @@
 	$id = $_GET["id"];
 	$newmsg = $_GET["newmsg"];
 	
-	$conn = mysql_connect("localhost","root","123456");
+	$conn = mysql_connect("localhost", "qwertyzx_admin", "admin");
 	//选择一个数据库
-	mysql_select_db("data1",$conn);
+	mysql_select_db("qwertyzx_1",$conn);
 
 	//设置一下字符集 mysql_query就是执行SQL的意思
 	mysql_query("SET NAMES UTF8");

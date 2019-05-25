@@ -5,10 +5,10 @@
 	$message = $_GET["message"];
 	$date = $_GET["date"];
 
-	// 连接到数据库
-	$conn = mysql_connect("localhost", "root", "123456");
+	// 连接到数据库 第一个参数是指要连接的数据库的服务器地址，第二个参数是指要连接的数据库登录用户名，第三个参数是指要连接的数据库登录密码。
+	$conn = mysql_connect("localhost", "qwertyzx_admin", "admin");
 	// 选择一个数据库
-	mysql_select_db("data1", $conn);
+	mysql_select_db("qwertyzx_1", $conn);
 	//设置字符集,不设中文可能乱码
 	mysql_query("SET NAMES UTF8");
 

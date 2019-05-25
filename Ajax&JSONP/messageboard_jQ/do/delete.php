@@ -2,9 +2,9 @@
 	header('Content-type:text/html;charset=utf-8');
 	$id = $_GET["id"];
 	//链接数据库
-	$conn = mysql_connect("localhost","root","123456");
+	$conn = mysql_connect("localhost", "qwertyzx_admin", "admin");
 	//选择数据库
-	mysql_select_db("data1",$conn);
+	mysql_select_db("qwertyzx_1",$conn);
 	//设置字符集
 	mysql_query("SET NAMES UTF8");
 	
