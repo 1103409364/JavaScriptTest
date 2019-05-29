@@ -1,0 +1,58 @@
+html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
+
+body {
+    background-color: #dfdfdf;
+    color: #333;
+    min-width: 1100px;
+}
+
+.inner_center {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.clearfix::before, .clearfix::after {
+    content: "";
+    clear: both;
+    height: 0;
+    display: block;
+}
+
+
+.pagination {
+    height: 53px;
+    background-color: #f56a6a;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination ol {
+    padding: 6px 0;
+}
+
+.pagination ol li {
+    /* float: left; */
+    display: inline-block;
+    margin: 0 2px;
+} 
+
+.pagination ol li a:hover {
+    /* float: left; */
+    color: #4090ff;
+} 
+
+.pagination ol li a {
+    font-family: serif;
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    color: #999;
+    border-radius: 3px;
+    background-color: #fff;
+} 
+
+.pagination ol li.current a {
+    color: #4090ff;
+} 

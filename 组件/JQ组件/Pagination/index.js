@@ -1,38 +1,10 @@
-
-// 列表行的构造函数-------------------------
-function PostRow(dictionary, container) {
-    this.$container = container;
-    this.$DOM = $(this.compile(dictionary));
-    
-    this.$showDetailBtn = this.$DOM.find(".toogle");
-    this.$detail = this.$DOM.find(".job_detail");
-
-    this.render();
-    this.addEvent();
-}
-// 拿到模板，返回数据绑定函数
-PostRow.prototype.compile = _.template($("#template").html());
-// 把自己渲染到页面上
-PostRow.prototype.render = function () {
-    this.$container.append(this.$DOM);
-}
-
-PostRow.prototype.addEvent = function () {
-    // 备份this
-    var _this = this;
-    this.$showDetailBtn.click(function() {
-            $(this).toggleClass("active");
-            _this.$detail.slideToggle();
-    })
-}
-
-PostRow.prototype.deleteSelf = function () {
-    this.$DOM.remove();
-}
-
-// 分页导航---------------------------------
-function Pagination(container, totalPage, admin) {
-    this.admin = admin;
+/*
+* @param0 分页导航容器，是一个jQ对象
+* @param1 分页导航总页数
+* @param2 回调函数
+*/
+function Pagination(container, totalPage, callback) {
+    this.callback = callback;
     // 容器
     this.$container = container;
     // 总页数
@@ -44,6 +16,7 @@ function Pagination(container, totalPage, admin) {
     this.render();
     this.addEvent();
 }
+
 // 初始化导航条
 Pagination.prototype.init = function () {
     this.pStr = "<ol>";
@@ -73,6 +46,7 @@ Pagination.prototype.init = function () {
     this.$prev = this.$container.find(".prev");
     this.$next = this.$container.find(".next");
 }
+
 // 渲染导航条，前中后分类讨论，隐藏不需要的格子
 Pagination.prototype.render = function () {
     // 设置hash值
@@ -81,16 +55,19 @@ Pagination.prototype.render = function () {
     // 当前页对应的导航节点
     var $current = this.$p.eq(this.nowIdx - 1);
     // 当前页码加上class，改变样式
-    $current.addClass("current");
+    $current.addClass("current").siblings().removeClass("current");
     // 去掉兄弟节点的class
-    $current.siblings().removeClass("current");
+    console.log(this.nowIdx);
 
     // 前面几项
     if (this.nowIdx < 5) {
+
         this.$p.each(function (i) {
+
             $(this).show();
             if (i >= 5) {
                 $(this).hide();
+                
             }
         });
         this.$ellipsis.eq(0).hide();
@@ -130,6 +107,7 @@ Pagination.prototype.render = function () {
         this.$ellipsis.eq(1).hide();
     }
 }
+
 // 删掉自己
 Pagination.prototype.deleteSelf = function () {
     this.$DOM.remove();
@@ -153,7 +131,7 @@ Pagination.prototype.addEvent = function () {
 
         _this.nowIdx = $a.html();
         // 通知管理员渲染页面
-        _this.admin.toPage(_this.nowIdx);
+        _this.callback(_this.nowIdx);
         // 渲染页码组件
         _this.render();
     });
@@ -166,7 +144,7 @@ Pagination.prototype.addEvent = function () {
         }
 
         if (_this.nowIdx != oldIdx) {
-            _this.admin.toPage(_this.nowIdx);
+            _this.callback(_this.nowIdx);
             _this.render();
         }
     });
@@ -178,76 +156,8 @@ Pagination.prototype.addEvent = function () {
             _this.nowIdx = _this.count;
         }
         if (_this.nowIdx != oldIdx) {
-            _this.admin.toPage(_this.nowIdx);
+            _this.callback(_this.nowIdx);
             _this.render();
         }
     });
 }
-
-// 管理员类-------------------------------------
-function Administrator() {
-    this.$DOM = $("#job_container");
-    this.$rowContainer =this.$DOM.find("#job_ulli");
-    this.$paginationContainer = this.$DOM.find("#pagination");
-    this.$totalPost = this.$DOM.find(".row_count");
-    this.postRowArr = [];
-    // 总页数默认是0，当调用toPage时，totalPage立即更新
-    this.totalPage = 0;
-    // 默认在第一页
-    this.toPage(1);
-    // 创建分页导航条,第一个参数导航条容器，第二个参数总页数，第三个参数告诉导航条管理员是谁
-    this.pagination = new Pagination(this.$paginationContainer, this.totalPage, this);
-
-}
-// 显示职位总数
-Administrator.prototype.showTotalPost = function (totalPost) {
-    this.$totalPost.html(totalPost);
-}
-// 添加列表的行
-Administrator.prototype.addPostRow = function ($rowDOM) {
-    this.postRowArr.push($rowDOM);
-    // this.$rowContainer.append($rowDOM);
-}
-
-// 字典修正
-Administrator.prototype.dictionaryFix = function (dictionary) {
-    // postType岗位类别需要字典修正
-    if (dictionary.postType.split("-")[1]) {
-        dictionary.postType = dictionary.postType.split("-")[1];
-    }
-    dictionary.postType = dictionary.postType.replace(/^\w*/, "");
-
-    dictionary.link = "http://talent.baidu.com/external/baidu/index.html#/jobDetail/2/" + dictionary.postId;
-    this.dictionary = dictionary;
-}
-// 去某页
-Administrator.prototype.toPage = function (pageNum) {
-    var _this = this;
-    $.get("JSON/getPostList" + pageNum, function (data) {
-        // 得到数据转为JSON
-        _this.postData = JSON.parse(data);
-        // 职位总数
-        _this.totalPost = _this.postData.rowCount;
-        // 总页数发生变化的时候，更新分页导航条
-        if(_this.totalPage != _this.postData.totalPage) {
-            _this.totalPage = _this.postData.totalPage;
-            _this.pagination.update(_this.totalPage);
-        }
-        // 显示总在招职位数
-        _this.showTotalPost(_this.totalPost);
-         // 清空旧的页
-         _.each(_this.postRowArr, function(row) {
-            row.deleteSelf();
-        })
-        // 清空数组，取消对象引用
-        _this.postRowArr  = [];
-
-        _.each(_this.postData.postList, function (dictionary) {
-            _this.dictionaryFix(dictionary);
-            // domStr += compile(dictionary);
-            _this.addPostRow(new PostRow(_this.dictionary, _this.$rowContainer));
-        });
-    })
-}
-
-var admin = new Administrator();
