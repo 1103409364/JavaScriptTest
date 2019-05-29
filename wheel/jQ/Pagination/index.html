@@ -18,8 +18,9 @@
     <script>
         var total = 50;
         var $pager = $("#pagination");
-        var pagination = new Pagination($pager, total, function () {
-            console.log("im callback");
+        
+        var pagination = new Pagination($pager, total, function (index) {
+            console.log("im callback, index:" + index);
         })
     </script>
 </body>

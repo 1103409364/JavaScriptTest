@@ -57,7 +57,7 @@ Pagination.prototype.render = function () {
     // 当前页码加上class，改变样式
     $current.addClass("current").siblings().removeClass("current");
     // 去掉兄弟节点的class
-    console.log(this.nowIdx);
+    // console.log(this.nowIdx);
 
     // 前面几项
     if (this.nowIdx < 5) {
