@@ -11,7 +11,20 @@
 
 <body>
     <div class="wrap">
-        <div class="tabs">
+        <div class="tabs tabs1">
+            <ul class="tabs-nav">
+                <li class="active tab1">tab1</li>
+                <li class="tab2">tab2</li>
+            </ul>
+            <ul class="tabs-panel">
+                <li class="active">1</li>
+                <li>2</li>
+            </ul>
+        </div>
+    </div>
+    <div class="wrap">
+    <!-- 基本结构不变，复用的时候在tabs后面加一个class，作为Tab类构造函数的参数 -->
+        <div class="tabs tabs2"> 
             <ul class="tabs-nav">
                 <li class="active tab1">tab1</li>
                 <li class="tab2">tab2</li>
@@ -27,8 +40,11 @@
 
     <script>
         new Tab({
-            'nav': 'tabs-nav',
-            'panels': 'tabs-panel'
+            'tabClassName': 'tabs1',
+        })
+
+        new Tab({
+            'tabClassName': 'tabs2',
         })
     </script>
 </body>

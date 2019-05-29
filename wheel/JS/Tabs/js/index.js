@@ -1,8 +1,8 @@
 class Tab {
-    constructor({ nav, panels }) {
-        this.nav = document.querySelector(`.${nav}`);
+    constructor({ tabClassName }) {
+        this.nav = document.querySelector(`.${tabClassName} .tabs-nav`);
         this.navlis = this.nav.querySelectorAll('li')
-        this.panels = document.querySelectorAll(`.${panels} li`)
+        this.panels = document.querySelectorAll(`.${tabClassName} .tabs-panel li`)
         this.tabIndex = 0;
         this.addEvent();
     }
