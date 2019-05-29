@@ -5,8 +5,6 @@ class Tab {
         this.panels = document.querySelectorAll(`.${panels} li`)
         this.tabIndex = 0;
         this.addEvent();
-
-        console.log(this.panels);
     }
 
     addEvent() {

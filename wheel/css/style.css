@@ -113,10 +113,10 @@ select {
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  transition: all 0.3s ease-out;
 }
 .wrap .tabs ul.tabs-nav li.active {
   background-color: #f55c5c;
+  transition: all 1s;
 }
 .wrap .tabs ul.tabs-panel {
   background-color: #f55c5c;
