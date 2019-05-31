@@ -4,7 +4,15 @@ window.addEventListener("resize", setFontSize);
 // 窗口尺寸改变的时候，立即重设字号，这样就能根据窗口大小自适应
 function setFontSize() {
     winWidth = document.documentElement.clientWidth;
-    document.documentElement.style.fontSize = 20 * (winWidth / 500) + "px";
+
+    if (isMobile()) {
+        document.documentElement.style.fontSize = 20 * (winWidth / 500) + "px";
+    } else {
+        winWidth = 500;
+        document.querySelector("html").style.width = 500 + "px";
+        document.querySelector(".footer").style.width = 500 + "px";
+        // document.documentElement.style.fontSize = 16 + "px";
+    }
 }
 
 // 3D轮播业务：先调整图片位置，形成一个四个面的组合体，再对整个组合体进行旋转操作
@@ -170,21 +178,43 @@ var navlist = document.querySelectorAll("nav li");
 for (var i = 0; i < navlist.length; i++) {
     navlist[i].index = i;
 
-    navlist[i].addEventListener("touchend", function () {
-        // 导航触摸结束后，改变信号量
-        now = this.index;
-        next = now + 1;
-        prev = now - 1;
-        back = now + 2;
-        // 切换指示器
-        switchShow();
-        unit.style.transition = "all 0.3s ease 0s";
-        // 切换导航
-        changeNav();
-        // 旋转组合体
-        unit.style.transform = "rotateY(" + -90 * now + "deg)" + "scale3d(1,1,1)";
-        changeSlider();
-    });
+    if (isMobile()) {
+        navlist[i].addEventListener("touchend", function () {
+            // 导航触摸结束后，改变信号量
+            now = this.index;
+            next = now + 1;
+            prev = now - 1;
+            back = now + 2;
+            // 切换指示器
+            switchShow();
+            unit.style.transition = "all 0.3s ease 0s";
+            // 切换导航
+            changeNav();
+            // 旋转组合体
+            unit.style.transform = "rotateY(" + -90 * now + "deg)" + "scale3d(1,1,1)";
+            changeSlider();
+        });
+    } else {
+        navlist[i].addEventListener("click", function () {
+            // 导航触摸结束后，改变信号量
+            now = this.index;
+            next = now + 1;
+            prev = now - 1;
+            back = now + 2;
+            // 切换指示器
+            switchShow();
+            unit.style.transition = "all 0.3s ease 0s";
+            // 切换导航
+            changeNav();
+            // 旋转组合体
+            unit.style.transform = "rotateY(" + -90 * now + "deg)" + "scale3d(1,1,1)";
+            changeSlider();
+        });
+    }
+
+
+
+
 }
 // 切换导航
 function changeNav() {
@@ -192,4 +222,17 @@ function changeNav() {
         navlist[i].className = "";
     }
     navlist[now].className = "current";
+}
+
+function isMobile() {
+    if (navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ) return true;
+
+    return false;
 }

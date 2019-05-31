@@ -13,7 +13,6 @@ html {
 
 body {
     font-size: 0.7rem;
-    width: 100%;
     min-width: 300px;
     /* 溢出隐藏，禁止纵向滑动 */
     overflow: hidden;

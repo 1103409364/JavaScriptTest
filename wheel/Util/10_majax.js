@@ -1,8 +1,7 @@
 (function () {
     // 暴露majax
     var majax = window.majax = {};
-    majax.author = "w";
-    majax.version = "1.1.0";
+    
     // get方法
     majax.get = function (URL, queryJSON, callback) {
         if (window.XMLHttpRequest) {
