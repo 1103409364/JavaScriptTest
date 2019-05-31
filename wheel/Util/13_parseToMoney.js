@@ -1,6 +1,6 @@
 // 将一个任意长的数字变成逗号分割的格式
 // 1234.56 => "1,234.56" , 123456789 => "123,456,789"
-// console.log(parseToMoney(1234.56));// return "1,234.56"
+console.log(parseToMoney(1234.56));// return "1,234.56"
 
 function parseToMoney(n) {
     let nstrArr = n.toString().split('.');
@@ -20,3 +20,6 @@ function parseToMoney(n) {
 
     return `${splitNumber(integer).join(',')}${decimal}`
 }
+
+// 正则写法
+'1234567891'.replace(/(\d+?)(?=(\d{3})+$)/g, '$1,')
