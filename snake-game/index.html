@@ -11,31 +11,37 @@
 
 <body>
     <!-- 背景音乐 -->
-    <audio src="audio/bgm.mp3" id = "bgm" autoplay loop></audio>
+    <audio src="audio/bgm.mp3" id="bgm" autoplay loop></audio>
     <!-- 吃食物音效 -->
-    <audio src="audio/eat.mp3"  id="eatAudio"></audio>
+    <audio src="audio/eat.mp3" id="eatAudio"></audio>
     <!-- 死亡音效 -->
     <audio src="audio/die.mp3" id="dieAudio"></audio>
 
     <div class="snakeGame">
-        <div class="gameBox" id="gameBox">
+        <div class="head">
+            <p>说明：用键盘方向键或者虚拟按键控制方向</p>
+            <p class="score">score:<span id="score"></span></p>
         </div>
-    
+
+        <div class="gameBox" id="gameBox"></div>
+
         <div class="ex">
             <div class="ctr">
-                <i class="up" id="ArrowUp"></i>
-                <i class="down" id="ArrowDown"></i>
-                <i class="left" id="ArrowLeft"></i>
-                <i class="right" id="ArrowRight"></i>
-                <i class="restart" id="restart">RESTART</i>
-            </div>
+                <div class="direction">
+                    <span class="up" id="ArrowUp">↑</span>
+                    <span class="down" id="ArrowDown">↓</span>
+                    <span class="left" id="ArrowLeft">←</span>
+                    <span class="right" id="ArrowRight">→</span>
+                </div>
 
-            <p class="score">score:<span id="score"></span></p>
-            <p>说明：用键盘方向键或者虚拟按键控制方向</p>
+                <div class="sysCtr">
+                    <span class="restart" id="restart">RESTART</span>
+                    <span class="start" id="start">START</span>
+                    <span class="pause" id="pause">PAUSE</span>
+                </div>
+            </div>
         </div>
     </div>
-    
-
     <script src="js/index.js"></script>
 </body>
 

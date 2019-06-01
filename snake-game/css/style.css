@@ -1,127 +1,207 @@
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
-
-
-/* * {
-    margin: 0;
-    padding: 0;
-} */
-html, body {
-    width: 100%;
-    height: 100%;
-    /* background-color: #7c99e7; */
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
 }
-.snakeGame {
-    width: 321px;
-    height: 100%;
-    position: absolute;
-    left: 50%;
-    margin-left: -160.5px;
-    /* border: 1px solid #000; */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-.gameBox {
-    /* width: 541px; */
-    position: absolute;
-    top: 20px;
+fieldset,
+img {
+  border: 0;
 }
-
-.gameBox table {
-    border-collapse: collapse;
-    background-color: #90ad8f;
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
 }
-
-.gameBox table td {
-    width: 15px;
-    height: 15px;
-    border: 1px solid #90ad8f;
-    background-color: #90ad8f;
+ol,
+ul {
+  list-style: none;
 }
-
-.gameBox table .snake {
-    width: 9px;
-    height: 9px;
-    background-color: #000000;
-    border-color: #90ad8f;
-    /* border: 1px dotted #90ad8f; */
+caption,
+th {
+  text-align: left;
 }
-
-.gameBox table .food {
-    width: 9px;
-    height: 9px;
-    background-color: #ff0000;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
 }
-
-.gameBox table .grow {
-    background-color: #ff0000;
+q:before,
+q:after {
+  content: '';
 }
-.gameBox table .head {
-    background-color: #076423;
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
 }
-
-.ex p {
-    font-family: monospace;
-    font-size: 12px;
-    position: absolute;
-    top: 370px;
-    padding-left: 10px;
-    font-size: 12px;
-    padding-left: 10px;
+sup {
+  vertical-align: text-top;
 }
-.ex p.score {
-    top: 350px;
+sub {
+  vertical-align: text-bottom;
 }
-
-.ex .ctr {
-    height: 150px;
-    width: 150px;
-    position: absolute;
-    right: 10px;
-    bottom: 30px;
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
 }
-
-.ex .ctr i {
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    background-color: #c74a4a;
-    /* border: 1px solid #000; */
-    border-radius: 50%;
-    box-shadow: 0 2px 4px #8a3232;
+legend {
+  color: #000;
 }
-.ex .ctr i:active {
-    background-color: #c74a4a;
-    box-shadow: 0 0 0 saddlebrown;
+html {
+  height: 100%;
 }
-
-.ex .ctr i.up {
-    top: 0;
-    left: 50%;
-    margin-left: -25px;
+body {
+  height: 100%;
+  background-color: #486bca;
+  display: flex;
+  justify-content: center;
 }
-.ex .ctr i.down {
-    bottom: 0;
-    left: 50%;
-    margin-left: -25px;
+body .snakeGame {
+  flex: 0 1 321px;
+  display: flex;
+  flex-direction: column;
 }
-.ex .ctr i.left {
-    top: 50%;
-    left: 0;
-    margin-top: -25px;
+body .snakeGame .head {
+  font-family: monospace;
 }
-.ex .ctr i.right {
-    top: 50%;
-    right: 0;
-    margin-top: -25px;
+body .snakeGame .head p {
+  font-size: 12px;
+  line-height: 20px;
+  color: #ebebeb;
 }
-
-.ex .ctr i.restart {
-    height: 40px;
-    width: 66px;
-    border-radius: 5px;
-    left: -140px;
-    top: 80px;
-    margin-top: -25px;
-    line-height: 40px;
-    font-size: 12px;
-    text-align: center;
-    color: #f08282;
+body .snakeGame .gameBox table {
+  border-collapse: collapse;
+  background-color: #90ad8f;
+}
+body .snakeGame .gameBox table td {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #90ad8f;
+  background-color: #90ad8f;
+}
+body .snakeGame .gameBox table .snake {
+  width: 9px;
+  height: 9px;
+  background-color: #000000;
+  border-color: #90ad8f;
+  /* border: 1px dotted #90ad8f; */
+}
+body .snakeGame .gameBox table .food {
+  width: 9px;
+  height: 9px;
+  background-color: #ff0000;
+}
+body .snakeGame .gameBox table .grow {
+  background-color: #ff0000;
+}
+body .snakeGame .ex {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body .snakeGame .ex .ctr {
+  background-color: #2a4797;
+  flex: 0 1 200px;
+  position: relative;
+  border-radius: 12px;
+}
+body .snakeGame .ex .ctr span {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: #c74a4a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #000000;
+  user-select: none;
+  text-align: center;
+  line-height: 50px;
+  color: #f37d7d;
+}
+body .snakeGame .ex .ctr span:active {
+  background-color: #c74a4a;
+  box-shadow: 0 0 0 #000000;
+}
+body .snakeGame .ex .ctr span.up {
+  top: 20px;
+  right: 50px;
+}
+body .snakeGame .ex .ctr span.down {
+  bottom: 20px;
+  right: 50px;
+}
+body .snakeGame .ex .ctr span.left {
+  top: 50%;
+  right: 100px;
+  margin-top: -25px;
+}
+body .snakeGame .ex .ctr span.right {
+  top: 50%;
+  right: 0;
+  margin-top: -25px;
+}
+body .snakeGame .ex .ctr .sysCtr span {
+  height: 40px;
+  width: 66px;
+  border-radius: 5px;
+  line-height: 40px;
+  font-size: 12px;
+  text-align: center;
+  left: 20px;
+}
+body .snakeGame .ex .ctr .sysCtr span.start {
+  top: 20px;
+  color: #bbbbbb;
+}
+body .snakeGame .ex .ctr .sysCtr span.pause {
+  top: 80px;
+  color: #bbbbbb;
+  background-color: #457efa;
+}
+body .snakeGame .ex .ctr .sysCtr span.restart {
+  top: 140px;
+  color: #a7a3a3;
+  background-color: #fac61d;
 }

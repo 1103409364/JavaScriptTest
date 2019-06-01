@@ -1,0 +1,144 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;*font-size:100%}legend{color:#000}
+@width: 321px;
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    background-color: #486bca; 
+    display: flex;
+    justify-content: center;
+    
+    .snakeGame {
+        // width: @width;
+        flex: 0 1 @width;
+  
+        display: flex;
+        flex-direction: column;
+
+        .head {
+            // flex: 0 1 25px;
+            font-family: monospace;
+            p {
+                font-size: 12px;
+                line-height: 20px;
+                color: #ebebeb;
+            }
+        }
+
+        .gameBox {
+            // flex: 0 1 @width;
+            table {
+                border-collapse: collapse;
+                background-color: #90ad8f;
+
+                td {
+                    width: 15px;
+                    height: 15px;
+                    border: 1px solid #90ad8f;
+                    background-color: #90ad8f;
+                }
+
+                .snake {
+                    width: 9px;
+                    height: 9px;
+                    background-color: #000000;
+                    border-color: #90ad8f;
+                    /* border: 1px dotted #90ad8f; */
+                }
+
+                .food {
+                    width: 9px;
+                    height: 9px;
+                    background-color: #ff0000;
+                }
+
+                .grow {
+                    background-color: #ff0000;
+                }
+            }
+        }
+        
+        .ex {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .ctr {
+                background-color: #2a4797;
+                flex: 0 1 200px;
+                position: relative;
+                border-radius: 12px;
+                span {
+                    position: absolute;
+                    height: 50px;
+                    width: 50px;
+                    background-color: #c74a4a;
+                    border-radius: 50%;
+                    box-shadow: 0 0 8px #000000;
+                    user-select: none;
+                    text-align: center;
+                    line-height: 50px;
+                    color: rgb(243, 125, 125);
+                }
+    
+                span:active {
+                    background-color: #c74a4a;
+                    box-shadow: 0 0 0 #000000;
+                }
+    
+                span.up {
+                    top: 20px;
+                    right: 50px;
+                }
+    
+                span.down {
+                    bottom: 20px;
+                    right: 50px;
+                }
+    
+                span.left {
+                    top: 50%;
+                    right: 100px;
+                    margin-top: -25px;
+                }
+    
+                span.right {
+                    top: 50%;
+                    right: 0;
+                    margin-top: -25px;
+                }
+                
+                .sysCtr {
+                    span {
+                        height: 40px;
+                        width: 66px;
+                        border-radius: 5px;
+                        line-height: 40px;
+                        font-size: 12px;
+                        text-align: center;
+                        left: 20px;
+                    }
+                    span.start {
+                        top: 20px;
+                        color: #bbbbbb;
+                    }
+
+                    span.pause {
+                        top: 80px;
+                        color: #bbbbbb;
+                        background-color: #457efa;
+                    }
+
+                    span.restart {
+                        top: 140px;
+                        color: #a7a3a3;
+                        background-color: #fac61d;
+                    }
+                }
+            }
+        }
+    }
+}
+
