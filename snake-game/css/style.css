@@ -104,6 +104,7 @@ body .snakeGame {
   flex-direction: column;
 }
 body .snakeGame .head {
+  user-select: none;
   font-family: monospace;
 }
 body .snakeGame .head p {
