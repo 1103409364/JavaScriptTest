@@ -13,8 +13,10 @@ class Game {
         this.start = document.getElementById("start");
         this.pause = document.getElementById("pause");
         this.score = document.getElementById("score");
+        // 获得 bgm
+        this.bgm = document.getElementById("bgm");
     }
-
+    // 绑定事件
     bindEvent() {
         const eventHandler = event => {
             event = event || window.event;
@@ -60,14 +62,21 @@ class Game {
             return false;
         }
         // 监听开始按钮
-        this.pause.addEventListener("click", () => clearInterval(snake.timer));
+        this.pause.addEventListener("click", () => {
+            clearInterval(snake.timer);
+            this.bgm.pause();
+        });
         // 监听暂停按钮
-        this.start.addEventListener("click", () => snake.move());
+        this.start.addEventListener("click", () => {
+            this.bgm.load();
+            this.bgm.play();
+            snake.move();
+        });
         // 监听重新开始按钮
         this.restart.addEventListener("click", () => {
             map.gameBox.innerHTML = "";
-            map.bgm.load();
-            map.bgm.play();
+            this.bgm.load();
+            this.bgm.play();
             clearInterval(snake.timer);
             map = new Map(20, 20);
             snake = new Snake();
@@ -108,8 +117,6 @@ class Map {
         this.col = col;
         // 初始化
         this.init(row, col);
-        // 获得 bgm
-        this.bgm = document.getElementById("bgm");
     }
 
     // 初始化地图
@@ -282,7 +289,7 @@ class Snake {
         clearInterval(this.timer);
         this.dieAudio.load();
         this.dieAudio.play();
-        map.bgm.pause();
+        game.bgm.pause();
     }
 
     // 蛇头碰到蛇身
