@@ -324,7 +324,7 @@ class Snake {
         this.isMove = false;
 
         clearInterval(this.timer);
-        this.dieAudio.load();
+        // this.dieAudio.load();
         this.dieAudio.play();
         game.bgm.pause();
         setTimeout(() => {
@@ -347,7 +347,8 @@ class Snake {
         // 吃到食物，把保存的旧尾巴加到蛇身体的最后
         this.snakeBody.push(this.tail);
         this.head = map.tdArr[this.snakeBody[0].x][this.snakeBody[0].y];
-        this.eatAudio.load();
+        // this.eatAudio.load();
+        this.eatAudio.stop();
         this.eatAudio.play();
 
         this.grow.push([0]);

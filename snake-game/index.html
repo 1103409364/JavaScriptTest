@@ -15,13 +15,13 @@
         <audio src="audio/bgm.mp3" id="bgm" preload="auto" loop></audio>
     </div>
     <!-- 中间穿插的和背景音乐同时播放的音频,-->
-    <div  style="display: none">
+    <div style="display: none">
         <!-- 吃食物音效  -->
-        <audio src="audio/eat.mp3" id="eatAudio" preload="auto" ></audio>
-         <!-- 死亡音效 -->
-        <audio src="audio/die.mp3" id="dieAudio" preload="auto" ></audio>
+        <audio src="audio/eat.mp3" id="eatAudio" preload="auto"></audio>
+        <!-- 死亡音效 -->
+        <audio src="audio/die.mp3" id="dieAudio" preload="auto"></audio>
     </div>
-   
+
 
     <div class="snakeGame">
         <div class="head">
@@ -50,6 +50,12 @@
         </div>
     </div>
     <script src="js/index.js"></script>
+    <script>
+        HTMLAudioElement.prototype.stop = function () {
+            this.pause();
+            this.currentTime = 0.0;
+        }
+    </script>
 </body>
 
 </html>
