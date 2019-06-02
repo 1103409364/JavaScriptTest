@@ -19,9 +19,11 @@ class Game {
     // 绑定事件
     bindEvent() {
         const eventHandler = event => {
+
             event = event || window.event;
             var target = event.target;
-            switch (event.key || target.id) {
+            console.log(event.code )
+            switch (event.code || target.id) {
                 case "ArrowUp":
                     if (snake.direction === "ArrowDown" || snake.lock)
                         return;
@@ -46,10 +48,56 @@ class Game {
                     snake.direction = "ArrowRight";
                     snake.lock = true;
                     break;
+                case "Enter":
+                    if (snake.isMove) return;
+                    startHandle();
+                    break;
+                case "Space":
+                    if (!snake.isMove) return;
+                    pauseHandle();
+                    break;
+                case "Backspace":
+                    restartHandle();
+                    break;
             }
         }
 
-        // 通过ua检测设备类型
+        // 开始游戏的事件处理函数
+        const startHandle = () => {
+            if (snake.alive && !snake.isMove) {
+                // 移动端一个audio对象的第一次播放，必须是一个用户触发的行为。立即触发一次，马上暂停。
+                snake.eatAudio.play();
+                snake.eatAudio.pause();
+                snake.dieAudio.play();
+                snake.dieAudio.pause();
+
+                this.bgm.play();
+                snake.move();
+            }
+        }
+
+        // 暂停游戏的事件处理函数
+        const pauseHandle = () => {
+            clearInterval(snake.timer);
+            snake.isMove = false;
+            this.bgm.pause();
+        }
+
+        // 重新开始游戏的事件处理函数
+        const restartHandle = () => {
+            if(snake.alive) return;
+
+            map.gameBox.innerHTML = "";
+            this.bgm.load();
+            this.bgm.play();
+            clearInterval(snake.timer);
+            map = new Map(20, 20);
+            snake = new Snake();
+            snake.move();
+            food = new Food();
+        }
+
+        // 通过ua检测设备类型,用于判断是监听触摸事件还是 click 事件，click 在触摸设备上有延迟
         const isMobile = () => {
             if (navigator.userAgent.match(/Android/i)
                 || navigator.userAgent.match(/webOS/i)
@@ -62,27 +110,13 @@ class Game {
             return false;
         }
         // 监听开始按钮
-        this.pause.addEventListener("click", () => {
-            clearInterval(snake.timer);
-            this.bgm.pause();
-        });
+        this.start.addEventListener("click", startHandle);
+
         // 监听暂停按钮
-        this.start.addEventListener("click", () => {
-            this.bgm.load();
-            this.bgm.play();
-            snake.move();
-        });
+        this.pause.addEventListener("click", pauseHandle);
+
         // 监听重新开始按钮
-        this.restart.addEventListener("click", () => {
-            map.gameBox.innerHTML = "";
-            this.bgm.load();
-            this.bgm.play();
-            clearInterval(snake.timer);
-            map = new Map(20, 20);
-            snake = new Snake();
-            snake.move();
-            food = new Food();
-        })
+        this.restart.addEventListener("click", restartHandle);
 
         // 键盘方向键添加监听
         window.onkeydown = eventHandler;
@@ -176,7 +210,6 @@ class Snake {
         this.init();
         // 渲染snake
         this.render();
-        // this.move();
     }
 
     // 初始化
@@ -205,6 +238,7 @@ class Snake {
         this.length = this.snakeBody.length;
         // 帧编号
         this.frameNumber = 0;
+        
         this.eatAudio = document.getElementById("eatAudio");
         this.dieAudio = document.getElementById("dieAudio");
     }
@@ -236,6 +270,7 @@ class Snake {
 
     // 蛇移动
     move() {
+        this.isMove = true;
         // 设表先关
         clearInterval(this.timer);
         this.timer = setInterval(() => {
@@ -286,10 +321,15 @@ class Snake {
     // 蛇死亡方法
     died() {
         this.alive = false;
+        this.isMove = false;
+
         clearInterval(this.timer);
         this.dieAudio.load();
         this.dieAudio.play();
         game.bgm.pause();
+        setTimeout(() => {
+            alert(`游戏结束，得分：${snake.length}`);
+        }, 500);
     }
 
     // 蛇头碰到蛇身
@@ -309,6 +349,7 @@ class Snake {
         this.head = map.tdArr[this.snakeBody[0].x][this.snakeBody[0].y];
         this.eatAudio.load();
         this.eatAudio.play();
+
         this.grow.push([0]);
         this.length++;
     }
@@ -348,8 +389,7 @@ class Food {
         }
     }
 }
-
+let game = new Game();
 let map = new Map(20, 20);
 let snake = new Snake();
 let food = new Food();
-let game = new Game();

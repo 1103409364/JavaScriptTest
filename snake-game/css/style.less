@@ -80,13 +80,17 @@ body {
                     box-shadow: 0 0 8px #000000;
                     user-select: none;
                     text-align: center;
+                    text-shadow: 1px 1px 1px #000;
+                    font-weight: bold;
                     line-height: 50px;
                     color: rgb(243, 125, 125);
+                    // transition: 0ms;
                 }
     
                 span:active {
                     background-color: #c74a4a;
                     box-shadow: 0 0 0 #000000;
+                    transform: translateY(4px);
                 }
     
                 span.up {
@@ -120,21 +124,20 @@ body {
                         font-size: 12px;
                         text-align: center;
                         left: 20px;
+                        color: #ebebeb;
                     }
                     span.start {
                         top: 20px;
-                        color: #bbbbbb;
                     }
+             
 
                     span.pause {
                         top: 80px;
-                        color: #bbbbbb;
                         background-color: #457efa;
                     }
 
                     span.restart {
                         top: 140px;
-                        color: #a7a3a3;
                         background-color: #fac61d;
                     }
                 }

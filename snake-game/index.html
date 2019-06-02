@@ -11,16 +11,23 @@
 
 <body>
     <!-- 背景音乐 -->
-    <audio src="audio/bgm.mp3" id="bgm" loop></audio>
-    <!-- 吃食物音效 -->
-    <audio src="audio/eat.mp3" id="eatAudio"></audio>
-    <!-- 死亡音效 -->
-    <audio src="audio/die.mp3" id="dieAudio"></audio>
+    <div class="audiopalyer" style="display: none">
+        <audio src="audio/bgm.mp3" id="bgm" preload="auto" loop></audio>
+    </div>
+    <!-- 中间穿插的和背景音乐同时播放的音频,-->
+    <div class="talkplay" style="display: none">
+        <!-- 吃食物音效  -->
+        <audio src="audio/eat.mp3" id="eatAudio" preload="auto" ></audio>
+         <!-- 死亡音效 -->
+        <audio src="audio/die.mp3" id="dieAudio" preload="auto" ></audio>
+    </div>
+   
 
     <div class="snakeGame">
         <div class="head">
-            <p>说明：用键盘方向键或者虚拟按键控制方向</p>
-            <p class="score">score:<span id="score"></span></p>
+            <p>pc端：Enter 键开始游戏，空格键暂停，方向键控制方向 </p>
+            <p>手机端：使用虚拟按键, 点击 start 开始游戏</p>
+            <p class="score">得分:<span id="score"></span></p>
         </div>
 
         <div class="gameBox" id="gameBox"></div>
@@ -28,10 +35,10 @@
         <div class="ex">
             <div class="ctr">
                 <div class="direction">
-                    <span class="up" id="ArrowUp">↑</span>
-                    <span class="down" id="ArrowDown">↓</span>
-                    <span class="left" id="ArrowLeft">←</span>
-                    <span class="right" id="ArrowRight">→</span>
+                    <span class="up" id="ArrowUp"></span>
+                    <span class="down" id="ArrowDown"></span>
+                    <span class="left" id="ArrowLeft"></span>
+                    <span class="right" id="ArrowRight"></span>
                 </div>
 
                 <div class="sysCtr">

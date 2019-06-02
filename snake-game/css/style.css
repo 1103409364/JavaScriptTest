@@ -158,12 +158,15 @@ body .snakeGame .ex .ctr span {
   box-shadow: 0 0 8px #000000;
   user-select: none;
   text-align: center;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
   line-height: 50px;
   color: #f37d7d;
 }
 body .snakeGame .ex .ctr span:active {
   background-color: #c74a4a;
   box-shadow: 0 0 0 #000000;
+  transform: translateY(4px);
 }
 body .snakeGame .ex .ctr span.up {
   top: 20px;
@@ -191,18 +194,16 @@ body .snakeGame .ex .ctr .sysCtr span {
   font-size: 12px;
   text-align: center;
   left: 20px;
+  color: #ebebeb;
 }
 body .snakeGame .ex .ctr .sysCtr span.start {
   top: 20px;
-  color: #bbbbbb;
 }
 body .snakeGame .ex .ctr .sysCtr span.pause {
   top: 80px;
-  color: #bbbbbb;
   background-color: #457efa;
 }
 body .snakeGame .ex .ctr .sysCtr span.restart {
   top: 140px;
-  color: #a7a3a3;
   background-color: #fac61d;
 }
