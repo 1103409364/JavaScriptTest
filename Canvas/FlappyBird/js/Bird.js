@@ -23,6 +23,7 @@
         // 鸟旋转的角度
         this.degree = 0;
         this.die = false;
+        // this.flyAudio = document.querySelector("#fly")
     }
 
     Bird.prototype.render = function () {
@@ -73,7 +74,8 @@
             //旋转一个角度，让鸟头抬起
             this.degree = -0.5;
             // 播放声音
-            game.R.fly.load();
+            // game.R.fly.load();
+            game.R.fly.stop();
             game.R.fly.play();
         }
     }

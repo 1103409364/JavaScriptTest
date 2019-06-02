@@ -3,16 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable= no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FlappyBird</title>
     <link rel="shortcut icon" href="./R/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        body,
-        html {
-            margin: 0;
-        }
-
         @font-face {
             font-family: 'FB';
             src: url('./R/fonts/FB.eot');
@@ -30,7 +26,24 @@
 
 <body>
     <canvas id="canvas">浏览器不支持，请升级</canvas>
-    <audio src="R/audio/bgm.mp3" id="bgm" autoplay></audio>
+
+    <!-- 背景音乐 -->
+    <div class="audiopalyer" style="display: none">
+        <audio src="R/audio/bgm.mp3" id="bgm" autoplay loop preload="auto"></audio>
+    </div>
+
+    <div style="display: none">
+        <audio src="R/audio/fly.mp3" id="fly" preload="auto"></audio>
+    </div>
+
+    <div class="tip show">
+        <h3>点击确定进入游戏，点击取消退出</h3>
+
+        <div class="btn">
+            <button class="confirm">确定</button>
+            <button class="cancle">取消</button>
+        </div>
+    </div>
 
     <script src="./js/Game.js"></script>
     <script src="./js/Background.js"></script>
@@ -40,6 +53,12 @@
     <script src="./js/SceneManager.js"></script>
 
     <script>
+        // 给Audio 标签添加停止方法
+        HTMLAudioElement.prototype.stop = function () {
+            this.pause();
+            this.currentTime = 0.0;
+        }
+
         var game = new Game({
             "id": "canvas",
             "dataUrl": "./data/R.json"

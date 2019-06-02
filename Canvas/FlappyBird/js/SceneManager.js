@@ -244,6 +244,29 @@
         var _this = this;
         // 触摸事件会覆盖鼠标点击
         if (isMobile()) {
+            var tipBox =  document.querySelector(".tip");
+            var confirmBtn =  document.querySelector(".confirm");
+            var cancleBtn =  document.querySelector(".cancle");
+            tipBox.style.display = "flex";
+
+            confirmBtn.addEventListener("click", function(event) {
+                // 移动端一个audio对象的第一次播放，必须是用户触发的 click 行为(touch事件不行)。
+                game.bgm.play();
+                game.R.fly.play();
+                game.R.fly.pause();
+                game.R.hit.play();
+                game.R.hit.pause();
+                game.R.point.play();
+                game.R.point.pause();
+
+                tipBox.style.display = "none";
+            })
+
+            cancleBtn.addEventListener("click", function(event) {
+                window.location = "about:blank"
+                // window.location = "about:newtab"
+            })
+
             game.canvas.addEventListener("touchstart", function (event) {
                 event.preventDefault();
                 clickHandler(event.touches[0].clientX, event.touches[0].clientY);

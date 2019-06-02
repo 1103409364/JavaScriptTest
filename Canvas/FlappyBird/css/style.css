@@ -1,0 +1,29 @@
+body,
+html {
+  margin: 0;
+  position: relative;
+}
+.tip {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+}
+.tip h3 {
+  text-align: center;
+  font-size: 30px;
+}
+.tip .btn {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+}
+.tip .btn button {
+  width: 45%;
+  line-height: 50px;
+  font-size: 30px;
+}
