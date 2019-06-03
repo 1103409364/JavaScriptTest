@@ -246,7 +246,7 @@
         if (isMobile()) {
             var tipBox =  document.querySelector(".tip");
             var confirmBtn =  document.querySelector(".confirm");
-            var cancleBtn =  document.querySelector(".cancle");
+            // var cancleBtn =  document.querySelector(".cancle");
             tipBox.style.display = "flex";
 
             confirmBtn.addEventListener("click", function(event) {
@@ -262,10 +262,9 @@
                 tipBox.style.display = "none";
             })
 
-            cancleBtn.addEventListener("click", function(event) {
-                window.location = "about:blank"
-                // window.location = "about:newtab"
-            })
+            // cancleBtn.addEventListener("click", function(event) {
+            //     window.location = "about:blank"
+            // })
 
             game.canvas.addEventListener("touchstart", function (event) {
                 event.preventDefault();
