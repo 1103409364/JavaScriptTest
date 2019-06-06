@@ -7,7 +7,7 @@ class Pagination extends React.Component {
         super(props);
 
         this.state = {
-            pageIndex: 10,
+            pageIndex: 1,
         }
 
         this.handlePrev = this.handlePrev.bind(this);
@@ -40,7 +40,8 @@ class Pagination extends React.Component {
             pageIndex: i
         });
 
-        this.props.callback(i);
+        // 点击当前页不调用回调函数
+        i !== this.state.pageIndex && this.props.callback(i);
     }
     
     render() {

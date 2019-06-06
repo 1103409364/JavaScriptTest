@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 // 分页器组件，接受两个参数：总页数和回调函数
 ReactDOM.render(
     <Pagination
-        totalPages={50}
+        totalPages={31}
         callback={pageIndex => console.log(pageIndex)} />,
     document.getElementById('root')
 );
