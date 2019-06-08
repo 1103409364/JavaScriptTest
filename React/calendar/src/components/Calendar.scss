@@ -16,19 +16,53 @@
         font-family: serif;
     }
 
+    th.prevY,
+    th.prevM,
+
+    th.nextY,
+    th.nextM {
+        cursor: pointer;
+
+        &:hover {
+            background-color: #b8cde4;
+        }
+
+        &:active {
+            background-color: #3178c9;
+        }
+
+    }
+
+
+
+    td.cur {
+        color: #000;
+    }
+
+    td.today {
+        background-color: #b8cde4;
+        color: #3178c9;
+        font-weight: bold;
+    }
+
     td {
+        color: #c2c2c2;
         cursor: pointer;
         font-family: Calibri, Arial;
 
         &:hover {
             background-color: #b8cde4;
         }
+
         &:active {
             background-color: #3178c9;
+            color: #fff;
         }
     }
 
-    td.today {
-        background-color: #3178c9;
+    tfoot {
+        td {
+            color: #3178c9;
+        }
     }
 }

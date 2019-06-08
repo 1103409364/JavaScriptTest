@@ -6,9 +6,17 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #37474F;
 }
 .App {
-    width: 900px;
-    height: 500px;
+    /* width: 500px;
+    height: 500px; */
+}
+
+.App h3 {
+    color: #fff;
+    font-size: 30px;
+    padding: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
 }

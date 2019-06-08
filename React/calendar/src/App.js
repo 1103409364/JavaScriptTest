@@ -1,36 +1,15 @@
 import React from 'react';
 import Calendar from './components/Calendar';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+function App() {
+    return (
+        <div className="App " style = {{'display': 'block'}}>
+            <h3>calendar</h3>
+            <Calendar callback = {d => console.log(d)} />
 
-        this.state = {
+        </div>
+    );
 
-        }
-        this.init();
-    }
-
-    init() {
-        let dateNow = new Date();
-        this.setState = ({
-            'year': dateNow.getFullYear(),
-            'month': dateNow.getMonth(),
-            'date': dateNow.getDate(),
-            'day': dateNow.getDay(),
-        })
-    }
-
-    render() {
-        return (
-            <div className="App">
-                {/* <p>请选择日期
-                <input type="text"></input> </p>*/}
-                <Calendar dateNow={this.state} />
-
-            </div>
-        );
-    }
 
 }
 
