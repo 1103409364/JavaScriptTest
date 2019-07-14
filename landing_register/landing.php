@@ -24,7 +24,7 @@
 	// 获得结果的数量
 	$number = mysql_num_rows($result);
 	if ($number == 1) {
-		echo " 你已经成功登陆 ";
+		echo " 你已经成功登录 ";
 		echo $username."-".$password;
 
 	} else {
