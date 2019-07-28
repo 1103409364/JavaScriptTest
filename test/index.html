@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- add mocha css, to show results -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+  <!-- add mocha framework code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+  <script>
+    mocha.setup('bdd'); // minimal setup
+  </script>
+  <!-- add chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+  <script>
+    // chai has a lot of stuff, let's make assert global
+    let assert = chai.assert;
+  </script>
+</head>
+
+<body>
+
+  <script>
+    function pow(x, n) {
+      if (n < 0) return NaN;
+      if (Math.round(n) != n) return NaN;
+      let results = x;
+      for (let index = 1; index < n; index++) {
+        results *= x;
+      }
+      return results;
+    }
+  </script>
+
+  <!-- the script with tests (describe, it...) -->
+  <script>
+    describe("pow", function () {
+
+      it("2 raised to power 3 is 8", function () {
+        assert.equal(pow(2, 3), 8);
+      });
+
+      it("3 raised to power 3 is 27", function () {
+        assert.equal(pow(3, 3), 27);
+      });
+
+      it("1 raised to power 3 is 1", function () {
+        assert.equal(pow(1, 3), 1);
+      });
+
+      it("for negative n the result is NaN", function () {
+        assert.isNaN(pow(2, -1));
+      });
+
+      it("for non-integer n the result is NaN", function () {
+        assert.isNaN(pow(2, 1.5));
+      });
+
+    });
+  </script>
+
+  <!-- the element with id="mocha" will contain test results -->
+  <div id="mocha"></div>
+
+  <!-- run tests! -->
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html>
