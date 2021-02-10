@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable= no" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>FlappyBird</title>
     <link rel="shortcut icon" href="./R/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <style>
-        @font-face {
-            font-family: 'FB';
-            src: url('./R/fonts/FB.eot');
-            src: url('./R/fonts/FB.eot?#iefix') format('embedded-opentype'),
-                url('./R/fonts/FB.woff') format('woff'),
-                url('./R/fonts/FB.ttf') format('truetype'),
-                url('./R/fonts/FB.svg#webfont34M5alKg') format('svg');
-            font-weight: normal;
-            font-style: normal;
-        }
+      @font-face {
+        font-family: "FB";
+        src: url("./R/fonts/FB.eot");
+        src: url("./R/fonts/FB.eot?#iefix") format("embedded-opentype"),
+          url("./R/fonts/FB.woff") format("woff"),
+          url("./R/fonts/FB.ttf") format("truetype"),
+          url("./R/fonts/FB.svg#webfont34M5alKg") format("svg");
+        font-weight: normal;
+        font-style: normal;
+      }
 
-        /*其中fontName替换为你的字体名称*/
+      /*其中fontName替换为你的字体名称*/
     </style>
-</head>
+    <!-- 解决 safari 音频播放延迟问题 -->
+    <script src="./js/howler.min.js"></script>
+  </head>
 
-<body>
+  <body>
     <canvas id="canvas">浏览器不支持，请升级</canvas>
 
     <!-- 背景音乐 -->
-    <div class="audiopalyer" style="display: none">
-        <audio src="R/audio/bgm.mp3" id="bgm" autoplay loop preload="auto"></audio>
-    </div>
-
-    <div style="display: none">
-        <audio src="R/audio/fly.mp3" id="fly" preload="auto"></audio>
-    </div>
+    <!-- <div class="audiopalyer" style="display: none">
+      <audio
+        src="R/audio/bgm.mp3"
+        id="bgm"
+        autoplay
+        loop
+        preload="auto"
+      ></audio>
+    </div> -->
 
     <div class="tip show">
-        <h3>进入游戏会立即播放背景音乐，请调整好手机音量</h3>
+      <h3>进入游戏会立即播放背景音乐，请调整好手机音量</h3>
 
-        <div class="btn">
-            <button class="confirm">进入游戏</button>
-            <!-- <button class="cancle">返回</button> -->
-        </div>
+      <div class="btn">
+        <button class="confirm">进入游戏</button>
+        <!-- <button class="cancle">返回</button> -->
+      </div>
     </div>
 
     <script src="./js/Game.js"></script>
@@ -53,17 +59,16 @@
     <script src="./js/SceneManager.js"></script>
 
     <script>
-        // 给Audio 标签添加停止方法
-        HTMLAudioElement.prototype.stop = function () {
-            this.pause();
-            this.currentTime = 0.0;
-        }
+      // 给Audio 标签添加停止方法
+      HTMLAudioElement.prototype.stop = function () {
+        this.pause();
+        this.currentTime = 0.0;
+      };
 
-        var game = new Game({
-            "id": "canvas",
-            "dataUrl": "./data/R.json"
-        })
+      var game = new Game({
+        id: "canvas",
+        dataUrl: "./data/R.json",
+      });
     </script>
-</body>
-
+  </body>
 </html>

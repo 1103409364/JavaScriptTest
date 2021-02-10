@@ -1,29 +1,28 @@
 {
-	"images" : [
-		{"name" : "bg_day" , "url" : "R/images/bg_day.png"},
-		{"name" : "land" , "url" : "R/images/land.png"},
-		{"name" : "pipe" , "url" : "R/images/pipe.png"},
-		{"name" : "bird" , "url" : "R/images/bird.png"},
-		{"name" : "shuzi0" , "url" : "R/images/font_048.png"},
-		{"name" : "shuzi1" , "url" : "R/images/font_049.png"},
-		{"name" : "shuzi2" , "url" : "R/images/font_050.png"},
-		{"name" : "shuzi3" , "url" : "R/images/font_051.png"},
-		{"name" : "shuzi4" , "url" : "R/images/font_052.png"},
-		{"name" : "shuzi5" , "url" : "R/images/font_053.png"},
-		{"name" : "shuzi6" , "url" : "R/images/font_054.png"},
-		{"name" : "shuzi7" , "url" : "R/images/font_055.png"},
-		{"name" : "shuzi8" , "url" : "R/images/font_056.png"},
-		{"name" : "shuzi9" , "url" : "R/images/font_057.png"},
-		{"name" : "logo" , "url" : "R/images/title.png"},
-		{"name" : "button_play" , "url" : "R/images/button_play.png"},
-		{"name" : "tutorial" , "url" : "R/images/tutorial.png"},
-		{"name" : "text_game_over" , "url" : "R/images/text_game_over.png"}
-	],
-	"audio" :[
-		{"name" : "bgm", "url" : "R/audio/bgm.mp3"},
-		{"name" : "fly", "url" : "R/audio/fly.mp3"},
-		{"name" : "hit", "url" : "R/audio/hit.mp3"},
-		{"name" : "point", "url" : "R/audio/point.mp3"}
-
-	]
+  "images": [
+    { "name": "bg_day", "url": "R/images/bg_day.png" },
+    { "name": "land", "url": "R/images/land.png" },
+    { "name": "pipe", "url": "R/images/pipe.png" },
+    { "name": "bird", "url": "R/images/bird.png" },
+    { "name": "shuzi0", "url": "R/images/font_048.png" },
+    { "name": "shuzi1", "url": "R/images/font_049.png" },
+    { "name": "shuzi2", "url": "R/images/font_050.png" },
+    { "name": "shuzi3", "url": "R/images/font_051.png" },
+    { "name": "shuzi4", "url": "R/images/font_052.png" },
+    { "name": "shuzi5", "url": "R/images/font_053.png" },
+    { "name": "shuzi6", "url": "R/images/font_054.png" },
+    { "name": "shuzi7", "url": "R/images/font_055.png" },
+    { "name": "shuzi8", "url": "R/images/font_056.png" },
+    { "name": "shuzi9", "url": "R/images/font_057.png" },
+    { "name": "logo", "url": "R/images/title.png" },
+    { "name": "button_play", "url": "R/images/button_play.png" },
+    { "name": "tutorial", "url": "R/images/tutorial.png" },
+    { "name": "text_game_over", "url": "R/images/text_game_over.png" }
+  ],
+  "audio": [
+    { "name": "bgm", "url": "R/audio/bgm.mp3" },
+    { "name": "fly", "url": "R/audio/fly.mp3" },
+    { "name": "hit", "url": "R/audio/hit.mp3" },
+    { "name": "point", "url": "R/audio/point.mp3" }
+  ]
 }
