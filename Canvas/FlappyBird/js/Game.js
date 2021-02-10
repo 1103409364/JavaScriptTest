@@ -123,7 +123,7 @@
       _this.ctx.font = "20px FB";
       _this.ctx.textAlign = "left";
       _this.ctx.fillStyle = "#fff";
-      _this.ctx.fillText("F NO. : " + _this.fno, 10, 20);
+      _this.ctx.fillText("Frame : " + _this.fno, 10, 20);
       _this.ctx.fillText("Scene : " + _this.sm.sceneNumber, 10, 40);
       // 渲染和更新也放到场景管理器中
     }, 20);
