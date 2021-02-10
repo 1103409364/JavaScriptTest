@@ -36,17 +36,17 @@
     this.windowWidth = document.documentElement.clientWidth;
     this.canvas.height = this.windowHeight;
     this.canvas.width = this.windowWidth;
-    // 限制画布宽高，pixel 2xL视口为411*823
-    if (this.windowHeight > 823) {
-      this.canvas.height = 823;
-    } else if (this.windowHeight < 480) {
-      this.canvas.height = 480;
-    }
-    if (this.windowWidth > 414) {
-      this.canvas.width = 414;
-    } else if (this.windowWidth < 320) {
-      this.canvas.width = 320;
-    }
+    // 限制画布宽高，pixel 2xL视口为411*823 取消限制
+    // if (this.windowHeight > 823) {
+    //   this.canvas.height = 823;
+    // } else if (this.windowHeight < 480) {
+    //   this.canvas.height = 480;
+    // }
+    // if (this.windowWidth > 414) {
+    //   this.canvas.width = 414;
+    // } else if (this.windowWidth < 320) {
+    //   this.canvas.width = 320;
+    // }
   };
   // 加载资源
   Game.prototype.loadResource = function (callback) {

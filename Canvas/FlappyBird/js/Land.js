@@ -13,9 +13,10 @@
   });
 
   Land.prototype.render = function () {
-    game.ctx.drawImage(this.image, this.x, this.y);
-    game.ctx.drawImage(this.image, this.x + this.width, this.y);
-    game.ctx.drawImage(this.image, this.x + this.width * 2, this.y);
+    //画出足够长的地板，6 数量。支持 pc 端横评
+    for (let i = 0; i <= 6; i++) {
+      game.ctx.drawImage(this.image, this.x + this.width * i, this.y);
+    }
 
     game.ctx.fillStyle = "#DED895";
     // 防止边界露馅，+5多绘制5px

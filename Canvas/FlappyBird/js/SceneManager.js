@@ -277,24 +277,25 @@
   // 绑定事件
   SceneManager.prototype.bindEvent = function () {
     var _this = this;
+
+    var tipBox = document.querySelector(".tip");
+    var confirmBtn = document.querySelector(".confirm");
+    // var cancleBtn =  document.querySelector(".cancle");
+    tipBox.style.display = "flex";
+
+    confirmBtn.addEventListener("click", function (event) {
+      // 移动端一个audio对象的第一次播放，必须是用户触发的 click 行为(touch事件不行)。
+      game.bgm.play();
+      // game.R.hit.play();
+      // game.R.hit.pause();
+      // game.R.point.play();
+      // game.R.point.pause();
+
+      tipBox.style.display = "none";
+    });
+
     // 触摸事件会覆盖鼠标点击
     if (isMobile()) {
-      var tipBox = document.querySelector(".tip");
-      var confirmBtn = document.querySelector(".confirm");
-      // var cancleBtn =  document.querySelector(".cancle");
-      tipBox.style.display = "flex";
-
-      confirmBtn.addEventListener("click", function (event) {
-        // 移动端一个audio对象的第一次播放，必须是用户触发的 click 行为(touch事件不行)。
-        game.bgm.play();
-        // game.R.hit.play();
-        // game.R.hit.pause();
-        // game.R.point.play();
-        // game.R.point.pause();
-
-        tipBox.style.display = "none";
-      });
-
       // cancleBtn.addEventListener("click", function(event) {
       //     window.location = "about:blank"
       // })
