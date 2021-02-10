@@ -13,7 +13,7 @@
     // this.width = 288;
     // this.height = 512;
     this.width = game.canvas.width;
-    this.height = (896 * this.width) / this.realW;
+    this.height = (this.realH * this.width) / this.realW;
     this.y = game.canvas.height * 0.76 - this.height;
     this.x = 0;
     // 移动速度
@@ -44,7 +44,7 @@
       this.width,
       this.height
     );
-    // 填空不够长，补一个同色的矩形；下方不用补，因为下面被大地覆盖了
+    // 手机竖屏状态 天空不够长，补一个同色的矩形；下方不用补，因为下面被大地覆盖了
     game.ctx.fillStyle = this.skyColor;
     game.ctx.fillRect(0, 0, game.canvas.width, this.y + 5);
   };
