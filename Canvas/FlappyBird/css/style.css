@@ -9,13 +9,14 @@ html {
   width: 100%;
   height: 100%;
   bottom: 0;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.637);
   flex-direction: column;
   justify-content: center;
 }
 .tip h3 {
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
+  color: #fff;
 }
 .tip .btn {
   display: flex;
@@ -25,5 +26,9 @@ html {
 .tip .btn button {
   width: 45%;
   line-height: 50px;
-  font-size: 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #eee;
+  user-select: none;
 }
